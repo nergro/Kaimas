@@ -1,7 +1,7 @@
 import FullLogoPng from 'assets/full-logo.png';
 import LogoPng from 'assets/logo.png';
-import { DefaultTheme } from 'styled-components/macro';
 import { rgba } from 'polished';
+import { DefaultTheme } from 'styled-components/macro';
 
 export const lightTheme: DefaultTheme = {
   fontFamily: {
@@ -10,6 +10,9 @@ export const lightTheme: DefaultTheme = {
   fonts: {
     HeaderBold: '600 60px Poppins, Sans-serif',
     Header: '400 60px Poppins, Sans-serif',
+    SectionHeaderBold: '600 50px Poppins, Sans-serif',
+    SectionHeaderSemiBold: '500 50px Poppins, Sans-serif',
+    SectionHeader: '400 50px Poppins, Sans-serif',
     bigTextBold: '700 20px Poppins, Sans-serif',
     bigText: '400 20px Poppins, Sans-serif',
     bigTextLight: '300 20px Poppins, Sans-serif',
@@ -69,6 +72,13 @@ export const lightTheme: DefaultTheme = {
       default: '#FFFFFF',
       hover: '#F8B600',
     },
+    card: {
+      background: '#FFFFFF',
+      title: rgba(0, 0, 0, 0.87),
+      description: rgba(0, 0, 0, 0.87),
+      link: '#F8B600',
+      linkHover: '#222222',
+    },
     text: {
       main: '#000000',
       secondary: '#FFFFFF',
@@ -77,13 +87,19 @@ export const lightTheme: DefaultTheme = {
       border: '#EEEEEE',
       borderFocus: '#8c8c8c',
       text: '#495057',
-      background: '#FFFFFF',
+      background: 'transparent',
     },
     tab: {
       background: rgba(255, 255, 255, 0.25),
       backgroundActive: '#FFFFFF',
       text: '#FFFFFF',
       textActive: '#495057',
+    },
+    footer: {
+      background: '#04091E',
+      title: '#FFFFFF',
+      text: '#777777',
+      border: '#333333',
     },
   },
   images: {

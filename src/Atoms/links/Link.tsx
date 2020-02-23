@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import styled from 'styled-components';
 import { Link as LinkComp } from 'react-router-dom';
+import styled from 'styled-components/macro';
 
 const StyledLink = styled(LinkComp)`
   text-decoration: none;

@@ -38,6 +38,13 @@ declare module 'styled-components' {
         default: string;
         hover: string;
       };
+      card: {
+        background: string;
+        title: string;
+        description: string;
+        link: string;
+        linkHover: string;
+      };
       text: {
         main: string;
         secondary: string;
@@ -54,6 +61,12 @@ declare module 'styled-components' {
         text: string;
         textActive: string;
       };
+      footer: {
+        background: string;
+        title: string;
+        text: string;
+        border: string;
+      };
     };
     images: {
       logo: string;
@@ -65,6 +78,9 @@ declare module 'styled-components' {
     fonts: {
       HeaderBold: string;
       Header: string;
+      SectionHeader: string;
+      SectionHeaderSemiBold: string;
+      SectionHeaderBold: string;
       bigText: string;
       bigTextBold: string;
       bigTextLight: string;
