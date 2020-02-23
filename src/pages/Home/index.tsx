@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 const Landing = styled.div`
   background-image: url(${img});
   background-size: cover;
-  height: 100vh;
+  height: calc(100vh + 10%);
 `;
 
 const Overlay = styled.div`

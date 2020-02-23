@@ -52,7 +52,7 @@ const componentFactory = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTh
     font-size: ${props => sizes[props.size || 'normal'].desktop};
     line-height: ${props => lineHeights[props.lineHeight || 'default']};
     text-align: center;
-    @media (max-width: ${props => props.theme.breakpoints.s}) {
+    @media (max-width: ${props => props.theme.breakpoints.m}) {
       font-size: ${props => sizes[props.size || 'veryBig'].mobile};
     }
   `;
