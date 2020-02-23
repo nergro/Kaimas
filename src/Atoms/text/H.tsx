@@ -23,7 +23,7 @@ const sizes: FontSizeCollection<Size> = {
   },
   veryBig: {
     desktop: '80px',
-    mobile: '25px',
+    mobile: '35px',
   },
 };
 
@@ -53,6 +53,19 @@ const componentFactory = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTh
     line-height: ${props => lineHeights[props.lineHeight || 'default']};
     text-align: center;
     @media (max-width: ${props => props.theme.breakpoints.s}) {
+      font-size: ${props => sizes[props.size || 'veryBig'].mobile};
+    }
+  `;
+
+const componentH2 = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTheme> =>
+  styled(comp)`
+    color: ${props => props.theme.colors.text[props.color || 'main']};
+    font-family: ${props => props.theme.fontFamily[props.font || 'Poppins']};
+    font-weight: ${props => props.weight || '400'};
+    font-size: ${props => sizes[props.size || 'normal'].desktop};
+    line-height: ${props => lineHeights[props.lineHeight || 'default']};
+    text-align: center;
+    @media (max-width: ${props => props.theme.breakpoints.s}) {
       font-size: ${props => sizes[props.size || 'normal'].mobile};
     }
   `;
@@ -61,7 +74,7 @@ const H1Comp: FC<Props> = ({ className, children }) => <h1 className={className}
 export const H1 = componentFactory(H1Comp);
 
 const H2Comp: FC<Props> = ({ className, children }) => <h2 className={className}>{children}</h2>;
-export const H2 = componentFactory(H2Comp);
+export const H2 = componentH2(H2Comp);
 
 const H3Comp: FC<Props> = ({ className, children }) => <h3 className={className}>{children}</h3>;
 export const H3 = componentFactory(H3Comp);

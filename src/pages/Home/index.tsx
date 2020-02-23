@@ -27,16 +27,27 @@ const OverlayContent = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const OverlayContentLeft = styled.div`
   width: 50%;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    width: 100%;
+  }
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    margin-top: 85px;
+    text-align: center;
+  }
 `;
 
 const OverlayContentRight = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    width: 100%;
+  }
 `;
 
 const StyledTitle = styled(H1)`
@@ -44,6 +55,9 @@ const StyledTitle = styled(H1)`
   font: ${props => props.theme.fonts.HeaderBold};
   text-align: left;
   margin: 0;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    text-align: center;
+  }
 `;
 
 const StyledP = styled(P)`
@@ -55,6 +69,9 @@ const StyledButton = styled(Button)`
   padding: 10px 10%;
   margin-top: 20px;
   align-self: center;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    display: none;
+  }
 `;
 
 export const Home: FC = () => {

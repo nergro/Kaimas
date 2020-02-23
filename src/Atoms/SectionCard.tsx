@@ -15,6 +15,10 @@ const Wrapper = styled.div`
   width: 60%;
   margin: 0 auto;
   min-height: 300px;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    width: 70%;
+    flex-wrap: wrap;
+  }
 `;
 
 const Left = styled.div<DivProps>`
@@ -24,6 +28,10 @@ const Left = styled.div<DivProps>`
   display: flex;
   flex-direction: column;
   order: ${props => (props['data-toRight'] ? 2 : 1)};
+
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    width: 100%;
+  }
 `;
 
 const Title = styled(H2).attrs(() => ({
@@ -44,6 +52,11 @@ const StyledCardLink = styled(CardLink)`
 const Right = styled.div`
   width: 50%;
   order: 1;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    width: 100%;
+    min-height: 250px;
+    order: 3;
+  }
 `;
 
 interface Props {

@@ -43,6 +43,6 @@ export const P = styled(PComp)`
   font-size: ${props => sizes[props.size || 'normal'].desktop};
   margin: 0;
   @media (max-width: ${props => props.theme.breakpoints.s}) {
-    font-size: ${props => sizes[props.size || 'normal'].mobile};
+    font-size: ${props => sizes[props.size || 'veryBig'].mobile};
   }
 `;

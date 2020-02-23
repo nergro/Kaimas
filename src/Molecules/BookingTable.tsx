@@ -12,7 +12,13 @@ const Tabs = styled.div`
 const StyledTab = styled(Tab)``;
 
 const Wrapper = styled.div`
-  width: 55%;
+  width: 60%;
+  @media (max-width: ${props => props.theme.breakpoints.l}) {
+    width: 80%;
+  }
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    width: 60%;
+  }
 `;
 
 const Form = styled.form`
