@@ -13,7 +13,13 @@ const Wrapper = styled.div`
 const Landing = styled.div`
   background-image: url(${img});
   background-size: cover;
-  height: calc(100vh + 10%);
+  height: 100vh;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    height: calc(100vh + 130px);
+  }
+  @media (max-width: ${props => props.theme.breakpoints.s}) {
+    height: calc(100vh + 200px);
+  }
 `;
 
 const Overlay = styled.div`

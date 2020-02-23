@@ -20,7 +20,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   html, body, #root {
-    height: 100%
+    /* height: 100% */
   }
 
   /* This class is applied to body when modal is open */
