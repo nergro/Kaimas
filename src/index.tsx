@@ -1,15 +1,17 @@
+import 'react-datepicker/dist/react-datepicker.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { lightTheme } from 'services/theme/lightTheme';
+import { ThemeProvider } from 'styled-components/macro';
 
 import { App } from './App';
 import { ErrorBoundary } from './errorBoundary';
 import { GlobalStyle } from './globalStyle';
 import { ProvidersInjector } from './ProvidersInjector';
 import * as serviceWorker from './serviceWorker';
-import { ThemeProvider } from 'styled-components';
 Modal.setAppElement('#root');
 
 const storeProviders: any = [];

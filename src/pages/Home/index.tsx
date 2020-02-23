@@ -1,9 +1,10 @@
-import React from 'react';
 import img from 'assets/main.jpg';
-import styled from 'styled-components';
-import { H1, P } from 'Atoms/text';
 import { Button } from 'Atoms/buttons/Button';
 import { Tab } from 'Atoms/buttons/Tab';
+import { H1, P } from 'Atoms/text';
+import React, { FC, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import styled, { css } from 'styled-components/macro';
 
 const Wrapper = styled.div`
   background-image: url(${img});
@@ -51,6 +52,7 @@ const Content = styled.div``;
 const StyledButton = styled(Button)`
   padding: 10px 10%;
   margin-top: 20px;
+  align-self: center;
 `;
 
 const Tabs = styled.div`
@@ -69,14 +71,9 @@ const Form = styled.form`
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
-const Input = styled.input`
-  margin-top: 10px;
-  &:first-child {
-    margin: 0;
-  }
 
+const InputCSS = css`
   width: 100%;
   padding: 12px;
   font: ${props => props.theme.fonts.smallTextLight};
@@ -90,7 +87,20 @@ const Input = styled.input`
   }
 `;
 
-export const Home = () => {
+const Input = styled.input`
+  margin-top: 10px;
+  ${InputCSS};
+`;
+
+const StyledPicker = styled(DatePicker)`
+  margin-top: 10px;
+  ${InputCSS};
+`;
+
+export const Home: FC = () => {
+  const [from, setFrom] = useState();
+  const [to, setTo] = useState();
+
   return (
     <Wrapper>
       <Overlay>
@@ -110,8 +120,12 @@ export const Home = () => {
                 <StyledTab>Activities</StyledTab>
               </Tabs>
               <Form>
-                <Input type="text" name="from" placeholder="From" />
-                <Input type="text" name="to" placeholder="To" />
+                <StyledPicker
+                  selected={from}
+                  onChange={day => setFrom(day)}
+                  placeholderText="From"
+                />
+                <StyledPicker selected={to} onChange={day => setTo(day)} placeholderText="To" />
                 <Input type="text" name="Start" placeholder="Start" />
                 <Input type="text" name="Return" placeholder="Return" />
                 <Input type="text" name="Adults" placeholder="Adults" />

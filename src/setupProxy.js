@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/api',
     proxy({
-      target: '',
+      target: '/',
       pathRewrite: { '^/api': '' },
       changeOrigin: true,
     })
