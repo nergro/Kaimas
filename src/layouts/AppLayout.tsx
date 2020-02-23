@@ -1,6 +1,6 @@
 import { Footer } from 'Molecules/Footer';
 import { Navbar } from 'Organisms/navbar';
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 
 const LayoutStyled = styled.div`
@@ -21,9 +21,18 @@ interface AppLayoutProps {
 }
 
 export const AppLayout: FC<AppLayoutProps> = ({ children, className }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    document.addEventListener('scroll', () => {
+      const didScroll = window.scrollY < 100 ? false : true;
+      setScrolled(didScroll);
+    });
+  }, [setScrolled]);
+
   return (
     <LayoutStyled className={className}>
-      <Navbar />
+      <Navbar scrolled={scrolled} />
       <Content>{children}</Content>
       <Footer />
     </LayoutStyled>

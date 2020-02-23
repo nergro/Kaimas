@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import styled from 'styled-components/macro';
 
 interface DivProps {
-  'data-toRight'?: boolean;
+  'data-toright'?: boolean;
 }
 
 const Wrapper = styled.div`
@@ -27,7 +27,7 @@ const Left = styled.div<DivProps>`
 
   display: flex;
   flex-direction: column;
-  order: ${props => (props['data-toRight'] ? 2 : 1)};
+  order: ${props => (props['data-toright'] ? 2 : 1)};
 
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     width: 100%;
@@ -71,7 +71,7 @@ interface Props {
 export const SectionCard: FC<Props> = ({ className, title, description, path, image, toRight }) => {
   return (
     <Wrapper className={className}>
-      <Left data-toRight={toRight}>
+      <Left data-toright={toRight}>
         <Title>{title}</Title>
         <Description>{description}</Description>
         <StyledCardLink to={path}>Sąrašas</StyledCardLink>

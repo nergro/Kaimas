@@ -19,6 +19,12 @@ const Wrapper = styled.div`
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     width: 60%;
   }
+  @media (max-width: ${props => props.theme.breakpoints.s}) {
+    width: 80%;
+  }
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 100%;
+  }
 `;
 
 const Form = styled.form`
