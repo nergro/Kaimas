@@ -83,7 +83,7 @@ export const CabinListItem: FC<Props> = ({ className, cabin }) => {
       </ImageWrapper>
       <Content>
         <ContentTop>
-          <ListTitleLink to="#">{cabin.title}</ListTitleLink>
+          <ListTitleLink to="/cabins/55">{cabin.title}</ListTitleLink>
           <StyledP>{trimmedDescription}...</StyledP>
         </ContentTop>
         <ContentBottom>

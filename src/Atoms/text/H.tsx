@@ -10,8 +10,8 @@ const sizes: FontSizeCollection<Size> = {
     mobile: '14px',
   },
   regular: {
-    desktop: '24px',
-    mobile: '20px',
+    desktop: '20px',
+    mobile: '16px',
   },
   medium: {
     desktop: '25px',
@@ -70,6 +70,19 @@ const componentH2 = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTheme> 
     }
   `;
 
+const componentH3 = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTheme> =>
+  styled(comp)`
+    color: ${props => props.theme.colors.text[props.color || 'main']};
+    font-family: ${props => props.theme.fontFamily[props.font || 'Poppins']};
+    font-weight: ${props => props.weight || '400'};
+    font-size: ${props => sizes[props.size || 'regular'].desktop};
+    line-height: ${props => lineHeights[props.lineHeight || 'default']};
+    text-align: center;
+    @media (max-width: ${props => props.theme.breakpoints.s}) {
+      font-size: ${props => sizes[props.size || 'regular'].mobile};
+    }
+  `;
+
 const H1Comp: FC<Props> = ({ className, children }) => <h1 className={className}>{children}</h1>;
 export const H1 = componentFactory(H1Comp);
 
@@ -77,7 +90,7 @@ const H2Comp: FC<Props> = ({ className, children }) => <h2 className={className}
 export const H2 = componentH2(H2Comp);
 
 const H3Comp: FC<Props> = ({ className, children }) => <h3 className={className}>{children}</h3>;
-export const H3 = componentFactory(H3Comp);
+export const H3 = componentH3(H3Comp);
 
 const H4Comp: FC<Props> = ({ className, children }) => <h4 className={className}>{children}</h4>;
 export const H4 = componentFactory(H4Comp);

@@ -13,10 +13,6 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-const Inputs = styled.div`
-  flex-grow: 1;
-`;
-
 const StyledInput = styled(Input)`
   margin-top: 10px;
 `;
@@ -36,10 +32,8 @@ export const LoginForm: FC<Props> = ({ className, onSwitchToRegister }) => {
   return (
     <Form className={className}>
       <H1>LOGIN</H1>
-      <Inputs>
-        <StyledInput type="email" name="Email" placeholder="Email" />
-        <StyledInput type="password" name="Password" placeholder="Password" />
-      </Inputs>
+      <StyledInput type="email" name="Email" placeholder="Email" />
+      <StyledInput type="password" name="Password" placeholder="Password" />
       <StyledButton>LOGIN</StyledButton>
       <CardButton onClick={onSwitchToRegister}>Don&apos;t have an account?</CardButton>
     </Form>
