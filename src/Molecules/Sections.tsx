@@ -39,7 +39,7 @@ export const Sections: FC = () => {
       <StyledSection
         title="Apgyvendinimas"
         description="Geriausias poilsis tik tikroje lietuviškoje gamtoje. Mūsų komfortabilios sodybos įrengtos puikioje vietoje. Viskas tobulam Jūsų poilsiui!"
-        path="#"
+        path="/cabins"
         image={HouseImage}
       />
       <StyledSection

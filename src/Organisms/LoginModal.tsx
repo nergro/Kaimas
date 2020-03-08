@@ -32,8 +32,13 @@ interface Props {
 
 export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
   const [showRegister, setShowRegister] = useState(false);
+
+  const onModalClose = (): void => {
+    onClose();
+    setShowRegister(false);
+  };
   return (
-    <StyledModal className={className} isOpen={isOpen} onClose={onClose}>
+    <StyledModal className={className} isOpen={isOpen} onClose={onModalClose}>
       {showRegister ? (
         <RegisterForm onSwitchToLogin={() => setShowRegister(false)} />
       ) : (

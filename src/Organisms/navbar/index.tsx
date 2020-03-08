@@ -7,6 +7,7 @@ import { P } from 'Atoms/text';
 import { MobileSideNav } from 'Molecules/MobileSideNav';
 import { LoginModal } from 'Organisms/LoginModal';
 import React, { FC, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 const HeaderContent = styled.div`
@@ -16,8 +17,17 @@ const HeaderContent = styled.div`
 `;
 
 const LogoWrapper = styled.div`
-  display: flex;
   flex-grow: 1;
+`;
+
+const Logo = styled.button`
+  display: flex;
+  cursor: pointer;
+  background: none;
+  border: none;
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 const LogoIcon = styled(Icon)`
@@ -56,6 +66,7 @@ interface Props {
   scrolled?: boolean;
 }
 const NavbarBase: FC<Props> = ({ className }) => {
+  const { push } = useHistory();
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
 
@@ -68,8 +79,10 @@ const NavbarBase: FC<Props> = ({ className }) => {
     <div className={className}>
       <HeaderContent>
         <LogoWrapper>
-          <LogoIcon svgComponent={LogoSVG} />
-          <LogoLabel>Laikas Atostogoms</LogoLabel>
+          <Logo onClick={() => push('/')}>
+            <LogoIcon svgComponent={LogoSVG} />
+            <LogoLabel>Laikas Atostogoms</LogoLabel>
+          </Logo>
         </LogoWrapper>
         <MenuButton
           onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
@@ -77,7 +90,7 @@ const NavbarBase: FC<Props> = ({ className }) => {
         />
         <StyledLink to="#">HOME</StyledLink>
         <StyledLink to="#">ABOUT</StyledLink>
-        <StyledLink to="#">HOTELS</StyledLink>
+        <StyledLink to="/cabins">CABINS</StyledLink>
         <StyledLink to="#">ACTIVITY</StyledLink>
         <StyledLink to="#">CONTACTS</StyledLink>
         <StyledLinkButton onClick={() => setLoginOpen(true)}>LOGIN</StyledLinkButton>
