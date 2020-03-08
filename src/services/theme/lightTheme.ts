@@ -44,7 +44,7 @@ export const lightTheme: DefaultTheme = {
     button: {
       default: {
         backgroundColor: '#F8B600',
-        borderColor: '#000000',
+        borderColor: '#F8B600',
         textColor: '#FFFFFF',
       },
       hover: {
