@@ -84,6 +84,9 @@ export const lightTheme: DefaultTheme = {
     text: {
       main: '#000000',
       secondary: '#FFFFFF',
+      warning: '#F8B600',
+      available: '#32a852',
+      inactive: '#4f4f4f',
     },
     input: {
       border: '#EEEEEE',

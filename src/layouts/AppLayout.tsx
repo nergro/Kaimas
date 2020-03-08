@@ -24,10 +24,14 @@ export const AppLayout: FC<AppLayoutProps> = ({ children, className }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    document.addEventListener('scroll', () => {
-      const didScroll = window.scrollY < 100 ? false : true;
+    const handleScroll = (): void => {
+      const didScroll = window.scrollY < 50 ? false : true;
       setScrolled(didScroll);
-    });
+    };
+    document.addEventListener('scroll', handleScroll);
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
   }, [setScrolled]);
 
   return (

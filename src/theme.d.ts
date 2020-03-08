@@ -50,6 +50,9 @@ declare module 'styled-components' {
       text: {
         main: string;
         secondary: string;
+        warning: string;
+        available: string;
+        inactive: string;
       };
       input: {
         border: string;

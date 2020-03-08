@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const Overlay = styled.div`
-  background: rgba(4, 9, 30, 0.4);
+  background: rgba(4, 9, 30, 0.5);
   height: 100%;
   display: flex;
   justify-content: center;
@@ -29,13 +29,14 @@ const StyledTitle = styled(H1)`
 
 interface Props {
   className?: string;
+  title: string;
 }
 
-export const Banner: FC<Props> = ({ className }) => {
+export const Banner: FC<Props> = ({ className, title }) => {
   return (
     <Wrapper className={className}>
       <Overlay>
-        <StyledTitle>Sodybos</StyledTitle>
+        <StyledTitle>{title}</StyledTitle>
       </Overlay>
     </Wrapper>
   );
