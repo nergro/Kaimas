@@ -20,6 +20,8 @@ declare module 'styled-components' {
     colors: {
       background: {
         primary: string;
+        navbar: string;
+        mobileDrawer: string;
       };
       button: ButtonTheme;
       select: {

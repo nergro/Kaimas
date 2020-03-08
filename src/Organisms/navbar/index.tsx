@@ -1,14 +1,17 @@
 import { ReactComponent as LogoSVG } from 'assets/logo/logo.svg';
+import { LinkButton } from 'Atoms/buttons/LinkButton';
 import { Icon } from 'Atoms/Icon';
 import { Link } from 'Atoms/links/Link';
 import { Menu } from 'Atoms/Menu';
 import { P } from 'Atoms/text';
+import { MobileSideNav } from 'Molecules/MobileSideNav';
+import { LoginModal } from 'Organisms/LoginModal';
 import React, { FC, useState } from 'react';
 import styled from 'styled-components/macro';
 
 const HeaderContent = styled.div`
   display: flex;
-  background: rgba(34, 34, 34, 0.9);
+  background: ${props => props.theme.colors.background.navbar};
   padding: 20px 15px;
 `;
 
@@ -35,6 +38,12 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledLinkButton = styled(LinkButton)`
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    display: none;
+  }
+`;
+
 const MenuButton = styled(Menu)`
   display: none;
   @media (max-width: ${props => props.theme.breakpoints.m}) {
@@ -48,6 +57,12 @@ interface Props {
 }
 const NavbarBase: FC<Props> = ({ className }) => {
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  const onLoginClick = (): void => {
+    setMobileNavbarOpen(false);
+    setLoginOpen(true);
+  };
 
   return (
     <div className={className}>
@@ -65,7 +80,14 @@ const NavbarBase: FC<Props> = ({ className }) => {
         <StyledLink to="#">HOTELS</StyledLink>
         <StyledLink to="#">ACTIVITY</StyledLink>
         <StyledLink to="#">CONTACTS</StyledLink>
+        <StyledLinkButton onClick={() => setLoginOpen(true)}>LOGIN</StyledLinkButton>
       </HeaderContent>
+      <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
+      <MobileSideNav
+        isOpen={mobileNavbarOpen}
+        onClose={() => setMobileNavbarOpen(false)}
+        onLoginClick={onLoginClick}
+      />
     </div>
   );
 };

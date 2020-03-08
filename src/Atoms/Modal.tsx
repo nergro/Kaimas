@@ -21,7 +21,6 @@ interface ModalProps {
   isOpen: boolean;
   onClose?: () => void;
   children: ReactNode;
-  // Animation time in ms
   animationTime?: number;
 }
 
@@ -58,15 +57,15 @@ export const Modal = styled(ModalBase)`
     justify-content: center;
     align-items: center;
     transition: background-color ${props => props.animationTime || DefaultAnimationTime}ms linear;
-    background-color: rgba(0, 0, 0, 0); // TODO move to theme
+    background-color: rgba(0, 0, 0, 0);
   }
 
   .${overlayClassNames.afterOpen} {
-    background-color: rgba(0, 0, 0, 0.4); // TODO move to theme
+    background-color: rgba(0, 0, 0, 0.4);
   }
 
   .${overlayClassNames.beforeClose} {
-    background-color: rgba(0, 0, 0, 0); // TODO move to theme
+    background-color: rgba(0, 0, 0, 0);
   }
 
   .${contentClassNames.base} {

@@ -38,6 +38,8 @@ export const lightTheme: DefaultTheme = {
   colors: {
     background: {
       primary: '#FFFFFF',
+      navbar: rgba(34, 34, 34, 0.9),
+      mobileDrawer: rgba(34, 34, 34, 0.9),
     },
     button: {
       default: {

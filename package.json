@@ -18,6 +18,7 @@
     "@types/react-tooltip": "^3.11.0",
     "@types/styled-components": "^4.4.3",
     "axios": "^0.19.2",
+    "formik": "^2.1.4",
     "http-proxy-middleware": "^0.20.0",
     "moment": "^2.24.0",
     "polished": "^3.4.4",
@@ -31,7 +32,8 @@
     "react-select": "^3.0.8",
     "react-tooltip": "^3.11.6",
     "styled-components": "^5.0.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "yup": "^0.28.3"
   },
   "scripts": {
     "start": "react-scripts start",
