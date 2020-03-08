@@ -29,15 +29,13 @@ const StyledTitle = styled(H1)`
 
 interface Props {
   className?: string;
-  title: string;
+  title?: string;
 }
 
 export const Banner: FC<Props> = ({ className, title }) => {
   return (
     <Wrapper className={className}>
-      <Overlay>
-        <StyledTitle>{title}</StyledTitle>
-      </Overlay>
+      <Overlay>{title && <StyledTitle>{title}</StyledTitle>}</Overlay>
     </Wrapper>
   );
 };

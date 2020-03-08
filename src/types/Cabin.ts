@@ -4,7 +4,8 @@ export interface Cabin {
   capacity: number;
   price: number;
   description: string;
-  imageUrl: string;
+  thumbnail: string;
+  images: string[];
 }
 
 export type CapacityFilterType = 'increase' | 'decrease';

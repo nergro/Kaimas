@@ -10,12 +10,13 @@ interface Props {
   children: ReactNode;
   className?: string;
   title?: string;
+  hideBanner?: boolean;
 }
 
-export const MainLayout: FC<Props> = ({ children, className, title }) => {
+export const MainLayout: FC<Props> = ({ children, className, title, hideBanner }) => {
   return (
     <LayoutStyled className={className}>
-      {title && <Banner title={title} />}
+      {!hideBanner && <Banner title={title} />}
       {children}
     </LayoutStyled>
   );

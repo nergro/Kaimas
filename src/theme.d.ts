@@ -66,6 +66,12 @@ declare module 'styled-components' {
         text: string;
         textActive: string;
       };
+      cabinTab: {
+        background: string;
+        backgroundActive: string;
+        text: string;
+        textActive: string;
+      };
       footer: {
         background: string;
         title: string;

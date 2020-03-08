@@ -79,7 +79,7 @@ export const CabinListItem: FC<Props> = ({ className, cabin }) => {
   return (
     <Wrapper className={className}>
       <ImageWrapper>
-        <Image src={cabin.imageUrl} alt="Cabin image" />
+        <Image src={cabin.thumbnail} alt="Cabin image" />
       </ImageWrapper>
       <Content>
         <ContentTop>

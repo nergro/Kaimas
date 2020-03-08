@@ -111,6 +111,7 @@ export const Navbar = styled(NavbarBase)`
   width: ${props => (props.scrolled ? '100%' : '80%')};
   margin: 0 auto;
   position: fixed;
+  z-index: 100;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);

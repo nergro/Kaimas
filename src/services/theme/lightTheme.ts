@@ -100,6 +100,12 @@ export const lightTheme: DefaultTheme = {
       text: '#FFFFFF',
       textActive: '#495057',
     },
+    cabinTab: {
+      background: '#EEEEEE',
+      backgroundActive: '#FFFFFF',
+      text: '#000000',
+      textActive: '#F8B600',
+    },
     footer: {
       background: '#04091E',
       title: '#FFFFFF',

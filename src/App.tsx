@@ -3,6 +3,7 @@ import { NotFound } from 'pages/404';
 import { Cabin } from 'pages/Cabin';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
+import { Reservation } from 'pages/Reservation';
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ export const App: FC = () => {
         <Route path="/" exact component={Home} />
         <Route path="/cabins" exact component={Cabins} />
         <Route path="/cabins/:cabinId" exact component={Cabin} />
+        <Route path="/cabins/:cabinId/reservation" exact component={Reservation} />
         <Route component={NotFound} />
       </Switch>
     </AppLayout>
