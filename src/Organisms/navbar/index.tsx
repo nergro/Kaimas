@@ -49,6 +49,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledLinkButton = styled(LinkButton)`
+  text-transform: uppercase;
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     display: none;
   }
@@ -88,12 +89,12 @@ const NavbarBase: FC<Props> = ({ className }) => {
           onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
           isOpen={mobileNavbarOpen}
         />
-        <StyledLink to="#">HOME</StyledLink>
-        <StyledLink to="#">ABOUT</StyledLink>
-        <StyledLink to="/cabins">CABINS</StyledLink>
-        <StyledLink to="#">ACTIVITY</StyledLink>
-        <StyledLink to="#">CONTACTS</StyledLink>
-        <StyledLinkButton onClick={() => setLoginOpen(true)}>LOGIN</StyledLinkButton>
+        <StyledLink to="/">Home</StyledLink>
+        <StyledLink to="#">About</StyledLink>
+        <StyledLink to="/cabins">Cabins</StyledLink>
+        <StyledLink to="#">Activities</StyledLink>
+        <StyledLink to="#">Contacts</StyledLink>
+        <StyledLinkButton onClick={() => setLoginOpen(true)}>Login</StyledLinkButton>
       </HeaderContent>
       <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
       <MobileSideNav
@@ -111,7 +112,7 @@ export const Navbar = styled(NavbarBase)`
   width: ${props => (props.scrolled ? '100%' : '80%')};
   margin: 0 auto;
   position: fixed;
-  z-index: 100;
+  z-index: 9;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);

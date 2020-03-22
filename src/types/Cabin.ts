@@ -11,3 +11,5 @@ export interface Cabin {
 export type CapacityFilterType = 'increase' | 'decrease';
 
 export type PriceFilterType = 'start' | 'end';
+
+export type CabinSection = 'About' | 'Perks' | 'Reviews';

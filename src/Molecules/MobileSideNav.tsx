@@ -38,11 +38,11 @@ export const MobileSideNav: FC<Props> = ({ className, isOpen, onClose, onLoginCl
   return (
     <StyledModal className={className} isOpen={isOpen} onClose={onClose}>
       <ModalContent>
-        <StyledLink to="#">HOME</StyledLink>
-        <StyledLink to="#">ABOUT</StyledLink>
-        <StyledLink to="#">HOTELS</StyledLink>
-        <StyledLink to="#">ACTIVITY</StyledLink>
-        <StyledLink to="#">CONTACTS</StyledLink>
+        <StyledLink to="/">Home</StyledLink>
+        <StyledLink to="/about">About</StyledLink>
+        <StyledLink to="#">Cabins</StyledLink>
+        <StyledLink to="#">Activities</StyledLink>
+        <StyledLink to="#">Contacts</StyledLink>
         <StyledLinkButton onClick={onLoginClick}>LOGIN</StyledLinkButton>
       </ModalContent>
     </StyledModal>

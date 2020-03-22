@@ -4,6 +4,7 @@ import styled from 'styled-components/macro';
 
 const StyledLink = styled(LinkComp)`
   text-decoration: none;
+  text-transform: uppercase;
   color: ${props => props.theme.colors.link.default};
   &:hover {
     color: ${props => props.theme.colors.link.hover};

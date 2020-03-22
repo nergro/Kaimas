@@ -29,7 +29,7 @@ export const lightTheme: DefaultTheme = {
     tinyText: '400 13px Poppins, Sans-serif',
   },
   breakpoints: {
-    sm: '400px',
+    sm: '450px',
     s: '700px',
     m: '1000px',
     l: '1300px',

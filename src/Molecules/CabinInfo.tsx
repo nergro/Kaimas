@@ -1,56 +1,50 @@
 import { CabinTab } from 'Atoms/buttons/CabinTab';
+import { CabinTabContent } from 'Molecules/CabinTabContent';
 import React, { FC, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { CabinSection } from 'types/Cabin';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
-  margin: 50px 40px 0 0;
 `;
 
 const Tabs = styled.div`
   display: flex;
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    flex-direction: column;
+  }
 `;
 
-const Content = styled.div`
-  padding: 40px;
-  background: ${props => props.theme.colors.background.primary};
+const StyledTab = styled(CabinTab)`
+  padding: 0;
+  width: 33.3333%;
+  height: 65px;
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    width: 100%;
+  }
 `;
 
-export const CabinInfo: FC = () => {
-  const [activeSection, setActiveSection] = useState<string>('Apie');
-  const { push } = useHistory();
+interface Props {
+  className?: string;
+}
+export const CabinInfo: FC<Props> = ({ className }) => {
+  const [activeSection, setActiveSection] = useState<CabinSection>('About');
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <Tabs>
-        <CabinTab active={activeSection === 'Apie'} onClick={() => setActiveSection('Apie')}>
+        <StyledTab active={activeSection === 'About'} onClick={() => setActiveSection('About')}>
           Apie
-        </CabinTab>
-        <CabinTab
-          active={activeSection === 'Privalumai'}
-          onClick={() => setActiveSection('Privalumai')}
-        >
+        </StyledTab>
+        <StyledTab active={activeSection === 'Perks'} onClick={() => setActiveSection('Perks')}>
           Privalumai
-        </CabinTab>
-        <CabinTab
-          active={activeSection === 'Atsiliepimai'}
-          onClick={() => setActiveSection('Atsiliepimai')}
-        >
+        </StyledTab>
+        <StyledTab active={activeSection === 'Reviews'} onClick={() => setActiveSection('Reviews')}>
           Atsiliepimai
-        </CabinTab>
-        <CabinTab active={false} onClick={() => push('/cabins/55/reservation')}>
-          Rezervacija
-        </CabinTab>
+        </StyledTab>
       </Tabs>
-      <Content>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </Content>
+      <CabinTabContent section={activeSection} />
     </Wrapper>
   );
 };
