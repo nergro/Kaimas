@@ -87,7 +87,9 @@ export const lightTheme: DefaultTheme = {
       warning: '#F8B600',
       available: '#32a852',
       inactive: '#4f4f4f',
+      error: '#FF0000',
     },
+    loader: '#F8B600',
     input: {
       border: '#EEEEEE',
       borderFocus: '#8c8c8c',

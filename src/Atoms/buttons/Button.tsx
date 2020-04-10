@@ -6,11 +6,12 @@ interface ButtonProps {
   children: ReactNode;
   onClick?(): void;
   outline?: boolean;
+  type?: 'submit' | 'button';
 }
 
-const ButtonBase: FC<ButtonProps> = ({ className, children, onClick }) => {
+const ButtonBase: FC<ButtonProps> = ({ className, children, onClick, type = 'button' }) => {
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} type={type}>
       {children}
     </button>
   );

@@ -53,7 +53,9 @@ declare module 'styled-components' {
         warning: string;
         available: string;
         inactive: string;
+        error: string;
       };
+      loader: string;
       input: {
         border: string;
         borderFocus: string;

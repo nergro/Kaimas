@@ -8,6 +8,8 @@ import { MobileSideNav } from 'Molecules/MobileSideNav';
 import { LoginModal } from 'Organisms/LoginModal';
 import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { handleLogout } from 'services/auth';
+import { getAuthStatus } from 'services/localStorage';
 import styled from 'styled-components/macro';
 
 const HeaderContent = styled.div`
@@ -50,6 +52,7 @@ const StyledLink = styled(Link)`
 
 const StyledLinkButton = styled(LinkButton)`
   text-transform: uppercase;
+
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     display: none;
   }
@@ -70,10 +73,21 @@ const NavbarBase: FC<Props> = ({ className }) => {
   const { push } = useHistory();
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [authStatus, setAuthStatus] = useState<boolean | undefined>(getAuthStatus());
 
   const onLoginClick = (): void => {
     setMobileNavbarOpen(false);
     setLoginOpen(true);
+  };
+
+  const onLogout = (): void => {
+    handleLogout();
+    setAuthStatus(false);
+  };
+
+  const onModalClose = (): void => {
+    setLoginOpen(false);
+    setAuthStatus(getAuthStatus());
   };
 
   return (
@@ -94,9 +108,12 @@ const NavbarBase: FC<Props> = ({ className }) => {
         <StyledLink to="/cabins">Cabins</StyledLink>
         <StyledLink to="#">Activities</StyledLink>
         <StyledLink to="#">Contacts</StyledLink>
-        <StyledLinkButton onClick={() => setLoginOpen(true)}>Login</StyledLinkButton>
+        {!authStatus && (
+          <StyledLinkButton onClick={() => setLoginOpen(true)}>Login</StyledLinkButton>
+        )}
+        {authStatus && <StyledLinkButton onClick={onLogout}>Logout</StyledLinkButton>}
       </HeaderContent>
-      <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
+      <LoginModal isOpen={loginOpen} onClose={onModalClose} />
       <MobileSideNav
         isOpen={mobileNavbarOpen}
         onClose={() => setMobileNavbarOpen(false)}
@@ -117,7 +134,7 @@ export const Navbar = styled(NavbarBase)`
   left: 50%;
   transform: translate(-50%, 0);
   transition: all 0.2s ease-in;
-  & > div {
+  ${HeaderContent} {
     background: ${props =>
       props.scrolled ? 'rgba(34, 34, 34, 0.9)' : 'rgba(255, 255, 255, 0.15)'};
   }

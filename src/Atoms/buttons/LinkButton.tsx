@@ -7,7 +7,7 @@ const StyledButton = styled.button`
   padding: 0;
   cursor: pointer;
   color: ${props => props.theme.colors.link.default};
-  font: ${props => props.theme.fonts.normalText};
+  font: ${props => props.theme.fonts.mediumText};
   &:hover {
     color: ${props => props.theme.colors.link.hover};
   }

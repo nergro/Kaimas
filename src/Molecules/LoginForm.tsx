@@ -1,8 +1,8 @@
 import { Button } from 'Atoms/buttons/Button';
 import { CardButton } from 'Atoms/buttons/CardButton';
 import { Input } from 'Atoms/Input';
-import { H1 } from 'Atoms/text';
-import React, { FC } from 'react';
+import { H1, P } from 'Atoms/text';
+import React, { FC, FormEvent, useState } from 'react';
 import styled from 'styled-components/macro';
 
 const Form = styled.form`
@@ -23,18 +23,46 @@ const StyledButton = styled(Button)`
   align-self: center;
 `;
 
+const ErrorMessage = styled(P)`
+  margin-top: 10px;
+`;
+
 interface Props {
   className?: string;
   onSwitchToRegister(): void;
+  onLogin(email: string, password: string): Promise<string | undefined>;
 }
 
-export const LoginForm: FC<Props> = ({ className, onSwitchToRegister }) => {
+export const LoginForm: FC<Props> = ({ className, onSwitchToRegister, onLogin }) => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    const message = await onLogin(email, password);
+    if (message) setErrorMessage(message);
+  };
+
   return (
-    <Form className={className}>
+    <Form className={className} onSubmit={onSubmit}>
       <H1>LOGIN</H1>
-      <StyledInput type="email" name="Email" placeholder="Email" />
-      <StyledInput type="password" name="Password" placeholder="Password" />
-      <StyledButton>LOGIN</StyledButton>
+      <StyledInput
+        type="email"
+        name="Email"
+        placeholder="Email"
+        required
+        onChange={e => setEmail(e.target.value)}
+      />
+      <StyledInput
+        type="password"
+        name="Password"
+        placeholder="Password"
+        required
+        onChange={e => setPassword(e.target.value)}
+      />
+      {errorMessage && <ErrorMessage color="error">{errorMessage}</ErrorMessage>}
+      <StyledButton type="submit">LOGIN</StyledButton>
       <CardButton onClick={onSwitchToRegister}>Don&apos;t have an account?</CardButton>
     </Form>
   );

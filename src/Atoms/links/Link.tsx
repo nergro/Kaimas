@@ -6,6 +6,7 @@ const StyledLink = styled(LinkComp)`
   text-decoration: none;
   text-transform: uppercase;
   color: ${props => props.theme.colors.link.default};
+  font: ${props => props.theme.fonts.mediumText};
   &:hover {
     color: ${props => props.theme.colors.link.hover};
   }

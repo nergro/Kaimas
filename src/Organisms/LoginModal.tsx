@@ -1,7 +1,11 @@
+import { Loader } from 'Atoms/Loader';
 import { contentClassNames, Modal } from 'Atoms/Modal';
 import { LoginForm } from 'Molecules/LoginForm';
 import { RegisterForm } from 'Molecules/RegisterForm';
 import React, { FC, useState } from 'react';
+import { toast } from 'react-toastify';
+import { handleLogin, handleRegistration } from 'services/auth';
+import { getAuthStatus } from 'services/localStorage';
 import styled from 'styled-components/macro';
 
 const StyledModal = styled(Modal)`
@@ -24,6 +28,10 @@ const StyledModal = styled(Modal)`
   }
 `;
 
+const StyledLoader = styled(Loader)`
+  top: 35vh;
+`;
+
 interface Props {
   className?: string;
   isOpen: boolean;
@@ -32,17 +40,61 @@ interface Props {
 
 export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
   const [showRegister, setShowRegister] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const authStatus = getAuthStatus();
+  if (authStatus) {
+    onClose();
+    return <></>;
+  }
 
   const onModalClose = (): void => {
     onClose();
     setShowRegister(false);
   };
+
+  const onLogin = async (email: string, password: string): Promise<string | undefined> => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const response = await handleLogin(email, password);
+    setIsLoading(false);
+    if (response) {
+      return response;
+    } else {
+      onClose();
+      toast.success(`You logged in!`);
+    }
+  };
+
+  const onRegister = async (
+    name: string,
+    lastName: string,
+    email: string,
+    password: string,
+    phone: string
+  ): Promise<string | undefined> => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const response = await handleRegistration(name, lastName, email, password, phone);
+    setIsLoading(false);
+    if (response) {
+      return response;
+    } else {
+      onClose();
+      toast.success(`Your registration is successful!`);
+    }
+  };
+
+  if (isLoading) return <StyledLoader />;
+
   return (
     <StyledModal className={className} isOpen={isOpen} onClose={onModalClose}>
       {showRegister ? (
-        <RegisterForm onSwitchToLogin={() => setShowRegister(false)} />
+        <RegisterForm onSwitchToLogin={() => setShowRegister(false)} onRegister={onRegister} />
       ) : (
-        <LoginForm onSwitchToRegister={() => setShowRegister(true)} />
+        <LoginForm onSwitchToRegister={() => setShowRegister(true)} onLogin={onLogin} />
       )}
     </StyledModal>
   );

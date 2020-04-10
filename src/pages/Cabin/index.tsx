@@ -48,6 +48,10 @@ const Gallery = styled(ImageGallery)`
 const ReservationButton = styled(ButtonLink)`
   align-self: flex-end;
   margin: 0 40px;
+  @media (max-width: ${props => props.theme.breakpoints.l}) {
+    align-self: center;
+    margin: 20px 0 0 0;
+  }
 `;
 
 export const Cabin: FC = () => {
