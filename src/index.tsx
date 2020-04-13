@@ -1,6 +1,7 @@
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'services/http';
+import './i18n';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

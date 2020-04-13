@@ -3,6 +3,7 @@ import { InputWithIcon } from 'Atoms/Input';
 import { Link } from 'Atoms/links/Link';
 import { H2, P } from 'Atoms/text';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 const FooterStyled = styled.footer`
@@ -103,47 +104,43 @@ const Bottom = styled.div`
 `;
 
 export const Footer: FC = () => {
+  const { t } = useTranslation();
   return (
     <FooterStyled>
       <Content>
         <Top>
           <About>
-            <Title>About</Title>
+            <Title>{t('About')}</Title>
             <StyledP>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in.
+              {t(
+                'Time for vacation - a convenient system that will ensure fast and convenient vacation planning and unforgettable rest in nature. Book your  vacation now!'
+              )}
             </StyledP>
           </About>
           <Links>
-            <Title>Navigation links</Title>
+            <Title>{t('Navigation links')}</Title>
             <LinksWrapper>
-              <StyledLink to="#">Home</StyledLink>
-              <StyledLink to="#">About</StyledLink>
-              <StyledLink to="#">Houses</StyledLink>
-              <StyledLink to="#">Activities</StyledLink>
-              <StyledLink to="#">Pricing</StyledLink>
-              <StyledLink to="#">Contacts</StyledLink>
+              <StyledLink to="#">{t('Home')}</StyledLink>
+              <StyledLink to="#">{t('Cabins')}</StyledLink>
+              <StyledLink to="#">{t('Activities')}</StyledLink>
             </LinksWrapper>
           </Links>
           <Newsletter>
-            <Title>Newsletter</Title>
+            <Title>{t('Newsletter')}</Title>
             <StyledP>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua.
+              {t('Never miss a chance to get best deals by subscribing to our newsletter.')}
             </StyledP>
             <StyledInput
               icon={ArrowSVG}
               inputName="email"
               inputType="email"
-              inputPlaceholder="Email Address"
+              inputPlaceholder={t('Email Address')}
             />
           </Newsletter>
         </Top>
         <Bottom>
           <StyledP size="small" color="main">
-            Copyright © Nerijus Gromas
+            {t('Copyright')} © Nerijus Gromas
           </StyledP>
         </Bottom>
       </Content>

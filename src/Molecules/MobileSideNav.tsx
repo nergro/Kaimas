@@ -2,6 +2,7 @@ import { LinkButton } from 'Atoms/buttons/LinkButton';
 import { Link } from 'Atoms/links/Link';
 import { contentClassNames, Modal } from 'Atoms/Modal';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 const StyledModal = styled(Modal)`
@@ -30,20 +31,30 @@ const StyledLinkButton = styled(LinkButton)`
 interface Props {
   className?: string;
   isOpen: boolean;
+  isAuth?: boolean;
   onClose(): void;
-  onLoginClick(): void;
+  onLogout(): void;
+  onLogin(): void;
 }
 
-export const MobileSideNav: FC<Props> = ({ className, isOpen, onClose, onLoginClick }) => {
+export const MobileSideNav: FC<Props> = ({
+  className,
+  isOpen,
+  onClose,
+  onLogin,
+  isAuth,
+  onLogout,
+}) => {
+  const { t } = useTranslation();
+
   return (
     <StyledModal className={className} isOpen={isOpen} onClose={onClose}>
       <ModalContent>
-        <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="/about">About</StyledLink>
-        <StyledLink to="#">Cabins</StyledLink>
-        <StyledLink to="#">Activities</StyledLink>
-        <StyledLink to="#">Contacts</StyledLink>
-        <StyledLinkButton onClick={onLoginClick}>LOGIN</StyledLinkButton>
+        <StyledLink to="/">{t('Home')}</StyledLink>
+        <StyledLink to="#">{t('Cabins')}</StyledLink>
+        <StyledLink to="#">{t('Activities')}</StyledLink>
+        {!isAuth && <StyledLinkButton onClick={onLogin}>{t('Login')}</StyledLinkButton>}
+        {isAuth && <StyledLinkButton onClick={onLogout}>{t('Logout')}</StyledLinkButton>}
       </ModalContent>
     </StyledModal>
   );

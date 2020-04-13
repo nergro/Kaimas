@@ -6,6 +6,7 @@ const StyledButton = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
+  text-transform: uppercase;
   color: ${props => props.theme.colors.link.default};
   font: ${props => props.theme.fonts.mediumText};
   &:hover {

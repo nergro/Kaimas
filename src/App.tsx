@@ -4,10 +4,20 @@ import { Cabin } from 'pages/Cabin';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
 import { Reservation } from 'pages/Reservation';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
+import { getLocale } from 'services/localStorage';
 
 export const App: FC = () => {
+  const { i18n } = useTranslation();
+  useEffect(() => {
+    const locale = getLocale();
+    if (locale !== null) {
+      i18n.changeLanguage(locale.value);
+    }
+  }, [i18n]);
+
   return (
     <AppLayout>
       <Switch>

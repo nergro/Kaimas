@@ -2,6 +2,7 @@ import { ImageBox } from 'Atoms/ImageBox';
 import { CardLink } from 'Atoms/links/CardLink';
 import { H2, P } from 'Atoms/text';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 interface DivProps {
@@ -69,12 +70,14 @@ interface Props {
 }
 
 export const SectionCard: FC<Props> = ({ className, title, description, path, image, toRight }) => {
+  const { t } = useTranslation();
+
   return (
     <Wrapper className={className}>
       <Left data-toright={toRight}>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <StyledCardLink to={path}>Sąrašas</StyledCardLink>
+        <StyledCardLink to={path}>{t('List')}</StyledCardLink>
       </Left>
       <Right>
         <ImageBox image={image} />

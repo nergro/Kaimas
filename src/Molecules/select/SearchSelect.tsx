@@ -22,15 +22,15 @@ interface SelectProps {
 }
 
 const StyledSelect = styled(ReactSelect)`
-  font: ${props => props.theme.fonts.normalText};
+  font: ${props => props.theme.fonts.mediumText};
   width: 100%;
 
   .${props => props.classNamePrefix}__control {
     background: ${props => props.theme.colors.select.backgroundColor};
-    border: solid ${props => props.theme.colors.select.borderColor};
+    border: none;
     border-width: 2px;
     border-radius: 10px;
-    padding: 6px 12px 6px 26px;
+    padding: 6px;
     box-shadow: none;
     transition: none;
     height: 100%;
@@ -39,7 +39,8 @@ const StyledSelect = styled(ReactSelect)`
     &--menu-is-open {
       border-width: 2px 2px 0px 2px;
       border-radius: 10px 10px 0 0;
-      padding: 6px 12px 8px 26px;
+      padding: 6px 12px;
+      background: ${props => props.theme.colors.select.backgroundOpen};
 
       .${props => props.classNamePrefix}__dropdown-indicator {
         transform: rotate(-180deg);
@@ -82,21 +83,21 @@ const StyledSelect = styled(ReactSelect)`
     min-height: 20px;
 
     & > input {
-      font: ${props => props.theme.fonts.normalTextBold};
+      font: ${props => props.theme.fonts.mediumTextBold};
       caret-color: ${props => props.theme.colors.select.textActiveColor};
     }
   }
 
   .${props => props.classNamePrefix}__single-value {
     color: ${props => props.theme.colors.select.textActiveColor};
-    font: ${props => props.theme.fonts.normalTextBold};
+    font: ${props => props.theme.fonts.mediumTextBold};
   }
 
   .${props => props.classNamePrefix}__menu {
     margin-top: 0px;
     margin-bottom: 0px;
 
-    background-color: ${props => props.theme.colors.select.backgroundColor};
+    background-color: ${props => props.theme.colors.select.backgroundOpen};
     border: solid ${props => props.theme.colors.select.borderColorActive};
     border-width: 0 2px 2px 2px;
     border-radius: 0 0 10px 10px;

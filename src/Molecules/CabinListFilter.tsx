@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const InputLabel = styled(H3)`
+export const InputLabel = styled(H3)`
   text-align: left;
   margin: 10px 0 0 0;
   &:first-child {
@@ -29,7 +29,7 @@ const StyledInput = styled(Input)`
   margin-top: 10px;
 `;
 
-const NumberInputWrapper = styled.div`
+export const NumberInputWrapper = styled.div`
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -39,14 +39,14 @@ const NumberInputWrapper = styled.div`
   }
 `;
 
-const NumberInput = styled(Input)`
+export const NumberInput = styled(Input)`
   margin: 0 20px;
   text-align: center;
   font: ${props => props.theme.fonts.bigTextBold};
   color: ${props => props.theme.colors.text.available};
 `;
 
-const PriceInputWrapper = styled.div`
+export const PriceInputWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
   ${NumberInput} {

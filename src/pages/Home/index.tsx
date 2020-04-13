@@ -4,6 +4,7 @@ import { H1, P } from 'Atoms/text';
 import { BookingTable } from 'Molecules/BookingTable';
 import { Sections } from 'Molecules/Sections';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 const Wrapper = styled.div`
@@ -61,6 +62,7 @@ const StyledTitle = styled(H1)`
   font: ${props => props.theme.fonts.HeaderBold};
   text-align: left;
   margin: 0;
+  text-transform: uppercase;
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     text-align: center;
   }
@@ -75,24 +77,28 @@ const StyledButton = styled(Button)`
   padding: 10px 10%;
   margin-top: 20px;
   align-self: center;
+  text-transform: uppercase;
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     display: none;
   }
 `;
 
 export const Home: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
       <Landing>
         <Overlay>
           <OverlayContent>
             <OverlayContentLeft>
-              <StyledTitle>LAIKAS ATOSTOGOMS</StyledTitle>
+              <StyledTitle>{t('Time for vacation')}</StyledTitle>
               <StyledP>
-                Nepamirštamos atostogos Lietuvos kaime. 15 nuostabių sodybų, pirtis, vandens
-                dviračiai, žirgų jodinėjimas.
+                {t(
+                  'Unforgettable holidays in the Lithuanian countryside. 15 wonderful homesteads, sauna, water bikes, horse riding.'
+                )}
               </StyledP>
-              <StyledButton>IEŠKOTI</StyledButton>
+              <StyledButton>{t('Search')}</StyledButton>
             </OverlayContentLeft>
             <OverlayContentRight>
               <BookingTable />

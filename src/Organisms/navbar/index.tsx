@@ -7,15 +7,19 @@ import { P } from 'Atoms/text';
 import { MobileSideNav } from 'Molecules/MobileSideNav';
 import { LoginModal } from 'Organisms/LoginModal';
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { handleLogout } from 'services/auth';
 import { getAuthStatus } from 'services/localStorage';
 import styled from 'styled-components/macro';
 
+import { Locale } from '../locale';
+
 const HeaderContent = styled.div`
   display: flex;
   background: ${props => props.theme.colors.background.navbar};
   padding: 20px 15px;
+  align-items: center;
 `;
 
 const LogoWrapper = styled.div`
@@ -70,24 +74,26 @@ interface Props {
   scrolled?: boolean;
 }
 const NavbarBase: FC<Props> = ({ className }) => {
+  const { t } = useTranslation();
   const { push } = useHistory();
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [authStatus, setAuthStatus] = useState<boolean | undefined>(getAuthStatus());
+  const [isAuth, setIsAuth] = useState<boolean | undefined>(getAuthStatus());
 
-  const onLoginClick = (): void => {
+  const onLogin = (): void => {
     setMobileNavbarOpen(false);
     setLoginOpen(true);
   };
 
   const onLogout = (): void => {
     handleLogout();
-    setAuthStatus(false);
+    setIsAuth(false);
+    setMobileNavbarOpen(false);
   };
 
   const onModalClose = (): void => {
     setLoginOpen(false);
-    setAuthStatus(getAuthStatus());
+    setIsAuth(getAuthStatus());
   };
 
   return (
@@ -96,28 +102,27 @@ const NavbarBase: FC<Props> = ({ className }) => {
         <LogoWrapper>
           <Logo onClick={() => push('/')}>
             <LogoIcon svgComponent={LogoSVG} />
-            <LogoLabel>Laikas Atostogoms</LogoLabel>
+            <LogoLabel>{t('Time for vacation')}</LogoLabel>
           </Logo>
         </LogoWrapper>
         <MenuButton
           onClick={() => setMobileNavbarOpen(!mobileNavbarOpen)}
           isOpen={mobileNavbarOpen}
         />
-        <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="#">About</StyledLink>
-        <StyledLink to="/cabins">Cabins</StyledLink>
-        <StyledLink to="#">Activities</StyledLink>
-        <StyledLink to="#">Contacts</StyledLink>
-        {!authStatus && (
-          <StyledLinkButton onClick={() => setLoginOpen(true)}>Login</StyledLinkButton>
-        )}
-        {authStatus && <StyledLinkButton onClick={onLogout}>Logout</StyledLinkButton>}
+        <StyledLink to="/">{t('Home')}</StyledLink>
+        <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
+        <StyledLink to="#">{t('Activities')}</StyledLink>
+        {!isAuth && <StyledLinkButton onClick={onLogin}>{t('Login')}</StyledLinkButton>}
+        {isAuth && <StyledLinkButton onClick={onLogout}>{t('Logout')}</StyledLinkButton>}
+        <Locale />
       </HeaderContent>
       <LoginModal isOpen={loginOpen} onClose={onModalClose} />
       <MobileSideNav
         isOpen={mobileNavbarOpen}
         onClose={() => setMobileNavbarOpen(false)}
-        onLoginClick={onLoginClick}
+        onLogin={onLogin}
+        onLogout={onLogout}
+        isAuth={isAuth}
       />
     </div>
   );

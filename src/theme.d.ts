@@ -26,6 +26,7 @@ declare module 'styled-components' {
       button: ButtonTheme;
       select: {
         backgroundColor: string;
+        backgroundOpen: string;
         borderColor: string;
         borderColorActive: string;
         placeholderColor: string;

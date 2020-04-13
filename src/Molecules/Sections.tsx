@@ -4,6 +4,7 @@ import LakeImage from 'assets/cards/lake.jpg';
 import { SectionCard } from 'Atoms/SectionCard';
 import { H1 } from 'Atoms/text';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 const Wrapper = styled.div`
@@ -33,9 +34,11 @@ const StyledSection = styled(SectionCard)`
 `;
 
 export const Sections: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
-      <StyledH1>Poilsis gamtoje</StyledH1>
+      <StyledH1>{t('Rest in Nature')}</StyledH1>
       <StyledSection
         title="Apgyvendinimas"
         description="Geriausias poilsis tik tikroje lietuviškoje gamtoje. Mūsų komfortabilios sodybos įrengtos puikioje vietoje. Viskas tobulam Jūsų poilsiui!"
