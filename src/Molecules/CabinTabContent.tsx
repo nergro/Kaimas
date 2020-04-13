@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
-import { CabinSection } from 'types/Cabin';
+import { CabinSection } from 'types/cabin';
 
 const Content = styled.div`
   padding: 40px;

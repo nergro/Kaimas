@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { lightTheme } from 'services/theme/lightTheme';
+import { CabinsStoreProvider } from 'store/cabinsStore/provider';
 import { ThemeProvider } from 'styled-components/macro';
 import { ToastContainer } from 'ToastContainer';
 
@@ -18,7 +19,7 @@ import { ProvidersInjector } from './ProvidersInjector';
 import * as serviceWorker from './serviceWorker';
 Modal.setAppElement('#root');
 
-const storeProviders: any = [];
+const storeProviders = [CabinsStoreProvider];
 
 ReactDOM.render(
   //TODO: Add error message/page to show for global ErrorBoundary

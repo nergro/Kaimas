@@ -61,7 +61,7 @@ export const Cabin: FC = () => {
     <MainLayout>
       <ContentTop>
         <Title size="big" weight="600">
-          {cabin.title}
+          {cabin.nameLT}
         </Title>
         <ReservationButton to="/cabins/55/reservation">Rezervacija</ReservationButton>
       </ContentTop>

@@ -1,10 +1,15 @@
+import { Loader } from 'Atoms/Loader';
 import { H2 } from 'Atoms/text';
 import { MainLayout } from 'layouts/MainLayout';
 import { CabinList } from 'Molecules/CabinList';
 import { CabinListFilter } from 'Molecules/CabinListFilter';
 import React, { FC, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useCabinsResource } from 'store/cabinsStore/hooks';
+import { assetIsNotStoreError } from 'store/storeError';
+import { isLoading } from 'store/types';
 import styled from 'styled-components/macro';
-import { Cabin, CapacityFilterType, PriceFilterType } from 'types/Cabin';
+import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 
 import { mockedCabins } from './mockedCabins';
 
@@ -72,7 +77,9 @@ const getFilteredCabinsByPrice = (cabins: Cabin[], priceFilter: PriceFilterState
 };
 
 export const Cabins: FC = () => {
-  const [cabins, setCabins] = useState<Cabin[]>(mockedCabins);
+  const { t } = useTranslation();
+  const cabinsResource = useCabinsResource();
+  const [cabins, setCabins] = useState<Cabin[]>([]);
   const [capacityFilter, setCapacityFilter] = useState<number>(0);
   const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
 
@@ -87,9 +94,20 @@ export const Cabins: FC = () => {
     return filteredCabins;
   }, [cabins, capacityFilter, priceFilter]);
 
+  assetIsNotStoreError(cabinsResource);
+  if (isLoading(cabinsResource)) {
+    return (
+      <MainLayout title={t('Cabins')}>
+        <Wrapper>
+          <Loader />
+        </Wrapper>
+      </MainLayout>
+    );
+  }
+
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const filteredCabins = mockedCabins.filter(cabin =>
-      cabin.title.toLowerCase().includes(e.target.value.toLowerCase())
+      cabin.nameLT.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setCabins(filteredCabins);
   };
@@ -115,14 +133,16 @@ export const Cabins: FC = () => {
   };
 
   return (
-    <MainLayout title="Sodybos">
+    <MainLayout title={t('Cabins')}>
       <Wrapper>
         <ListWrapper>
-          <StyledH2>Rasta sodybų: {filteredCabins.length}</StyledH2>
-          <CabinList cabins={filteredCabins} />
+          <StyledH2>
+            {t('Cabins found')}: {cabinsResource.length}
+          </StyledH2>
+          <CabinList cabins={cabinsResource} />
         </ListWrapper>
         <FilterWrapper>
-          <FilterTitleH2>Filtravimas</FilterTitleH2>
+          <FilterTitleH2>{t('Filter')}</FilterTitleH2>
           <CabinListFilter
             onSearchChange={onSearchChange}
             capacityValue={capacityFilter}

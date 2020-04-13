@@ -1,14 +1,22 @@
+import { CustomError, ErrorCodes } from 'types/errorTypes';
+
 export interface StoreError {
-  type: 'Error';
-  message?: string;
-  errorCode?: string;
+  type: 'StoreError';
+  message: string;
+  code?: ErrorCodes;
 }
 
-export const newStoreError = (message: string, errorCode: string): StoreError => ({
-  type: 'Error',
+export const newStoreError = (message: string, code: ErrorCodes): StoreError => ({
+  type: 'StoreError',
   message,
-  errorCode,
+  code,
 });
 
 export const isStoreError = (error: unknown): error is StoreError =>
-  typeof error === 'object' && error !== null && typeof (error as StoreError).type === 'string';
+  typeof error === 'object' && error !== null && (error as StoreError).type === 'StoreError';
+
+export function assetIsNotStoreError<T>(object: StoreError | T): asserts object is T {
+  if (isStoreError(object)) {
+    throw new CustomError(object.message, object.code);
+  }
+}

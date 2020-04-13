@@ -2,7 +2,7 @@ import { CabinTab } from 'Atoms/buttons/CabinTab';
 import { CabinTabContent } from 'Molecules/CabinTabContent';
 import React, { FC, useState } from 'react';
 import styled from 'styled-components/macro';
-import { CabinSection } from 'types/Cabin';
+import { CabinSection } from 'types/cabin';
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,8 +1,9 @@
 import { Button } from 'Atoms/buttons/Button';
 import { CabinListItem } from 'Atoms/CabinListItem';
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { Cabin } from 'types/Cabin';
+import { Cabin } from 'types/cabin';
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,6 +33,8 @@ interface Props {
 }
 
 export const CabinList: FC<Props> = ({ className, cabins }) => {
+  const { t } = useTranslation();
+  console.log(cabins);
   const [cabinsToShow, setCabinsToShow] = useState<number>(8);
   return (
     <Wrapper className={className}>
@@ -42,7 +45,7 @@ export const CabinList: FC<Props> = ({ className, cabins }) => {
       </List>
       {cabinsToShow < cabins.length && (
         <MoreButton onClick={() => setCabinsToShow(cabinsToShow + 8)} outline>
-          Rodyti daugiau
+          {t('Show More')}
         </MoreButton>
       )}
     </Wrapper>

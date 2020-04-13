@@ -1,8 +1,9 @@
 import { ListTitleLink } from 'Atoms/links/ListTitleLink';
 import { P } from 'Atoms/text';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { Cabin } from 'types/Cabin';
+import { Cabin } from 'types/cabin';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -75,20 +76,26 @@ interface Props {
 }
 
 export const CabinListItem: FC<Props> = ({ className, cabin }) => {
-  const trimmedDescription = cabin.description.split('.')[0];
+  const { t } = useTranslation();
+  const trimmedDescription = cabin.descriptionLT.split('.')[0];
+  console.log(cabin);
   return (
     <Wrapper className={className}>
       <ImageWrapper>
-        <Image src={cabin.thumbnail} alt="Cabin image" />
+        <Image src={cabin.thumbnail.imageUrl} alt="Cabin image" />
       </ImageWrapper>
       <Content>
         <ContentTop>
-          <ListTitleLink to="/cabins/55">{cabin.title}</ListTitleLink>
+          <ListTitleLink to="/cabins/55">{cabin.nameLT}</ListTitleLink>
           <StyledP>{trimmedDescription}...</StyledP>
         </ContentTop>
         <ContentBottom>
-          <Price weight="700">Kaina nuo {cabin.price} €</Price>
-          <Capacity weight="700">Vietų skaičius: {cabin.capacity}</Capacity>
+          <Price weight="700">
+            {t('Price')}: {cabin.price} €
+          </Price>
+          <Capacity weight="700">
+            {t('Capacity')}: {cabin.capacity}
+          </Capacity>
         </ContentBottom>
       </Content>
     </Wrapper>

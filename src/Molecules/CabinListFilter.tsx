@@ -3,7 +3,7 @@ import { Input } from 'Atoms/Input';
 import { H3 } from 'Atoms/text';
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
-import { CapacityFilterType, PriceFilterType } from 'types/Cabin';
+import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 
 const Wrapper = styled.div`
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);

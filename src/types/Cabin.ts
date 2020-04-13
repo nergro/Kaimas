@@ -1,10 +1,14 @@
+import { ImageType } from 'types/image';
+
 export interface Cabin {
   id: number;
-  title: string;
+  nameLT: string;
+  nameEN: string;
+  descriptionLT: string;
+  descriptionEN: string;
   capacity: number;
   price: number;
-  description: string;
-  thumbnail: string;
+  thumbnail: ImageType;
   images: string[];
 }
 
