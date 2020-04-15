@@ -2,9 +2,10 @@ import { ButtonLink } from 'Atoms/links/ButtonLink';
 import { Loader } from 'Atoms/Loader';
 import { H1, P } from 'Atoms/text';
 import { MainLayout } from 'layouts/MainLayout';
-import { AboutContent } from 'Molecules/AboutContent';
 import { ImageGallery } from 'Molecules/ImageGallery';
 import { ServiceTabs } from 'Molecules/ServiceTabs';
+import { AboutContent } from 'Molecules/tabs/AboutContent';
+import { BenefitsContent } from 'Molecules/tabs/BenefitsContent';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
@@ -97,7 +98,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
       <ContentBottom>
         <ServiceTabs
           aboutContent={<AboutContent text={description} />}
-          benefitsContent={<P>Benefits</P>}
+          benefitsContent={<BenefitsContent benefits={cabin.benefits} />}
           reviewsContent={<P>Reviews</P>}
         />
         <Gallery images={images} />

@@ -1,7 +1,7 @@
 import { ListLayout } from 'layouts/ListLayout';
 import { CabinListFilter } from 'Molecules/CabinListFilter';
 import { ServiceList } from 'Molecules/ServiceList';
-import React, { FC, useMemo, useState, useEffect } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getLocale } from 'services/localStorage';
 import { useActivitiesList } from 'store/activitiesStore/hooks';
@@ -39,18 +39,18 @@ export const Activities: FC = () => {
   const locale = getLocale()?.value;
 
   const filteredActivities: Activity[] = useMemo(() => {
-    let filteredCabins = [...fetchedActivities];
+    let filteredCabins = [...activities];
     if (capacityFilter > 0) {
-      filteredCabins = filteredCabins.filter(cabin => cabin.capacity === capacityFilter);
+      filteredCabins = filteredCabins.filter(cabin => cabin.capacity >= capacityFilter);
     }
     if (priceFilter.start > 0 || priceFilter.end > 0) {
       filteredCabins = getFilteredCabinsByPrice(filteredCabins, priceFilter);
     }
     return filteredCabins;
-  }, [fetchedActivities, capacityFilter, priceFilter]);
+  }, [activities, capacityFilter, priceFilter]);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const filteredCabins = activities.filter(cabin => {
+    const filteredCabins = fetchedActivities.filter(cabin => {
       const name = locale === 'lt' ? cabin.nameLT : cabin.nameEN;
 
       return name.toLowerCase().includes(e.target.value.toLowerCase());
@@ -66,15 +66,17 @@ export const Activities: FC = () => {
     if (action === 'increase') {
       setCapacityFilter(capacityFilter + 1);
     } else {
-      setCapacityFilter(capacityFilter - 1);
+      if (capacityFilter > 0) {
+        setCapacityFilter(capacityFilter - 1);
+      }
     }
   };
 
   const onPriceChange = (e: React.ChangeEvent<HTMLInputElement>, input: PriceFilterType): void => {
     if (input === 'start') {
-      setPriceFilter({ ...priceFilter, start: parseInt(e.target.value) });
+      setPriceFilter({ ...priceFilter, start: e.target.value ? parseInt(e.target.value) : 0 });
     } else {
-      setPriceFilter({ ...priceFilter, end: parseInt(e.target.value) });
+      setPriceFilter({ ...priceFilter, end: e.target.value ? parseInt(e.target.value) : 0 });
     }
   };
 

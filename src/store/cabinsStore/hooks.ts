@@ -1,7 +1,8 @@
 import { getCabins } from 'apiServices/cabins/cabins';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { newStoreError } from 'store/storeError';
-import { Dispatch, Loading, Resource } from 'store/types';
+import { assetIsNotStoreError } from 'store/storeError';
+import { Dispatch, isLoading, Loading, Resource } from 'store/types';
 
 import { Action, Cabins, CabinsDispatchContext, CabinsStateContext, State } from './provider';
 
@@ -36,4 +37,11 @@ export const useCabinsResource = (): Resource<Cabins> => {
   }
 
   return state;
+};
+
+export const useCabinsList = (): Cabins => {
+  const cabins = useCabinsResource();
+  assetIsNotStoreError(cabins);
+
+  return useMemo(() => (isLoading(cabins) ? [] : cabins), [cabins]);
 };

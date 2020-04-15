@@ -41,12 +41,7 @@ export const ServiceList: FC<Props> = ({ className, services, section }) => {
     <Wrapper className={className}>
       <List>
         {services.slice(0, servicesToShow).map(service => (
-          <StyledService
-            key={service.id}
-            service={service}
-            section={section}
-            showCapacity={section === 'cabins'}
-          />
+          <StyledService key={service.id} service={service} section={section} />
         ))}
       </List>
       {servicesToShow < services.length && (

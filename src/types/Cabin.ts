@@ -1,3 +1,4 @@
+import { BenefitType } from 'types/benefit';
 import { ImageType } from 'types/image';
 
 export interface Cabin {
@@ -11,6 +12,7 @@ export interface Cabin {
   address: string;
   thumbnail: ImageType;
   images: ImageType[];
+  benefits: BenefitType[];
 }
 
 export type CapacityFilterType = 'increase' | 'decrease';

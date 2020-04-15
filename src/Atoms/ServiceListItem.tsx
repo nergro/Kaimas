@@ -80,15 +80,9 @@ interface Props {
   className?: string;
   service: Cabin;
   section: ServiceType;
-  showCapacity?: boolean;
 }
 
-export const ServiceListItem: FC<Props> = ({
-  className,
-  service,
-  section,
-  showCapacity = true,
-}) => {
+export const ServiceListItem: FC<Props> = ({ className, service, section }) => {
   const { t } = useTranslation();
   const locale = getLocale()?.value;
   if (!locale) {
@@ -112,11 +106,10 @@ export const ServiceListItem: FC<Props> = ({
           <Price weight="700">
             {t('Price')}: {service.price} €
           </Price>
-          {showCapacity && (
-            <Capacity weight="700">
-              {t('Capacity')}: {service.capacity}
-            </Capacity>
-          )}
+
+          <Capacity weight="700">
+            {t('Capacity')}: {service.capacity}
+          </Capacity>
         </ContentBottom>
       </Content>
     </Wrapper>
