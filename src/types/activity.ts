@@ -1,6 +1,6 @@
 import { ImageType } from 'types/image';
 
-export interface Cabin {
+export interface Activity {
   id: string;
   nameLT: string;
   nameEN: string;
@@ -8,6 +8,7 @@ export interface Cabin {
   descriptionEN: string;
   capacity: number;
   price: number;
+  category: string;
   address: string;
   thumbnail: ImageType;
   images: ImageType[];
@@ -16,3 +17,5 @@ export interface Cabin {
 export type CapacityFilterType = 'increase' | 'decrease';
 
 export type PriceFilterType = 'start' | 'end';
+
+export type ActivitySection = 'About' | 'Reviews';

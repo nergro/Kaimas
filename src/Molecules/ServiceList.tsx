@@ -1,9 +1,10 @@
 import { Button } from 'Atoms/buttons/Button';
-import { CabinListItem } from 'Atoms/CabinListItem';
+import { ServiceListItem } from 'Atoms/ServiceListItem';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 import { Cabin } from 'types/cabin';
+import { ServiceType } from 'types/service';
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const List = styled.div`
   flex-direction: column;
 `;
 
-const StyledCabin = styled(CabinListItem)`
+const StyledService = styled(ServiceListItem)`
   margin-top: 20px;
   &:first-child {
     margin: 0;
@@ -29,22 +30,27 @@ const MoreButton = styled(Button)`
 
 interface Props {
   className?: string;
-  cabins: Cabin[];
+  services: Cabin[];
+  section: ServiceType;
 }
 
-export const CabinList: FC<Props> = ({ className, cabins }) => {
+export const ServiceList: FC<Props> = ({ className, services, section }) => {
   const { t } = useTranslation();
-  console.log(cabins);
-  const [cabinsToShow, setCabinsToShow] = useState<number>(8);
+  const [servicesToShow, setServicesToShow] = useState<number>(8);
   return (
     <Wrapper className={className}>
       <List>
-        {cabins.slice(0, cabinsToShow).map(cabin => (
-          <StyledCabin key={cabin.id} cabin={cabin} />
+        {services.slice(0, servicesToShow).map(service => (
+          <StyledService
+            key={service.id}
+            service={service}
+            section={section}
+            showCapacity={section === 'cabins'}
+          />
         ))}
       </List>
-      {cabinsToShow < cabins.length && (
-        <MoreButton onClick={() => setCabinsToShow(cabinsToShow + 8)} outline>
+      {servicesToShow < services.length && (
+        <MoreButton onClick={() => setServicesToShow(servicesToShow + 8)} outline>
           {t('Show More')}
         </MoreButton>
       )}

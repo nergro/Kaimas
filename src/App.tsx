@@ -1,6 +1,7 @@
 import { AppLayout } from 'layouts/AppLayout';
 import { NotFound } from 'pages/404';
-import { Cabin } from 'pages/Cabin';
+import { Activities } from 'pages/Activities';
+import { CabinDetails } from 'pages/CabinDetails';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
 import { Reservation } from 'pages/Reservation';
@@ -23,8 +24,11 @@ export const App: FC = () => {
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/cabins" exact component={Cabins} />
-        <Route path="/cabins/:cabinId" exact component={Cabin} />
+        <Route path="/cabins/:cabinId" exact component={CabinDetails} />
         <Route path="/cabins/:cabinId/reservation" exact component={Reservation} />
+        <Route path="/activities" exact component={Activities} />
+        <Route path="/activities/:activityId" exact component={CabinDetails} />
+        <Route path="/activities/:activityId/reservation" exact component={Reservation} />
         <Route component={NotFound} />
       </Switch>
     </AppLayout>

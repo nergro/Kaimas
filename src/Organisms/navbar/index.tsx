@@ -111,7 +111,7 @@ const NavbarBase: FC<Props> = ({ className }) => {
         />
         <StyledLink to="/">{t('Home')}</StyledLink>
         <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
-        <StyledLink to="#">{t('Activities')}</StyledLink>
+        <StyledLink to="/activities">{t('Activities')}</StyledLink>
         {!isAuth && <StyledLinkButton onClick={onLogin}>{t('Login')}</StyledLinkButton>}
         {isAuth && <StyledLinkButton onClick={onLogout}>{t('Logout')}</StyledLinkButton>}
         <Locale />

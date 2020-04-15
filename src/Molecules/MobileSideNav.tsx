@@ -51,8 +51,8 @@ export const MobileSideNav: FC<Props> = ({
     <StyledModal className={className} isOpen={isOpen} onClose={onClose}>
       <ModalContent>
         <StyledLink to="/">{t('Home')}</StyledLink>
-        <StyledLink to="#">{t('Cabins')}</StyledLink>
-        <StyledLink to="#">{t('Activities')}</StyledLink>
+        <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
+        <StyledLink to="/activities">{t('Activities')}</StyledLink>
         {!isAuth && <StyledLinkButton onClick={onLogin}>{t('Login')}</StyledLinkButton>}
         {isAuth && <StyledLinkButton onClick={onLogout}>{t('Logout')}</StyledLinkButton>}
       </ModalContent>

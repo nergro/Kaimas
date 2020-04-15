@@ -2,8 +2,10 @@ import { ListTitleLink } from 'Atoms/links/ListTitleLink';
 import { P } from 'Atoms/text';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getLocale } from 'services/localStorage';
 import styled from 'styled-components/macro';
 import { Cabin } from 'types/cabin';
+import { ServiceType } from 'types/service';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -72,30 +74,45 @@ const Capacity = styled(P)`
 
 interface Props {
   className?: string;
-  cabin: Cabin;
+  service: Cabin;
+  section: ServiceType;
+  showCapacity?: boolean;
 }
 
-export const CabinListItem: FC<Props> = ({ className, cabin }) => {
+export const ServiceListItem: FC<Props> = ({
+  className,
+  service,
+  section,
+  showCapacity = true,
+}) => {
   const { t } = useTranslation();
-  const trimmedDescription = cabin.descriptionLT.split('.')[0];
-  console.log(cabin);
+  const locale = getLocale()?.value;
+  if (!locale) {
+    return <></>;
+  }
+  const name = locale === 'lt' ? service.nameLT : service.nameEN;
+  const description = locale === 'lt' ? service.descriptionLT : service.descriptionEN;
+
+  const trimmedDescription = description.split('.')[0];
   return (
     <Wrapper className={className}>
       <ImageWrapper>
-        <Image src={cabin.thumbnail.imageUrl} alt="Cabin image" />
+        <Image src={service.thumbnail.imageUrl} alt="Thumbnail" />
       </ImageWrapper>
       <Content>
         <ContentTop>
-          <ListTitleLink to="/cabins/55">{cabin.nameLT}</ListTitleLink>
+          <ListTitleLink to={`/${section}/${service.id}`}>{name}</ListTitleLink>
           <StyledP>{trimmedDescription}...</StyledP>
         </ContentTop>
         <ContentBottom>
           <Price weight="700">
-            {t('Price')}: {cabin.price} €
+            {t('Price')}: {service.price} €
           </Price>
-          <Capacity weight="700">
-            {t('Capacity')}: {cabin.capacity}
-          </Capacity>
+          {showCapacity && (
+            <Capacity weight="700">
+              {t('Capacity')}: {service.capacity}
+            </Capacity>
+          )}
         </ContentBottom>
       </Content>
     </Wrapper>

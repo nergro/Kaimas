@@ -5,7 +5,7 @@ import { CabinListFilter } from 'Molecules/CabinListFilter';
 import { ServiceList } from 'Molecules/ServiceList';
 import React, { FC, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCabinsResource } from 'store/cabinsStore/hooks';
+import { useActivitiesResource } from 'store/activitiesStore/hooks';
 import { assetIsNotStoreError } from 'store/storeError';
 import { isLoading } from 'store/types';
 import styled from 'styled-components/macro';
@@ -35,9 +35,9 @@ const getFilteredCabinsByPrice = (cabins: Cabin[], priceFilter: PriceFilterState
   return cabins.filter(cabin => cabin.price >= priceFilter.start && cabin.price <= priceFilter.end);
 };
 
-export const Cabins: FC = () => {
+export const Activities: FC = () => {
   const { t } = useTranslation();
-  const cabinsResource = useCabinsResource();
+  const activitiesResource = useActivitiesResource();
   const [cabins, setCabins] = useState<Cabin[]>([]);
   const [capacityFilter, setCapacityFilter] = useState<number>(0);
   const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
@@ -53,10 +53,10 @@ export const Cabins: FC = () => {
     return filteredCabins;
   }, [cabins, capacityFilter, priceFilter]);
 
-  assetIsNotStoreError(cabinsResource);
-  if (isLoading(cabinsResource)) {
+  assetIsNotStoreError(activitiesResource);
+  if (isLoading(activitiesResource)) {
     return (
-      <MainLayout title={t('Cabins')}>
+      <MainLayout title={t('Activities')}>
         <Wrapper>
           <Loader />
         </Wrapper>
@@ -65,7 +65,7 @@ export const Cabins: FC = () => {
   }
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const filteredCabins = cabinsResource.filter(cabin =>
+    const filteredCabins = activitiesResource.filter(cabin =>
       cabin.nameLT.toLowerCase().includes(e.target.value.toLowerCase())
     );
     setCabins(filteredCabins);
@@ -93,9 +93,9 @@ export const Cabins: FC = () => {
 
   return (
     <ListLayout
-      title={t('Cabins')}
-      foundTitle={`${t('Cabins found')}: ${cabinsResource.length}`}
-      list={<ServiceList services={cabinsResource} section="cabins" />}
+      title={t('Activities')}
+      foundTitle={`${t('Activities found')}: ${activitiesResource.length}`}
+      list={<ServiceList services={activitiesResource} section="activities" />}
       filter={
         <CabinListFilter
           onSearchChange={onSearchChange}
