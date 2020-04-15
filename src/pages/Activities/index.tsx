@@ -1,31 +1,19 @@
-import { Loader } from 'Atoms/Loader';
 import { ListLayout } from 'layouts/ListLayout';
-import { MainLayout } from 'layouts/MainLayout';
 import { CabinListFilter } from 'Molecules/CabinListFilter';
 import { ServiceList } from 'Molecules/ServiceList';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useActivitiesResource } from 'store/activitiesStore/hooks';
-import { assetIsNotStoreError } from 'store/storeError';
-import { isLoading } from 'store/types';
-import styled from 'styled-components/macro';
-import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
-
-const Wrapper = styled.div`
-  width: 80%;
-  margin: 50px auto;
-  display: flex;
-  @media (max-width: ${props => props.theme.breakpoints.xl}) {
-    width: 85%;
-  }
-  @media (max-width: ${props => props.theme.breakpoints.l}) {
-    flex-direction: column;
-  }
-`;
+import { getLocale } from 'services/localStorage';
+import { useActivitiesList } from 'store/activitiesStore/hooks';
+import { Activity } from 'types/activity';
+import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 
 type PriceFilterState = { start: number; end: number };
 
-const getFilteredCabinsByPrice = (cabins: Cabin[], priceFilter: PriceFilterState): Cabin[] => {
+const getFilteredCabinsByPrice = (
+  cabins: Activity[],
+  priceFilter: PriceFilterState
+): Activity[] => {
   if (priceFilter.start > 0 && priceFilter.end === 0) {
     return cabins.filter(cabin => cabin.price >= priceFilter.start);
   }
@@ -37,13 +25,21 @@ const getFilteredCabinsByPrice = (cabins: Cabin[], priceFilter: PriceFilterState
 
 export const Activities: FC = () => {
   const { t } = useTranslation();
-  const activitiesResource = useActivitiesResource();
-  const [cabins, setCabins] = useState<Cabin[]>([]);
+  const fetchedActivities = useActivitiesList();
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [capacityFilter, setCapacityFilter] = useState<number>(0);
   const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
 
-  const filteredCabins: Cabin[] = useMemo(() => {
-    let filteredCabins = [...cabins];
+  useEffect(() => {
+    if (fetchedActivities) {
+      setActivities(fetchedActivities);
+    }
+  }, [fetchedActivities]);
+
+  const locale = getLocale()?.value;
+
+  const filteredActivities: Activity[] = useMemo(() => {
+    let filteredCabins = [...fetchedActivities];
     if (capacityFilter > 0) {
       filteredCabins = filteredCabins.filter(cabin => cabin.capacity === capacityFilter);
     }
@@ -51,24 +47,15 @@ export const Activities: FC = () => {
       filteredCabins = getFilteredCabinsByPrice(filteredCabins, priceFilter);
     }
     return filteredCabins;
-  }, [cabins, capacityFilter, priceFilter]);
-
-  assetIsNotStoreError(activitiesResource);
-  if (isLoading(activitiesResource)) {
-    return (
-      <MainLayout title={t('Activities')}>
-        <Wrapper>
-          <Loader />
-        </Wrapper>
-      </MainLayout>
-    );
-  }
+  }, [fetchedActivities, capacityFilter, priceFilter]);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const filteredCabins = activitiesResource.filter(cabin =>
-      cabin.nameLT.toLowerCase().includes(e.target.value.toLowerCase())
-    );
-    setCabins(filteredCabins);
+    const filteredCabins = activities.filter(cabin => {
+      const name = locale === 'lt' ? cabin.nameLT : cabin.nameEN;
+
+      return name.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setActivities(filteredCabins);
   };
 
   const onCapacityChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -94,8 +81,8 @@ export const Activities: FC = () => {
   return (
     <ListLayout
       title={t('Activities')}
-      foundTitle={`${t('Activities found')}: ${activitiesResource.length}`}
-      list={<ServiceList services={activitiesResource} section="activities" />}
+      foundTitle={`${t('Activities found')}: ${filteredActivities.length}`}
+      list={<ServiceList services={filteredActivities} section="activities" />}
       filter={
         <CabinListFilter
           onSearchChange={onSearchChange}

@@ -2,6 +2,7 @@ import { ButtonLink } from 'Atoms/links/ButtonLink';
 import { Loader } from 'Atoms/Loader';
 import { H1, P } from 'Atoms/text';
 import { MainLayout } from 'layouts/MainLayout';
+import { AboutContent } from 'Molecules/AboutContent';
 import { ImageGallery } from 'Molecules/ImageGallery';
 import { ServiceTabs } from 'Molecules/ServiceTabs';
 import React, { FC } from 'react';
@@ -95,7 +96,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
       </ContentTop>
       <ContentBottom>
         <ServiceTabs
-          aboutContent={<P>{description}</P>}
+          aboutContent={<AboutContent text={description} />}
           benefitsContent={<P>Benefits</P>}
           reviewsContent={<P>Reviews</P>}
         />

@@ -1,7 +1,8 @@
 import { getActivities } from 'apiServices/activities/activities';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { newStoreError } from 'store/storeError';
-import { Dispatch, Loading, Resource } from 'store/types';
+import { assetIsNotStoreError } from 'store/storeError';
+import { Dispatch, isLoading, Loading, Resource } from 'store/types';
 
 import {
   Action,
@@ -42,4 +43,11 @@ export const useActivitiesResource = (): Resource<Activities> => {
   }
 
   return state;
+};
+
+export const useActivitiesList = (): Activities => {
+  const activities = useActivitiesResource();
+  assetIsNotStoreError(activities);
+
+  return useMemo(() => (isLoading(activities) ? [] : activities), [activities]);
 };
