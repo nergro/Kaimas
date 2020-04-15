@@ -1,7 +1,6 @@
-import { ReactComponent as ArrowSVG } from 'assets/UI/RightArrow.svg';
-import { InputWithIcon } from 'Atoms/Input';
 import { Link } from 'Atoms/links/Link';
 import { H2, P } from 'Atoms/text';
+import { NewsletterForm } from 'Molecules/NewsletterForm';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
@@ -80,6 +79,9 @@ const StyledLink = styled(Link)`
 `;
 
 const Newsletter = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 30%;
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     width: 80%;
@@ -87,13 +89,6 @@ const Newsletter = styled.div`
   }
   @media (max-width: ${props => props.theme.breakpoints.s}) {
     width: 100%;
-  }
-`;
-
-const StyledInput = styled(InputWithIcon)`
-  margin-top: 15px;
-  input {
-    border: 1px solid ${props => props.theme.colors.footer.border};
   }
 `;
 
@@ -118,7 +113,7 @@ export const Footer: FC = () => {
             </StyledP>
           </About>
           <Links>
-            <Title>{t('Navigation links')}</Title>
+            <Title>{t('Navigation')}</Title>
             <LinksWrapper>
               <StyledLink to="#">{t('Home')}</StyledLink>
               <StyledLink to="#">{t('Cabins')}</StyledLink>
@@ -130,12 +125,7 @@ export const Footer: FC = () => {
             <StyledP>
               {t('Never miss a chance to get best deals by subscribing to our newsletter.')}
             </StyledP>
-            <StyledInput
-              icon={ArrowSVG}
-              inputName="email"
-              inputType="email"
-              inputPlaceholder={t('Email Address')}
-            />
+            <NewsletterForm />
           </Newsletter>
         </Top>
         <Bottom>

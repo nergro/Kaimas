@@ -1,6 +1,6 @@
 import { Button } from 'Atoms/buttons/Button';
 import { Icon, SvgComponent } from 'Atoms/Icon';
-import React, { FC } from 'react';
+import React, { ChangeEvent, FC, FormEvent } from 'react';
 import styled from 'styled-components/macro';
 
 export const Input = styled.input`
@@ -17,7 +17,7 @@ export const Input = styled.input`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
 `;
 
@@ -38,26 +38,34 @@ const StyledIcon = styled(Icon)`
 interface Props {
   className?: string;
   icon: SvgComponent;
-  onChange?(): void;
-  onClick?(): void;
+  onChange?(e: ChangeEvent<HTMLInputElement>): void;
+  onSubmit?(e: FormEvent<HTMLFormElement>): void;
   inputType: string;
   inputName: string;
   inputPlaceholder: string;
+  required?: boolean;
 }
 
 export const InputWithIcon: FC<Props> = ({
   className,
   icon,
   onChange,
-  onClick,
+  onSubmit,
   inputType,
   inputName,
   inputPlaceholder,
+  required,
 }) => {
   return (
-    <Wrapper className={className}>
-      <Input onChange={onChange} type={inputType} name={inputName} placeholder={inputPlaceholder} />
-      <StyledButton onClick={onClick}>
+    <Wrapper className={className} onSubmit={onSubmit}>
+      <Input
+        onChange={onChange}
+        type={inputType}
+        name={inputName}
+        placeholder={inputPlaceholder}
+        required={required}
+      />
+      <StyledButton type="submit">
         <StyledIcon svgComponent={icon} />
       </StyledButton>
     </Wrapper>
