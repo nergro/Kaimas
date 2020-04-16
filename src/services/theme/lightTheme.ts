@@ -115,6 +115,9 @@ export const lightTheme: DefaultTheme = {
       text: '#777777',
       border: '#333333',
     },
+    review: {
+      border: '#000000',
+    },
   },
   images: {
     logo: FullLogoPng,

@@ -81,6 +81,9 @@ declare module 'styled-components' {
         text: string;
         border: string;
       };
+      review: {
+        border: string;
+      };
     };
     images: {
       logo: string;

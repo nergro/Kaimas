@@ -29,5 +29,11 @@
   "Benefits": "Privalumai",
   "Reviews": "Atsiliepimai",
   "Your cancellation were successful!": "Jūs sėkmingai atsisakėte naujienlaiškio!",
-  "Your cancellation were not successful! :(": "Atšaukti naujienlaiškio prenumeratos nepavyko :("
+  "Your cancellation were not successful! :(": "Atšaukti naujienlaiškio prenumeratos nepavyko :(",
+  "Write a review": "Rašyti atsiliepimą",
+  "Rating": "Vertinimas",
+  "Would recommend": "Ar rekomenduotų",
+  "Yes": "Taip",
+  "No": "Ne",
+  "Comment":"Komentaras"
 }

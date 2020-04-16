@@ -1,16 +1,18 @@
 import { ButtonLink } from 'Atoms/links/ButtonLink';
 import { Loader } from 'Atoms/Loader';
-import { H1, P } from 'Atoms/text';
+import { H1 } from 'Atoms/text';
 import { MainLayout } from 'layouts/MainLayout';
 import { ImageGallery } from 'Molecules/ImageGallery';
 import { ServiceTabs } from 'Molecules/ServiceTabs';
 import { AboutContent } from 'Molecules/tabs/AboutContent';
 import { BenefitsContent } from 'Molecules/tabs/BenefitsContent';
+import { ReviewsContent } from 'Molecules/tabs/ReviewsContent';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 import { getLocale } from 'services/localStorage';
 import { useCabinsResource } from 'store/cabinsStore/hooks';
+import { useReviews } from 'store/reviewsStore/hooks';
 import { assetIsNotStoreError } from 'store/storeError';
 import { isLoading } from 'store/types';
 import styled from 'styled-components/macro';
@@ -55,11 +57,14 @@ const ReservationButton = styled(ButtonLink)`
 export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ match }) => {
   const { t } = useTranslation();
   const cabinsResource = useCabinsResource();
+  const reviews = useReviews(match.params.cabinId);
+
   const locale = getLocale()?.value;
 
   assetIsNotStoreError(cabinsResource);
+  assetIsNotStoreError(reviews);
 
-  if (isLoading(cabinsResource)) {
+  if (isLoading(cabinsResource) || isLoading(reviews)) {
     return (
       <MainLayout>
         <Loader />
@@ -99,7 +104,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <ServiceTabs
           aboutContent={<AboutContent text={description} />}
           benefitsContent={<BenefitsContent benefits={cabin.benefits} />}
-          reviewsContent={<P>Reviews</P>}
+          reviewsContent={<ReviewsContent reviews={reviews} />}
         />
         <Gallery images={images} />
       </ContentBottom>
