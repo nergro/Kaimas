@@ -26,12 +26,22 @@ declare module 'styled-components' {
       button: ButtonTheme;
       select: {
         backgroundColor: string;
-        backgroundOpen: string;
         borderColor: string;
         borderColorActive: string;
         placeholderColor: string;
         textColor: string;
         textActiveColor: string;
+        localeSelect: {
+          background: string;
+          backgroundOpen: string;
+          borderColor: string;
+          borderColorActive: string;
+          placeholderColor: string;
+          textColor: string;
+          textActiveColor: string;
+        };
+        optionHover: string;
+        menuBackgroundColor: string;
       };
       scrollbar: {
         track: string;

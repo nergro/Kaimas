@@ -33,7 +33,11 @@
   "Write a review": "Write a review",
   "Rating": "Rating",
   "Would recommend": "Would recommend",
+  "Would you recommend?": "Would you recommend?",
   "Yes": "Yes",
   "No": "No",
-  "Comment":"Comment"
+  "Comment":"Comment",
+  "Review": "Review",
+  "Publish":"Publish",
+  "Server error": "Server error"
 }

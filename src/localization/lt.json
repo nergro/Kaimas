@@ -33,7 +33,11 @@
   "Write a review": "Rašyti atsiliepimą",
   "Rating": "Vertinimas",
   "Would recommend": "Ar rekomenduotų",
+  "Would you recommend?": "Ar rekomenduotumėte?",
   "Yes": "Taip",
   "No": "Ne",
-  "Comment":"Komentaras"
+  "Comment":"Komentaras",
+  "Review": "Atsiliepimas",
+  "Publish":"Publikuoti",
+  "Server error": "Serverio klaida"
 }

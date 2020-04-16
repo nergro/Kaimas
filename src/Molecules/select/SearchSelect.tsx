@@ -26,7 +26,7 @@ const StyledSelect = styled(ReactSelect)`
   width: 100%;
 
   .${props => props.classNamePrefix}__control {
-    background: ${props => props.theme.colors.select.backgroundColor};
+    background: ${props => props.theme.colors.select.localeSelect.background};
     border: none;
     border-width: 2px;
     border-radius: 10px;
@@ -40,7 +40,7 @@ const StyledSelect = styled(ReactSelect)`
       border-width: 2px 2px 0px 2px;
       border-radius: 10px 10px 0 0;
       padding: 6px 12px;
-      background: ${props => props.theme.colors.select.backgroundOpen};
+      background: ${props => props.theme.colors.select.localeSelect.backgroundOpen};
 
       .${props => props.classNamePrefix}__dropdown-indicator {
         transform: rotate(-180deg);
@@ -51,10 +51,10 @@ const StyledSelect = styled(ReactSelect)`
     &--is-focused,
     &--has-value,
     &--menu-is-open {
-      border-color: ${props => props.theme.colors.select.borderColorActive};
+      border-color: ${props => props.theme.colors.select.localeSelect.borderColorActive};
 
       .${props => props.classNamePrefix}__dropdown-icon {
-        fill: ${props => props.theme.colors.select.borderColorActive};
+        fill: ${props => props.theme.colors.select.localeSelect.borderColorActive};
       }
     }
   }
@@ -66,11 +66,11 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .${props => props.classNamePrefix}__dropdown-icon {
-    fill: ${props => props.theme.colors.select.borderColor};
+    fill: ${props => props.theme.colors.select.localeSelect.borderColor};
   }
 
   .${props => props.classNamePrefix}__placeholder {
-    color: ${props => props.theme.colors.select.placeholderColor};
+    color: ${props => props.theme.colors.select.localeSelect.placeholderColor};
   }
 
   .${props => props.classNamePrefix}__value-container {
@@ -79,17 +79,17 @@ const StyledSelect = styled(ReactSelect)`
   }
 
   .${props => props.classNamePrefix}__input {
-    color: ${props => props.theme.colors.select.textActiveColor};
+    color: ${props => props.theme.colors.select.localeSelect.textActiveColor};
     min-height: 20px;
 
     & > input {
       font: ${props => props.theme.fonts.mediumTextBold};
-      caret-color: ${props => props.theme.colors.select.textActiveColor};
+      caret-color: ${props => props.theme.colors.select.localeSelect.textActiveColor};
     }
   }
 
   .${props => props.classNamePrefix}__single-value {
-    color: ${props => props.theme.colors.select.textActiveColor};
+    color: ${props => props.theme.colors.select.localeSelect.textActiveColor};
     font: ${props => props.theme.fonts.mediumTextBold};
   }
 
@@ -97,8 +97,8 @@ const StyledSelect = styled(ReactSelect)`
     margin-top: 0px;
     margin-bottom: 0px;
 
-    background-color: ${props => props.theme.colors.select.backgroundOpen};
-    border: solid ${props => props.theme.colors.select.borderColorActive};
+    background-color: ${props => props.theme.colors.select.localeSelect.backgroundOpen};
+    border: solid ${props => props.theme.colors.select.localeSelect.borderColorActive};
     border-width: 0 2px 2px 2px;
     border-radius: 0 0 10px 10px;
     box-shadow: none;
@@ -112,7 +112,7 @@ const StyledSelect = styled(ReactSelect)`
 
   .${props => props.classNamePrefix}__option {
     overflow: hidden;
-    color: ${props => props.theme.colors.select.textColor};
+    color: ${props => props.theme.colors.select.localeSelect.textColor};
 
     &--is-focused,
     &--is-selected {

@@ -17,6 +17,21 @@ export const Input = styled.input`
   }
 `;
 
+export const TextArea = styled.textarea`
+  width: 100%;
+  padding: 12px;
+  font: ${props => props.theme.fonts.smallTextLight};
+  border: 1px solid ${props => props.theme.colors.input.border};
+  color: ${props => props.theme.colors.input.text};
+  background: ${props => props.theme.colors.input.background};
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  outline: none;
+  resize: none;
+  &:focus {
+    border-color: ${props => props.theme.colors.input.borderFocus};
+  }
+`;
+
 const Wrapper = styled.form`
   display: flex;
 `;

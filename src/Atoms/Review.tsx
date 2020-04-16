@@ -52,7 +52,6 @@ interface Props {
 }
 export const Review: FC<Props> = ({ className, review }) => {
   const { t } = useTranslation();
-
   return (
     <Wrapper className={className}>
       <NameAndDate>
