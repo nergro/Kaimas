@@ -49,6 +49,7 @@ interface Props {
   weight?: '400' | '500' | '600' | '700';
   font?: keyof DefaultTheme['fontFamily'];
   lineHeight?: keyof typeof lineHeights;
+  uppercase?: boolean;
 }
 
 // this is common styles for all heading tags
@@ -60,6 +61,7 @@ const componentFactory = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTh
     font-size: ${props => sizes[props.size || 'normal'].desktop};
     line-height: ${props => lineHeights[props.lineHeight || 'default']};
     text-align: center;
+    text-transform: ${props => (props.uppercase ? 'uppercase' : 'unset')};
     @media (max-width: ${props => props.theme.breakpoints.m}) {
       font-size: ${props => sizes[props.size || 'veryBig'].mobile};
     }
@@ -73,6 +75,7 @@ const componentH2 = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTheme> 
     font-size: ${props => sizes[props.size || 'normal'].desktop};
     line-height: ${props => lineHeights[props.lineHeight || 'default']};
     text-align: center;
+    text-transform: ${props => (props.uppercase ? 'uppercase' : 'unset')};
     @media (max-width: ${props => props.theme.breakpoints.s}) {
       font-size: ${props => sizes[props.size || 'normal'].mobile};
     }
@@ -86,6 +89,7 @@ const componentH3 = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTheme> 
     font-size: ${props => sizes[props.size || 'regular'].desktop};
     line-height: ${props => lineHeights[props.lineHeight || 'default']};
     text-align: center;
+    text-transform: ${props => (props.uppercase ? 'uppercase' : 'unset')};
     @media (max-width: ${props => props.theme.breakpoints.s}) {
       font-size: ${props => sizes[props.size || 'regular'].mobile};
     }

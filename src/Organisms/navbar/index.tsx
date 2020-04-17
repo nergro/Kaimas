@@ -86,9 +86,10 @@ const NavbarBase: FC<Props> = ({ className }) => {
   };
 
   const onLogout = (): void => {
-    handleLogout();
+    handleLogout(t('You logged out'));
     setIsAuth(false);
     setMobileNavbarOpen(false);
+    window.location.reload();
   };
 
   const onModalClose = (): void => {

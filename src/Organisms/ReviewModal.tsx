@@ -1,11 +1,10 @@
 import { writeReview } from 'apiServices/reviews/reviews';
 import { Loader } from 'Atoms/Loader';
 import { contentClassNames, Modal } from 'Atoms/Modal';
-import { LoginForm } from 'Molecules/LoginForm';
 import { ReviewForm } from 'Molecules/ReviewForm';
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import { handleLogin, handleRegistration } from 'services/auth';
 import { getAuthStatus } from 'services/localStorage';
 import styled from 'styled-components/macro';
 
@@ -36,36 +35,23 @@ const StyledLoader = styled(Loader)`
 interface Props {
   className?: string;
   isOpen: boolean;
+  serviceType: 'Cabin' | 'Activity';
+  serviceId: string;
   onClose(): void;
 }
 
-export const ReviewModal: FC<Props> = ({ className, isOpen, onClose }) => {
-  const [showRegister, setShowRegister] = useState(false);
+export const ReviewModal: FC<Props> = ({ className, isOpen, onClose, serviceId, serviceType }) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const authStatus = getAuthStatus();
-  if (authStatus) {
+  if (!authStatus) {
     onClose();
     return <></>;
   }
 
   const onModalClose = (): void => {
     onClose();
-    setShowRegister(false);
-  };
-
-  const onLogin = async (email: string, password: string): Promise<string | undefined> => {
-    if (isLoading) return;
-    setIsLoading(true);
-
-    const response = await handleLogin(email, password);
-    setIsLoading(false);
-    if (response) {
-      return response;
-    } else {
-      onClose();
-      toast.success(`You logged in!`);
-    }
   };
 
   const onSubmit = async (
@@ -73,18 +59,22 @@ export const ReviewModal: FC<Props> = ({ className, isOpen, onClose }) => {
     comment: string,
     recommend: boolean
   ): Promise<boolean> => {
-    // if (isLoading) return;
-    // setIsLoading(true);
-
-    // const response = await handleRegistration(name, lastName, email, password, phone);
-    // setIsLoading(false);
-    // if (response) {
-    //   return response;
-    // } else {
-    //   onClose();
-    //   toast.success(`Your registration is successful!`);
-    // }
-    return true;
+    setIsLoading(true);
+    try {
+      const response = await writeReview(serviceId, serviceType, rating, comment, recommend);
+      if (response === 200) {
+        onClose();
+        toast.success(t('Your review was submitted!'));
+        setIsLoading(false);
+        return true;
+      } else {
+        setIsLoading(false);
+        return false;
+      }
+    } catch (error) {
+      setIsLoading(false);
+      return false;
+    }
   };
 
   if (isLoading) return <StyledLoader />;

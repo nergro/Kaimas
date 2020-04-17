@@ -14,6 +14,7 @@ const Spinner = styled.div`
   transform: translate(-50%, -50%);
   width: 60px;
   height: 60px;
+  z-index: 100;
   background-color: ${props => props.theme.colors.loader};
   animation: ${cubeGridScaleDelay} 0.8s infinite ease-in-out;
 `;

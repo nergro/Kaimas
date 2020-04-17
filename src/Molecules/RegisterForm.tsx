@@ -3,6 +3,7 @@ import { CardButton } from 'Atoms/buttons/CardButton';
 import { Input } from 'Atoms/Input';
 import { H1, P } from 'Atoms/text';
 import React, { FC, FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 const Form = styled.form`
@@ -40,6 +41,8 @@ interface Props {
 }
 
 export const RegisterForm: FC<Props> = ({ className, onSwitchToLogin, onRegister }) => {
+  const { t } = useTranslation();
+
   const [name, setName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -59,53 +62,53 @@ export const RegisterForm: FC<Props> = ({ className, onSwitchToLogin, onRegister
   };
   return (
     <Form className={className} onSubmit={onSubmit}>
-      <H1>Register</H1>
+      <H1 uppercase>{t('Registration')}</H1>
 
       <StyledInput
         type="text"
         name="Name"
-        placeholder="Name"
+        placeholder={t('Name')}
         required
         onChange={e => setName(e.target.value)}
       />
       <StyledInput
         type="text"
         name="Last Name"
-        placeholder="Last Name"
+        placeholder={t('Last Name')}
         required
         onChange={e => setLastName(e.target.value)}
       />
       <StyledInput
         type="text"
         name="Email"
-        placeholder="Email"
+        placeholder={t('Email')}
         required
         onChange={e => setEmail(e.target.value)}
       />
       <StyledInput
         type="text"
         name="Phone"
-        placeholder="Phone"
+        placeholder={t('Phone')}
         required
         onChange={e => setPhone(e.target.value)}
       />
       <StyledInput
         type="password"
         name="Password"
-        placeholder="Password"
+        placeholder={t('Password')}
         required
         onChange={e => setPassword(e.target.value)}
       />
       <StyledInput
         type="password"
         name="RepeatPassword"
-        placeholder="Repeat password"
+        placeholder={t('Repeat password')}
         required
         onChange={e => setPasswordRepeat(e.target.value)}
       />
       {errorMessage && <ErrorMessage color="error">{errorMessage}</ErrorMessage>}
-      <StyledButton type="submit">Register</StyledButton>
-      <CardButton onClick={onSwitchToLogin}>Already have an account?</CardButton>
+      <StyledButton type="submit">{t('Register')}</StyledButton>
+      <CardButton onClick={onSwitchToLogin}>{t('Already have an account?')}</CardButton>
     </Form>
   );
 };

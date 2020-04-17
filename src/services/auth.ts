@@ -2,7 +2,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { removeAuthStatus, removeToken, setAuthStatus, setToken } from 'services/localStorage';
 
-export const handleLogin = async (email: string, password: string): Promise<string | null> => {
+export const handleLogin = async (
+  email: string,
+  password: string,
+  errors: string[]
+): Promise<string | null> => {
   try {
     const {
       data: { token },
@@ -13,8 +17,8 @@ export const handleLogin = async (email: string, password: string): Promise<stri
     return null;
   } catch (err) {
     if (err.response && err.response.status === 401) {
-      return 'Invalid credentials';
-    } else return 'Network error';
+      return errors[0];
+    } else return errors[1];
   }
 };
 
@@ -23,7 +27,8 @@ export const handleRegistration = async (
   lastName: string,
   email: string,
   password: string,
-  phone: string
+  phone: string,
+  errors: string[]
 ): Promise<string | null> => {
   try {
     const {
@@ -35,15 +40,15 @@ export const handleRegistration = async (
     return null;
   } catch (err) {
     if (err.response && err.response.status === 409) {
-      return 'User already exists';
+      return errors[0];
     } else if (err.response && err.response.status === 400) {
-      return 'Entered data is not correct';
-    } else return 'Network error';
+      return errors[1];
+    } else return errors[2];
   }
 };
 
-export const handleLogout = (): void => {
+export const handleLogout = (toastMessage: string): void => {
   removeToken();
   removeAuthStatus();
-  toast.info(`You logged out`);
+  toast.info(toastMessage);
 };

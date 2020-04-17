@@ -3,6 +3,7 @@ import { contentClassNames, Modal } from 'Atoms/Modal';
 import { LoginForm } from 'Molecules/LoginForm';
 import { RegisterForm } from 'Molecules/RegisterForm';
 import React, { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { handleLogin, handleRegistration } from 'services/auth';
 import { getAuthStatus } from 'services/localStorage';
@@ -39,6 +40,8 @@ interface Props {
 }
 
 export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
+  const { t } = useTranslation();
+
   const [showRegister, setShowRegister] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -57,13 +60,16 @@ export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
     if (isLoading) return;
     setIsLoading(true);
 
-    const response = await handleLogin(email, password);
+    const response = await handleLogin(email, password, [
+      t('Invalid credentials'),
+      t('Network error'),
+    ]);
     setIsLoading(false);
     if (response) {
       return response;
     } else {
       onClose();
-      toast.success(`You logged in!`);
+      toast.success(t('You logged in!'));
     }
   };
 
@@ -77,13 +83,17 @@ export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
     if (isLoading) return;
     setIsLoading(true);
 
-    const response = await handleRegistration(name, lastName, email, password, phone);
+    const response = await handleRegistration(name, lastName, email, password, phone, [
+      t('User already exists'),
+      t('Entered data is not correct'),
+      t('Network error'),
+    ]);
     setIsLoading(false);
     if (response) {
       return response;
     } else {
       onClose();
-      toast.success(`Your registration is successful!`);
+      toast.success(t('Your registration is successful!'));
     }
   };
 

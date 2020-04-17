@@ -104,7 +104,13 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <ServiceTabs
           aboutContent={<AboutContent text={description} />}
           benefitsContent={<BenefitsContent benefits={cabin.benefits} />}
-          reviewsContent={<ReviewsContent reviews={reviews} />}
+          reviewsContent={
+            <ReviewsContent
+              reviews={reviews}
+              serviceId={match.params.cabinId}
+              serviceType="Cabin"
+            />
+          }
         />
         <Gallery images={images} />
       </ContentBottom>
