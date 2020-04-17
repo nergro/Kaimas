@@ -6,9 +6,6 @@ axios.defaults.baseURL = baseUrl;
 
 const authStatus = getAuthStatus();
 const token = getToken();
-console.log(authStatus);
-console.log(token);
 if (authStatus && token) {
-  console.log('HERE');
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }

@@ -11,12 +11,12 @@ import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 import { getLocale } from 'services/localStorage';
-import { useCabinsResource } from 'store/cabinsStore/hooks';
+import { useActivitiesResource } from 'store/activitiesStore/hooks';
 import { useReviews } from 'store/reviewsStore/hooks';
 import { assetIsNotStoreError } from 'store/storeError';
 import { isLoading } from 'store/types';
 import styled from 'styled-components/macro';
-import { Cabin } from 'types/cabin';
+import { Activity } from 'types/activity';
 
 const ContentTop = styled.div`
   display: flex;
@@ -54,17 +54,17 @@ const ReservationButton = styled(ButtonLink)`
   }
 `;
 
-export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ match }) => {
+export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = ({ match }) => {
   const { t } = useTranslation();
-  const cabinsResource = useCabinsResource();
-  const reviews = useReviews(match.params.cabinId);
+  const activitiesResource = useActivitiesResource();
+  const reviews = useReviews(match.params.activityId);
 
   const locale = getLocale()?.value;
 
-  assetIsNotStoreError(cabinsResource);
+  assetIsNotStoreError(activitiesResource);
   assetIsNotStoreError(reviews);
 
-  if (isLoading(cabinsResource) || isLoading(reviews)) {
+  if (isLoading(activitiesResource) || isLoading(reviews)) {
     return (
       <MainLayout>
         <Loader />
@@ -72,9 +72,11 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
     );
   }
 
-  const cabin: Cabin | undefined = cabinsResource.find(cabin => cabin.id === match.params.cabinId);
+  const activity: Activity | undefined = activitiesResource.find(
+    activity => activity.id === match.params.activityId
+  );
 
-  if (!cabin) {
+  if (!activity) {
     return (
       <MainLayout>
         <p>{t('Sorry! Something went wrong... :(')}</p>
@@ -82,13 +84,13 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
     );
   }
 
-  const images = cabin.images.map(image => ({
+  const images = activity.images.map(image => ({
     original: image.imageUrl,
     thumbnail: image.imageUrl,
   }));
 
-  const name = locale === 'lt' ? cabin.nameLT : cabin.nameEN;
-  const description = locale === 'lt' ? cabin.descriptionLT : cabin.descriptionEN;
+  const name = locale === 'lt' ? activity.nameLT : activity.nameEN;
+  const description = locale === 'lt' ? activity.descriptionLT : activity.descriptionEN;
 
   return (
     <MainLayout>
@@ -96,19 +98,19 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <Title size="big" weight="600">
           {name}
         </Title>
-        <ReservationButton to={`/cabins/${match.params.cabinId}/reservation`}>
+        <ReservationButton to={`/activities/${match.params.activityId}/reservation`}>
           {t('Reservation')}
         </ReservationButton>
       </ContentTop>
       <ContentBottom>
         <ServiceTabs
           aboutContent={<AboutContent text={description} />}
-          benefitsContent={<BenefitsContent benefits={cabin.benefits} />}
+          benefitsContent={<BenefitsContent benefits={activity.benefits} />}
           reviewsContent={
             <ReviewsContent
               reviews={reviews}
-              serviceId={match.params.cabinId}
-              serviceType="Cabin"
+              serviceId={match.params.activityId}
+              serviceType="Activity"
             />
           }
         />

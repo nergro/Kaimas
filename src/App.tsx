@@ -1,6 +1,7 @@
 import { AppLayout } from 'layouts/AppLayout';
 import { NotFound } from 'pages/404';
 import { Activities } from 'pages/Activities';
+import { ActivityDetails } from 'pages/ActivityDetails';
 import { CabinDetails } from 'pages/CabinDetails';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
@@ -28,7 +29,7 @@ export const App: FC = () => {
         <Route path="/cabins/:cabinId" exact component={CabinDetails} />
         <Route path="/cabins/:cabinId/reservation" exact component={Reservation} />
         <Route path="/activities" exact component={Activities} />
-        <Route path="/activities/:activityId" exact component={CabinDetails} />
+        <Route path="/activities/:activityId" exact component={ActivityDetails} />
         <Route path="/activities/:activityId/reservation" exact component={Reservation} />
         <Route path="/subscribtion/:token" exact component={SubscribeCancellation} />
         <Route component={NotFound} />

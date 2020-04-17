@@ -1,5 +1,6 @@
 import { Button } from 'Atoms/buttons/Button';
 import { Review } from 'Atoms/Review';
+import { P } from 'Atoms/text';
 import { ReviewModal } from 'Organisms/ReviewModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -53,9 +54,13 @@ export const ReviewsContent: FC<Props> = ({ className, reviews, serviceType, ser
         <StyledButton onClick={() => setReviewModalOpen(true)}>{t('Write a review')}</StyledButton>
       )}
       <Reviews>
-        {reviews.map(review => (
-          <StyledReview key={review.id} review={review} />
-        ))}
+        {reviews.length > 0 ? (
+          reviews.map(review => <StyledReview key={review.id} review={review} />)
+        ) : (
+          <P size="big" weight="600">
+            {t('No reviews yet')}
+          </P>
+        )}
       </Reviews>
       <ReviewModal
         isOpen={reviewModalOpen}

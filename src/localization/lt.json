@@ -20,7 +20,7 @@
   "Never miss a chance to get best deals by subscribing to our newsletter.": "Nepraleiskite progos gauti geriausius pasiūlymus užsiprenumeruodami mūsų naujienlaiškį.",
   "Email Address": "El. Paštas",
   "Copyright": "Visos teisės saugomos",
-  "List": "Sąrašas",
+  "View": "Peržiūrėti",
   "Cabins found": "Rasta sodybų",
   "Activities found": "Rasta pramogų",
   "Filter": "Filtravimas",
@@ -58,5 +58,10 @@
   "Network error":"Serverio klaida",
   "User already exists":"Toks vartotojas jau egzistuoja",
   "Entered data is not correct": "Įvesti duomenys neteisingi",
-  "You logged out": "Jūs atsijungėte"
+  "You logged out": "Jūs atsijungėte",
+  "Sorry! Something went wrong... :(": "Atsiprašome! Serverio klaida... :(",
+  "No reviews yet": "Atsiliepimų nėra",
+  "List of benefits is empty": "Privalumų sąrašas tuščias",
+  "Accomodation": "Apgyvendinimas",
+  "The best rest only in fabulous Lithuanian nature. Our comfortable homesteads are in a great location. Everything for your perfect vacation!":"Geriausias poilsis tik pasakiškoje lietuviškoje gamtoje. Mūsų komfortabilios sodybos įrengtos puikioje vietoje. Viskas tobulam Jūsų poilsiui!"
 }

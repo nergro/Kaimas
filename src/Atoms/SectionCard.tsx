@@ -77,7 +77,7 @@ export const SectionCard: FC<Props> = ({ className, title, description, path, im
       <Left data-toright={toRight}>
         <Title>{title}</Title>
         <Description>{description}</Description>
-        <StyledCardLink to={path}>{t('List')}</StyledCardLink>
+        <StyledCardLink to={path}>{t('View')}</StyledCardLink>
       </Left>
       <Right>
         <ImageBox image={image} />

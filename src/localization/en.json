@@ -20,7 +20,7 @@
   "Never miss a chance to get best deals by subscribing to our newsletter.": "Never miss a chance to get best deals by subscribing to our newsletter.",
   "Email Address": "Email Address",
   "Copyright": "Copyright",
-  "List": "List",
+  "View": "View",
   "Cabins found": "Cabins found",
   "Activities found": "Activities found",
   "Filter": "Filter",
@@ -58,5 +58,10 @@
   "Network error":"Network error",
   "User already exists":"User already exists",
   "Entered data is not correct": "Entered data is not correct",
-  "You logged out": "You logged out"
+  "You logged out": "You logged out",
+  "Sorry! Something went wrong... :(": "Sorry! Something went wrong... :(",
+  "No reviews yet": "No reviews yet",
+  "List of benefits is empty": "List of benefits is empty",
+  "Accomodation": "Accomodation",
+  "The best rest only in fabulous Lithuanian nature. Our comfortable homesteads are in a great location. Everything for your perfect vacation!":"The best rest only in fabulous Lithuanian nature. Our comfortable homesteads are in a great location. Everything for your perfect vacation!"
 }
