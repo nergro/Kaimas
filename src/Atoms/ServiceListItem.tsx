@@ -91,7 +91,11 @@ export const ServiceListItem: FC<Props> = ({ className, service, section }) => {
   const name = locale === 'lt' ? service.nameLT : service.nameEN;
   const description = locale === 'lt' ? service.descriptionLT : service.descriptionEN;
 
-  const trimmedDescription = description.split('.')[0];
+  const trimmedDescription =
+    description
+      .split(' ')
+      .slice(0, 15)
+      .join(' ') + ' ...';
   return (
     <Wrapper className={className}>
       <ImageWrapper>
@@ -100,7 +104,7 @@ export const ServiceListItem: FC<Props> = ({ className, service, section }) => {
       <Content>
         <ContentTop>
           <ListTitleLink to={`/${section}/${service.id}`}>{name}</ListTitleLink>
-          <StyledP>{trimmedDescription}...</StyledP>
+          <StyledP>{trimmedDescription}</StyledP>
         </ContentTop>
         <ContentBottom>
           <Price weight="700">

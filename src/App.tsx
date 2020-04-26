@@ -5,7 +5,6 @@ import { ActivityDetails } from 'pages/ActivityDetails';
 import { CabinDetails } from 'pages/CabinDetails';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
-import { Reservation } from 'pages/Reservation';
 import { SubscribeCancellation } from 'pages/SubscribeCancellation';
 import React, { FC, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,10 +26,8 @@ export const App: FC = () => {
         <Route path="/" exact component={Home} />
         <Route path="/cabins" exact component={Cabins} />
         <Route path="/cabins/:cabinId" exact component={CabinDetails} />
-        <Route path="/cabins/:cabinId/reservation" exact component={Reservation} />
         <Route path="/activities" exact component={Activities} />
         <Route path="/activities/:activityId" exact component={ActivityDetails} />
-        <Route path="/activities/:activityId/reservation" exact component={Reservation} />
         <Route path="/subscribtion/:token" exact component={SubscribeCancellation} />
         <Route component={NotFound} />
       </Switch>
