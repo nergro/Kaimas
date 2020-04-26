@@ -67,8 +67,18 @@ export const BookingTable: FC = () => {
       </Tabs>
       <Form>
         <InputLabel weight="500">{t('Dates')}</InputLabel>
-        <StyledPicker selected={from} onChange={day => setFrom(day)} placeholderText={t('From')} />
-        <StyledPicker selected={to} onChange={day => setTo(day)} placeholderText={t('To')} />
+        <StyledPicker
+          dateFormat="dd/MM/yyyy"
+          selected={from}
+          onChange={day => setFrom(day)}
+          placeholderText={t('From')}
+        />
+        <StyledPicker
+          dateFormat="dd/MM/yyyy"
+          selected={to}
+          onChange={day => setTo(day)}
+          placeholderText={t('To')}
+        />
         <InputLabel weight="500">{t('Price')}</InputLabel>
         <PriceInputWrapper>
           <NumberInput type="number" name="capacity" placeholder={t('From')} />

@@ -30,6 +30,21 @@ export const getAuthStatus = (): boolean | undefined => {
   } else return undefined;
 };
 
+export const setReservationStatus = (status: boolean): void => {
+  localStorage.setItem('hasReservation', JSON.stringify(status));
+};
+export const removeReservationStatus = (): void => {
+  localStorage.removeItem('hasReservation');
+};
+
+export const getReservationStatus = (): boolean | undefined => {
+  const hasReservation = localStorage.getItem('hasReservation');
+  if (hasReservation) {
+    const parsedReservation: boolean = JSON.parse(hasReservation);
+    return parsedReservation;
+  } else return undefined;
+};
+
 export const setLocale = (locale: Locale): void => {
   localStorage.setItem('locale', JSON.stringify(locale));
 };

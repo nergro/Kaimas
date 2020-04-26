@@ -46,6 +46,7 @@ export const Sections: FC = () => {
       : fetchedActivities.length > 0
       ? fetchedActivities
       : [];
+
   return (
     <Wrapper>
       <StyledH1>{t('Rest in Nature')}</StyledH1>

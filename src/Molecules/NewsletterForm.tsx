@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
 const StyledInput = styled(InputWithIcon)`
+  align-self: normal;
   margin-top: 15px;
   input {
     border: 1px solid ${props => props.theme.colors.footer.border};
@@ -24,7 +25,7 @@ export const NewsletterForm: FC = () => {
     return <SimpleLoader />;
   }
   if (hasSubscribed) {
-    return <P color="warning">Thank you!</P>;
+    return <P color="warning">{t('Thank you!')}</P>;
   }
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();

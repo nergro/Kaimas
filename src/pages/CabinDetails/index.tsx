@@ -1,4 +1,4 @@
-import { ButtonLink } from 'Atoms/links/ButtonLink';
+import { Button } from 'Atoms/buttons/Button';
 import { Loader } from 'Atoms/Loader';
 import { H1 } from 'Atoms/text';
 import { MainLayout } from 'layouts/MainLayout';
@@ -7,10 +7,12 @@ import { ServiceTabs } from 'Molecules/ServiceTabs';
 import { AboutContent } from 'Molecules/tabs/AboutContent';
 import { BenefitsContent } from 'Molecules/tabs/BenefitsContent';
 import { ReviewsContent } from 'Molecules/tabs/ReviewsContent';
-import React, { FC } from 'react';
+import { ReservationModal } from 'Organisms/ReservationModal';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 import { getLocale } from 'services/localStorage';
+import { getReservationStatus } from 'services/localStorage';
 import { useCabinsResource } from 'store/cabinsStore/hooks';
 import { useReviews } from 'store/reviewsStore/hooks';
 import { assetIsNotStoreError } from 'store/storeError';
@@ -45,7 +47,7 @@ const Gallery = styled(ImageGallery)`
   }
 `;
 
-const ReservationButton = styled(ButtonLink)`
+const ReservationButton = styled(Button)`
   align-self: flex-end;
   margin: 0 40px;
   @media (max-width: ${props => props.theme.breakpoints.l}) {
@@ -56,10 +58,12 @@ const ReservationButton = styled(ButtonLink)`
 
 export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ match }) => {
   const { t } = useTranslation();
+  const [reservationModalOpen, setReservationModalOpen] = useState<boolean>(false);
   const cabinsResource = useCabinsResource();
   const reviews = useReviews(match.params.cabinId);
 
   const locale = getLocale()?.value;
+  const hasReservation = getReservationStatus();
 
   assetIsNotStoreError(cabinsResource);
   assetIsNotStoreError(reviews);
@@ -96,9 +100,11 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <Title size="big" weight="600">
           {name}
         </Title>
-        <ReservationButton to={`/cabins/${match.params.cabinId}/reservation`}>
-          {t('Reservation')}
-        </ReservationButton>
+        {!hasReservation && (
+          <ReservationButton onClick={() => setReservationModalOpen(true)}>
+            {t('Reservation')}
+          </ReservationButton>
+        )}
       </ContentTop>
       <ContentBottom>
         <ServiceTabs
@@ -114,6 +120,13 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         />
         {images.length > 0 && <Gallery images={images} />}
       </ContentBottom>
+      <ReservationModal
+        isOpen={reservationModalOpen}
+        serviceType="Cabin"
+        serviceId={match.params.cabinId}
+        onClose={() => setReservationModalOpen(false)}
+        price={cabin.price}
+      />
     </MainLayout>
   );
 };

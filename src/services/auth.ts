@@ -1,6 +1,12 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { removeAuthStatus, removeToken, setAuthStatus, setToken } from 'services/localStorage';
+import {
+  removeAuthStatus,
+  removeToken,
+  setAuthStatus,
+  setReservationStatus,
+  setToken,
+} from 'services/localStorage';
 
 export const handleLogin = async (
   email: string,
@@ -9,10 +15,11 @@ export const handleLogin = async (
 ): Promise<string | null> => {
   try {
     const {
-      data: { token },
+      data: { token, hasReservation },
     } = await axios.post('/user/login', { email, password });
     setToken(token);
     setAuthStatus(true);
+    setReservationStatus(hasReservation);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return null;
   } catch (err) {
@@ -32,10 +39,11 @@ export const handleRegistration = async (
 ): Promise<string | null> => {
   try {
     const {
-      data: { token },
+      data: { token, hasReservation },
     } = await axios.post('/user/register', { name, lastName, email, password, phone });
     setToken(token);
     setAuthStatus(true);
+    setReservationStatus(hasReservation);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return null;
   } catch (err) {
