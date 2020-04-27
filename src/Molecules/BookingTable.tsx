@@ -1,16 +1,18 @@
 import { Button } from 'Atoms/buttons/Button';
 import { IncreaseButton } from 'Atoms/buttons/IncreaseButton';
 import { Tab } from 'Atoms/buttons/Tab';
-import { DatePicker } from 'Atoms/DatePicker';
 import {
   InputLabel,
   NumberInput,
   NumberInputWrapper,
   PriceInputWrapper,
 } from 'Molecules/CabinListFilter';
-import React, { FC, useState } from 'react';
+import { MultiSelect } from 'Molecules/select/MultiSelect';
+import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getLocale } from 'services/localStorage';
 import styled from 'styled-components/macro';
+import { BenefitType } from 'types/benefit';
 
 const Tabs = styled.div`
   display: flex;
@@ -42,10 +44,6 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-const StyledPicker = styled(DatePicker)`
-  margin-top: 10px;
-`;
-
 const StyledButton = styled(Button)`
   padding: 10px 10%;
   margin-top: 20px;
@@ -53,11 +51,19 @@ const StyledButton = styled(Button)`
   text-transform: uppercase;
 `;
 
-export const BookingTable: FC = () => {
-  const { t } = useTranslation();
+interface Props {
+  benefits: BenefitType[];
+}
 
-  const [from, setFrom] = useState<Date | null>();
-  const [to, setTo] = useState<Date | null>();
+export const BookingTable: FC<Props> = ({ benefits }) => {
+  const { t } = useTranslation();
+  const locale = getLocale()?.value;
+  const isLT = locale === 'lt';
+
+  const benefitOptions = benefits.map(x => ({
+    value: x.id,
+    label: isLT ? x.descriptionLT : x.descriptionEN,
+  }));
 
   return (
     <Wrapper>
@@ -66,19 +72,6 @@ export const BookingTable: FC = () => {
         <StyledTab>{t('Activities')}</StyledTab>
       </Tabs>
       <Form>
-        <InputLabel weight="500">{t('Dates')}</InputLabel>
-        <StyledPicker
-          dateFormat="dd/MM/yyyy"
-          selected={from}
-          onChange={day => setFrom(day)}
-          placeholderText={t('From')}
-        />
-        <StyledPicker
-          dateFormat="dd/MM/yyyy"
-          selected={to}
-          onChange={day => setTo(day)}
-          placeholderText={t('To')}
-        />
         <InputLabel weight="500">{t('Price')}</InputLabel>
         <PriceInputWrapper>
           <NumberInput type="number" name="capacity" placeholder={t('From')} />
@@ -90,6 +83,8 @@ export const BookingTable: FC = () => {
           <NumberInput type="number" name="capacity" />
           <IncreaseButton>+</IncreaseButton>
         </NumberInputWrapper>
+        <InputLabel weight="500">{t('Benefits')}</InputLabel>
+        <MultiSelect options={benefitOptions} placeholder={t('Choose one or more')} />
         <StyledButton>{t('Search')}</StyledButton>
       </Form>
     </Wrapper>

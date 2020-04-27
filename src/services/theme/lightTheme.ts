@@ -65,6 +65,12 @@ export const lightTheme: DefaultTheme = {
       placeholderColor: '#808080',
       textColor: '#495057',
       textActiveColor: '#495057',
+      multiSelectOption: {
+        text: '#FFFFFF',
+        background: '#999999',
+        closeButtonBackground: '#000000',
+        closeButton: '#FFFFFF',
+      },
       localeSelect: {
         background: 'transparent',
         backgroundOpen: rgba(0, 0, 0, 0.7),

@@ -31,6 +31,12 @@ declare module 'styled-components' {
         placeholderColor: string;
         textColor: string;
         textActiveColor: string;
+        multiSelectOption: {
+          text: string;
+          background: string;
+          closeButtonBackground: string;
+          closeButton: string;
+        };
         localeSelect: {
           background: string;
           backgroundOpen: string;

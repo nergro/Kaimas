@@ -1,10 +1,15 @@
 import img from 'assets/main.jpg';
 import { Button } from 'Atoms/buttons/Button';
+import { Loader } from 'Atoms/Loader';
 import { H1, P } from 'Atoms/text';
 import { BookingTable } from 'Molecules/BookingTable';
 import { Sections } from 'Molecules/Sections';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { useBenefitsResource } from 'store/benefitsStore/hooks';
+import { assetIsNotStoreError } from 'store/storeError';
+import { isLoading } from 'store/types';
 import styled from 'styled-components/macro';
 
 const Wrapper = styled.div`
@@ -85,6 +90,25 @@ const StyledButton = styled(Button)`
 
 export const Home: FC = () => {
   const { t } = useTranslation();
+  const { push } = useHistory();
+
+  const benefits = useBenefitsResource();
+
+  assetIsNotStoreError(benefits);
+
+  if (isLoading(benefits)) {
+    return (
+      <Wrapper>
+        <Landing>
+          <Overlay>
+            <OverlayContent>
+              <Loader />
+            </OverlayContent>
+          </Overlay>
+        </Landing>
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>
@@ -98,10 +122,10 @@ export const Home: FC = () => {
                   'Unforgettable holidays in the Lithuanian countryside. 15 wonderful homesteads, sauna, water bikes, horse riding.'
                 )}
               </StyledP>
-              <StyledButton>{t('Search')}</StyledButton>
+              <StyledButton onClick={() => push('/cabins')}>{t('Search')}</StyledButton>
             </OverlayContentLeft>
             <OverlayContentRight>
-              <BookingTable />
+              <BookingTable benefits={benefits} />
             </OverlayContentRight>
           </OverlayContent>
         </Overlay>
