@@ -67,5 +67,18 @@
   "Thank you!": "Thank you!",
   "Reserve": "Reserve",
   "Dates are not correct": "Dates are not correct",
-  "Your reservation were successful!": "Your reservation were successful!"
+  "Your reservation were successful!": "Your reservation were successful!",
+  "Orders": "Orders",
+  "Change password": "Change password",
+  "Account": "Account",
+  "Submit": "Submit",
+  "New password": "New password",
+  "Repeat new password": "Repeat new password",
+  "Order nr.": "Order nr.",
+  "Service": "Service",
+  "Cabin": "Cabin",
+  "Activity": "Activity",
+  "Title": "Title",
+  "No orders yet": "No orders yet",
+  "Your password has been changed!": "Your password has been changed!"
 }

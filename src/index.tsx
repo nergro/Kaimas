@@ -11,6 +11,7 @@ import { lightTheme } from 'services/theme/lightTheme';
 import { ActivitiesStoreProvider } from 'store/activitiesStore/provider';
 import { CabinsStoreProvider } from 'store/cabinsStore/provider';
 import { DatesStoreProvider } from 'store/datesStore/provider';
+import { OrdersStoreProvider } from 'store/ordersStore/provider';
 import { ReviewsStoreProvider } from 'store/reviewsStore/provider';
 import { ThemeProvider } from 'styled-components/macro';
 import { ToastContainer } from 'ToastContainer';
@@ -27,6 +28,7 @@ const storeProviders = [
   ActivitiesStoreProvider,
   ReviewsStoreProvider,
   DatesStoreProvider,
+  OrdersStoreProvider,
 ];
 
 ReactDOM.render(

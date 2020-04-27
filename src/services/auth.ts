@@ -60,3 +60,13 @@ export const handleLogout = (toastMessage: string): void => {
   removeAuthStatus();
   toast.info(toastMessage);
 };
+
+export const handlePasswordChange = async (password: string): Promise<boolean> => {
+  try {
+    const response = await axios.put('/user/edit', { password });
+
+    return response.status === 200;
+  } catch (err) {
+    return false;
+  }
+};

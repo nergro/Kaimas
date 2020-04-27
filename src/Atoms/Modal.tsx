@@ -75,6 +75,22 @@ export const Modal = styled(ModalBase)`
     max-height: 100%;
     max-width: 100%;
     overflow: auto;
+
+    background: ${props => props.theme.colors.background.primary};
+    max-width: 25%;
+    width: 100%;
+    @media (max-width: ${props => props.theme.breakpoints.l}) {
+      max-width: 45%;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.m}) {
+      max-width: 55%;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.s}) {
+      max-width: 80%;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.sm}) {
+      max-width: 100%;
+    }
   }
   .${contentClassNames.afterOpen} {
     opacity: 1;

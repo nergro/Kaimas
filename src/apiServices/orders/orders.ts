@@ -18,3 +18,8 @@ export const createOrder = async (
 
   return data.status;
 };
+
+export const getOrders = async (): Promise<Order[]> => {
+  const orders = await axios.get<Order[]>(`/order`);
+  return orders.data;
+};

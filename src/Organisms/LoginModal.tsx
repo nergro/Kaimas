@@ -1,5 +1,4 @@
-import { Loader } from 'Atoms/Loader';
-import { contentClassNames, Modal } from 'Atoms/Modal';
+import { Modal } from 'Atoms/Modal';
 import { LoginForm } from 'Molecules/LoginForm';
 import { RegisterForm } from 'Molecules/RegisterForm';
 import React, { FC, useState } from 'react';
@@ -7,31 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { handleLogin, handleRegistration } from 'services/auth';
 import { getAuthStatus } from 'services/localStorage';
-import styled from 'styled-components/macro';
-
-const StyledModal = styled(Modal)`
-  .${contentClassNames.base} {
-    background: ${props => props.theme.colors.background.primary};
-    max-width: 25%;
-    width: 100%;
-    @media (max-width: ${props => props.theme.breakpoints.l}) {
-      max-width: 45%;
-    }
-    @media (max-width: ${props => props.theme.breakpoints.m}) {
-      max-width: 55%;
-    }
-    @media (max-width: ${props => props.theme.breakpoints.s}) {
-      max-width: 80%;
-    }
-    @media (max-width: ${props => props.theme.breakpoints.sm}) {
-      max-width: 100%;
-    }
-  }
-`;
-
-const StyledLoader = styled(Loader)`
-  top: 35vh;
-`;
 
 interface Props {
   className?: string;
@@ -64,6 +38,7 @@ export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
       t('Invalid credentials'),
       t('Network error'),
     ]);
+    console.log(response);
     setIsLoading(false);
     if (response) {
       return response;
@@ -97,15 +72,13 @@ export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
     }
   };
 
-  if (isLoading) return <StyledLoader />;
-
   return (
-    <StyledModal className={className} isOpen={isOpen} onClose={onModalClose}>
+    <Modal className={className} isOpen={isOpen} onClose={onModalClose}>
       {showRegister ? (
         <RegisterForm onSwitchToLogin={() => setShowRegister(false)} onRegister={onRegister} />
       ) : (
         <LoginForm onSwitchToRegister={() => setShowRegister(true)} onLogin={onLogin} />
       )}
-    </StyledModal>
+    </Modal>
   );
 };

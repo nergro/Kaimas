@@ -54,10 +54,10 @@ export const RegisterForm: FC<Props> = ({ className, onSwitchToLogin, onRegister
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (password !== passwordRepeat) {
-      setErrorMessage('Passwords must be the same');
+      setErrorMessage(t('Passwords must be the same'));
       return;
     }
-    const message = await onRegister(name, lastName, phone, email, password);
+    const message = await onRegister(name, lastName, email, password, phone);
     if (message) setErrorMessage(message);
   };
   return (

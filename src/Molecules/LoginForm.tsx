@@ -44,6 +44,7 @@ export const LoginForm: FC<Props> = ({ className, onSwitchToRegister, onLogin })
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     const message = await onLogin(email, password);
+    console.log(message);
     if (message) setErrorMessage(message);
   };
 

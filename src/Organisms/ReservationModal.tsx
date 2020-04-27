@@ -1,6 +1,6 @@
 import { createOrder } from 'apiServices/orders/orders';
 import { Loader } from 'Atoms/Loader';
-import { contentClassNames, Modal } from 'Atoms/Modal';
+import { Modal } from 'Atoms/Modal';
 import { ReservationForm } from 'Molecules/ReservationForm';
 import moment from 'moment';
 import React, { FC, useState } from 'react';
@@ -13,26 +13,6 @@ import { assetIsNotStoreError } from 'store/storeError';
 import { isLoading } from 'store/types';
 import styled from 'styled-components/macro';
 import { getDateChunks } from 'utils/getDateChunks';
-
-const StyledModal = styled(Modal)`
-  .${contentClassNames.base} {
-    background: ${props => props.theme.colors.background.primary};
-    max-width: 25%;
-    width: 100%;
-    @media (max-width: ${props => props.theme.breakpoints.l}) {
-      max-width: 45%;
-    }
-    @media (max-width: ${props => props.theme.breakpoints.m}) {
-      max-width: 55%;
-    }
-    @media (max-width: ${props => props.theme.breakpoints.s}) {
-      max-width: 80%;
-    }
-    @media (max-width: ${props => props.theme.breakpoints.sm}) {
-      max-width: 100%;
-    }
-  }
-`;
 
 const StyledLoader = styled(Loader)`
   top: 35vh;
@@ -109,8 +89,8 @@ export const ReservationModal: FC<Props> = ({
   if (loading) return <StyledLoader />;
 
   return (
-    <StyledModal className={className} isOpen={isOpen} onClose={onModalClose}>
+    <Modal className={className} isOpen={isOpen} onClose={onModalClose}>
       <ReservationForm onSubmit={onSubmit} availableDates={dates} />
-    </StyledModal>
+    </Modal>
   );
 };

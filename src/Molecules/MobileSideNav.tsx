@@ -25,7 +25,10 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledLinkButton = styled(LinkButton)`
-  margin: 20px 0;
+  margin-top: 20px;
+  &:last-child {
+    margin-bottom: 20px;
+  }
 `;
 
 interface Props {
@@ -35,6 +38,7 @@ interface Props {
   onClose(): void;
   onLogout(): void;
   onLogin(): void;
+  onAccount(): void;
 }
 
 export const MobileSideNav: FC<Props> = ({
@@ -44,6 +48,7 @@ export const MobileSideNav: FC<Props> = ({
   onLogin,
   isAuth,
   onLogout,
+  onAccount,
 }) => {
   const { t } = useTranslation();
 
@@ -53,6 +58,7 @@ export const MobileSideNav: FC<Props> = ({
         <StyledLink to="/">{t('Home')}</StyledLink>
         <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
         <StyledLink to="/activities">{t('Activities')}</StyledLink>
+        {isAuth && <StyledLinkButton onClick={onAccount}>{t('Account')}</StyledLinkButton>}
         {!isAuth && <StyledLinkButton onClick={onLogin}>{t('Login')}</StyledLinkButton>}
         {isAuth && <StyledLinkButton onClick={onLogout}>{t('Logout')}</StyledLinkButton>}
       </ModalContent>

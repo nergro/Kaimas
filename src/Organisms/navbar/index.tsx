@@ -5,6 +5,7 @@ import { Link } from 'Atoms/links/Link';
 import { Menu } from 'Atoms/Menu';
 import { P } from 'Atoms/text';
 import { MobileSideNav } from 'Molecules/MobileSideNav';
+import { AccountModal } from 'Organisms/AccountModal';
 import { LoginModal } from 'Organisms/LoginModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -56,6 +57,7 @@ const StyledLink = styled(Link)`
 
 const StyledLinkButton = styled(LinkButton)`
   text-transform: uppercase;
+  margin-right: 10px;
 
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     display: none;
@@ -78,6 +80,7 @@ const NavbarBase: FC<Props> = ({ className }) => {
   const { push } = useHistory();
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [accountOpen, setAccountOpen] = useState(false);
   const [isAuth, setIsAuth] = useState<boolean | undefined>(getAuthStatus());
 
   const onLogin = (): void => {
@@ -92,9 +95,14 @@ const NavbarBase: FC<Props> = ({ className }) => {
     window.location.reload();
   };
 
-  const onModalClose = (): void => {
+  const onLoginModalClose = (): void => {
     setLoginOpen(false);
     setIsAuth(getAuthStatus());
+  };
+
+  const onAccountOpen = (): void => {
+    setMobileNavbarOpen(false);
+    setAccountOpen(true);
   };
 
   return (
@@ -113,17 +121,20 @@ const NavbarBase: FC<Props> = ({ className }) => {
         <StyledLink to="/">{t('Home')}</StyledLink>
         <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
         <StyledLink to="/activities">{t('Activities')}</StyledLink>
+        {isAuth && <StyledLinkButton onClick={onAccountOpen}>{t('Account')}</StyledLinkButton>}
         {!isAuth && <StyledLinkButton onClick={onLogin}>{t('Login')}</StyledLinkButton>}
         {isAuth && <StyledLinkButton onClick={onLogout}>{t('Logout')}</StyledLinkButton>}
         <Locale />
       </HeaderContent>
-      <LoginModal isOpen={loginOpen} onClose={onModalClose} />
+      <LoginModal isOpen={loginOpen} onClose={onLoginModalClose} />
+      <AccountModal isOpen={accountOpen} onClose={() => setAccountOpen(false)} />
       <MobileSideNav
         isOpen={mobileNavbarOpen}
         onClose={() => setMobileNavbarOpen(false)}
         onLogin={onLogin}
         onLogout={onLogout}
         isAuth={isAuth}
+        onAccount={onAccountOpen}
       />
     </div>
   );
