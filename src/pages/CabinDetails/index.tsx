@@ -108,7 +108,14 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
       </ContentTop>
       <ContentBottom>
         <ServiceTabs
-          aboutContent={<AboutContent text={description} />}
+          aboutContent={
+            <AboutContent
+              price={cabin.price}
+              capacity={cabin.capacity}
+              address={cabin.address}
+              description={description}
+            />
+          }
           benefitsContent={<BenefitsContent benefits={cabin.benefits} />}
           reviewsContent={
             <ReviewsContent

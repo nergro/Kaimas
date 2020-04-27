@@ -80,5 +80,7 @@
   "Activity": "Pramoga",
   "Title": "Pavadinimas",
   "No orders yet": "Užsakymų nėra",
-  "Your password has been changed!": "Jūsų slaptažodis buvo pakeistas!"
+  "Your password has been changed!": "Jūsų slaptažodis buvo pakeistas!",
+  "Description": "Aprašymas",
+  "Address": "Adresas"
 }

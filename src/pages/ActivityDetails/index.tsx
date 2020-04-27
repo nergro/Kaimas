@@ -104,7 +104,14 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
       </ContentTop>
       <ContentBottom>
         <ServiceTabs
-          aboutContent={<AboutContent text={description} />}
+          aboutContent={
+            <AboutContent
+              price={activity.price}
+              capacity={activity.capacity}
+              address={activity.address}
+              description={description}
+            />
+          }
           benefitsContent={<BenefitsContent benefits={activity.benefits} />}
           reviewsContent={
             <ReviewsContent
