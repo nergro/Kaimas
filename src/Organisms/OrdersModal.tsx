@@ -39,9 +39,6 @@ interface Props {
 export const OrdersModal: FC<Props> = ({ className, isOpen, onClose }) => {
   const { t } = useTranslation();
   const orders = useOrdersList();
-
-  console.log(orders);
-
   const isAuth = getAuthStatus();
   if (!isAuth) {
     onClose();

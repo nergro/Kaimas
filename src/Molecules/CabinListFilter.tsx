@@ -1,9 +1,14 @@
 import { IncreaseButton } from 'Atoms/buttons/IncreaseButton';
 import { Input } from 'Atoms/Input';
 import { H3 } from 'Atoms/text';
+import { MultiSelect } from 'Molecules/select/MultiSelect';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+import { getLocale } from 'services/localStorage';
+import { useBenefitsList } from 'store/benefitsStore/hooks';
 import styled from 'styled-components/macro';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
+import { SearchSelectOption } from 'types/searchSelectOption';
 
 const Wrapper = styled.div`
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
@@ -62,6 +67,7 @@ interface Props {
   onCapacityChange(e: React.ChangeEvent<HTMLInputElement>): void;
   onCapacityButtonClick(action: CapacityFilterType): void;
   onPriceChange(e: React.ChangeEvent<HTMLInputElement>, input: PriceFilterType): void;
+  onBenefitsChange?: (values?: SearchSelectOption[]) => void;
 }
 
 export const CabinListFilter: FC<Props> = ({
@@ -70,7 +76,17 @@ export const CabinListFilter: FC<Props> = ({
   onCapacityChange,
   onCapacityButtonClick,
   onPriceChange,
+  onBenefitsChange,
 }) => {
+  const { t } = useTranslation();
+  const benefits = useBenefitsList();
+  const locale = getLocale()?.value;
+  const isLT = locale === 'lt';
+
+  const benefitOptions = benefits.map(x => ({
+    value: x.id,
+    label: isLT ? x.descriptionLT : x.descriptionEN,
+  }));
   return (
     <Wrapper>
       <InputLabel weight="500">Paieška</InputLabel>
@@ -106,6 +122,12 @@ export const CabinListFilter: FC<Props> = ({
           onChange={e => onPriceChange(e, 'end')}
         />
       </PriceInputWrapper>
+      <InputLabel weight="500">{t('Benefits')}</InputLabel>
+      <MultiSelect
+        options={benefitOptions}
+        placeholder={t('Choose one or more')}
+        onChange={onBenefitsChange}
+      />
     </Wrapper>
   );
 };

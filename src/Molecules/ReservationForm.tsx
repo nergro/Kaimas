@@ -50,8 +50,6 @@ export const ReservationForm: FC<Props> = ({ className, onSubmit, availableDates
   const onFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (from && to) {
-      console.log(moment(from).format('YYYY-MM-DD'));
-      console.log(moment(to).format('YYYY-MM-DD'));
       const formatedFrom = moment(from).format('YYYY-MM-DD');
       const formatedTo = moment(to).format('YYYY-MM-DD');
       if (formatedFrom < formatedTo || formatedTo === formatedFrom) {

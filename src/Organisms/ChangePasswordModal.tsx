@@ -52,7 +52,6 @@ export const ChangePasswordModal: FC<Props> = ({ className, isOpen, onClose }) =
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    console.log('CLICKED');
     if (isLoading) return;
     if (password !== passwordRepeat) {
       setErrorMessage(t('Passwords must be the same'));

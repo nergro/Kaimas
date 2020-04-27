@@ -38,7 +38,6 @@ export const LoginModal: FC<Props> = ({ className, isOpen, onClose }) => {
       t('Invalid credentials'),
       t('Network error'),
     ]);
-    console.log(response);
     setIsLoading(false);
     if (response) {
       return response;

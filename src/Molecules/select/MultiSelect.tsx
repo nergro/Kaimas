@@ -27,6 +27,11 @@ const StyledSelect = styled(Select)`
     & > svg {
       fill: ${props => props.theme.colors.select.multiSelectOption.closeButton};
     }
+    &:hover {
+      background: ${props => props.theme.colors.select.multiSelectOption.closeButtonBackground};
+      opacity: 0.9;
+      cursor: pointer;
+    }
   }
   .${props => props.classNamePrefix}__clear-indicator {
     display: none;

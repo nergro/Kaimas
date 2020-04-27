@@ -47,7 +47,6 @@ export const AccountModal: FC<Props> = ({ className, isOpen, onClose }) => {
     setPasswordOpen(true);
     setOrdersOpen(false);
   };
-  console.log(passwordOpen);
 
   return (
     <>
