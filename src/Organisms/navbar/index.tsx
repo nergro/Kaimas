@@ -127,7 +127,7 @@ const NavbarBase: FC<Props> = ({ className }) => {
         <Locale />
       </HeaderContent>
       <LoginModal isOpen={loginOpen} onClose={onLoginModalClose} />
-      <AccountModal isOpen={accountOpen} onClose={() => setAccountOpen(false)} />
+      {isAuth && <AccountModal isOpen={accountOpen} onClose={() => setAccountOpen(false)} />}
       <MobileSideNav
         isOpen={mobileNavbarOpen}
         onClose={() => setMobileNavbarOpen(false)}

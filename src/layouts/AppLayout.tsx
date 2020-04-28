@@ -1,5 +1,7 @@
+import { ErrorBoundary } from 'errorBoundary';
 import { Footer } from 'Molecules/Footer';
 import { Navbar } from 'Organisms/navbar';
+import { ErrorPage } from 'pages/Error';
 import React, { FC, ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 
@@ -37,7 +39,9 @@ export const AppLayout: FC<AppLayoutProps> = ({ children, className }) => {
   return (
     <LayoutStyled className={className}>
       <Navbar scrolled={scrolled} />
-      <Content>{children}</Content>
+      <ErrorBoundary error={<ErrorPage />}>
+        <Content>{children}</Content>
+      </ErrorBoundary>
       <Footer />
     </LayoutStyled>
   );

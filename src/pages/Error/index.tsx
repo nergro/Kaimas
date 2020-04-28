@@ -65,7 +65,7 @@ const TitleStyled = styled(H1)`
   }
 `;
 
-export const NotFound: React.FC = () => {
+export const ErrorPage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
@@ -75,7 +75,7 @@ export const NotFound: React.FC = () => {
           <NotFoundImageStyled />
           <TextContainer>
             <TitleStyled weight="600" font="Poppins" size="veryBig" color="main" lineHeight="unset">
-              {t('Hmm... I can’t find this page.')}
+              {t('Sorry! Something went wrong... :(')}
             </TitleStyled>
           </TextContainer>
         </GridSection>
