@@ -1,22 +1,36 @@
 import { ListLayout } from 'layouts/ListLayout';
-import { CabinListFilter } from 'Molecules/CabinListFilter';
+import { ListFilter } from 'Molecules/ListFilter';
 import { ServiceList } from 'Molecules/ServiceList';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getLocale } from 'services/localStorage';
+import { useLocation } from 'react-router-dom';
 import { useActivitiesList } from 'store/activitiesStore/hooks';
 import { Activity } from 'types/activity';
-import { CapacityFilterType, PriceFilterType } from 'types/cabin';
+import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
-import { getFilteredList, PriceFilterState } from 'utils/listFilter';
+import { getInitialListValues } from 'utils/getInitialListValues';
+import {
+  getFilteredList,
+  onCapacityButtonClick,
+  onPriceChange,
+  PriceFilterState,
+} from 'utils/listFilter';
 
 export const Activities: FC = () => {
+  const location = useLocation();
+  const { benefits, capacity, price, searchValue: initialSearchValue } = getInitialListValues(
+    location.state
+  );
+
   const { t } = useTranslation();
   const fetchedActivities = useActivitiesList();
-  const [activities, setActivities] = useState<Activity[]>([]);
-  const [capacityFilter, setCapacityFilter] = useState<number>(0);
-  const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
-  const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[]>();
+  const [activities, setActivities] = useState<(Cabin | Activity)[]>([]);
+  const [capacityFilter, setCapacityFilter] = useState<number>(capacity);
+  const [priceFilter, setPriceFilter] = useState<PriceFilterState>(price);
+  const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[] | undefined>(
+    benefits
+  );
+  const [searchValue, setSearchValue] = useState<string | undefined>(initialSearchValue);
 
   useEffect(() => {
     if (fetchedActivities) {
@@ -24,41 +38,20 @@ export const Activities: FC = () => {
     }
   }, [fetchedActivities]);
 
-  const locale = getLocale()?.value;
-
   const filteredActivities = useMemo(() => {
-    return getFilteredList(activities, capacityFilter, priceFilter, selectedBenefits);
-  }, [activities, capacityFilter, priceFilter, selectedBenefits]);
+    return getFilteredList(activities, capacityFilter, priceFilter, selectedBenefits, searchValue);
+  }, [activities, capacityFilter, priceFilter, selectedBenefits, searchValue]);
 
-  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const filteredCabins = fetchedActivities.filter(cabin => {
-      const name = locale === 'lt' ? cabin.nameLT : cabin.nameEN;
-
-      return name.toLowerCase().includes(e.target.value.toLowerCase());
-    });
-    setActivities(filteredCabins);
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchValue(e.target.value);
   };
 
-  const onCapacityChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCapacityFilter(parseInt(e.target.value));
+  const onCapacityClick = (action: CapacityFilterType): void => {
+    setCapacityFilter(onCapacityButtonClick(action, capacityFilter));
   };
 
-  const onCapacityButtonClick = (action: CapacityFilterType): void => {
-    if (action === 'increase') {
-      setCapacityFilter(capacityFilter + 1);
-    } else {
-      if (capacityFilter > 0) {
-        setCapacityFilter(capacityFilter - 1);
-      }
-    }
-  };
-
-  const onPriceChange = (e: React.ChangeEvent<HTMLInputElement>, input: PriceFilterType): void => {
-    if (input === 'start') {
-      setPriceFilter({ ...priceFilter, start: e.target.value ? parseInt(e.target.value) : 0 });
-    } else {
-      setPriceFilter({ ...priceFilter, end: e.target.value ? parseInt(e.target.value) : 0 });
-    }
+  const onPrice = (e: React.ChangeEvent<HTMLInputElement>, input: PriceFilterType): void => {
+    setPriceFilter(onPriceChange(e.target.value, input, priceFilter));
   };
 
   return (
@@ -67,13 +60,16 @@ export const Activities: FC = () => {
       foundTitle={`${t('Activities found')}: ${filteredActivities.length}`}
       list={<ServiceList services={filteredActivities} section="activities" />}
       filter={
-        <CabinListFilter
-          onSearchChange={onSearchChange}
+        <ListFilter
+          onSearchChange={onSearch}
           capacityValue={capacityFilter}
-          onCapacityChange={onCapacityChange}
-          onCapacityButtonClick={onCapacityButtonClick}
-          onPriceChange={onPriceChange}
+          onCapacityChange={e => setCapacityFilter(parseInt(e.target.value))}
+          onCapacityButtonClick={onCapacityClick}
+          onPriceChange={onPrice}
           onBenefitsChange={setSelectedBenefits}
+          searchValue={searchValue}
+          priceValues={priceFilter}
+          benefitValues={selectedBenefits}
         />
       }
     />

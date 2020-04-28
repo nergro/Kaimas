@@ -1,23 +1,29 @@
+import { getLocale } from 'services/localStorage';
 import { Activity } from 'types/activity';
-import { Cabin } from 'types/cabin';
+import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
 
-export type PriceFilterState = { start: number; end: number };
+export type PriceFilterState = { start: number | undefined; end: number | undefined };
 
-export const getFilteredCabinsByPrice = (
+const getFilteredCabinsByPrice = (
   cabins: Cabin[] | Activity[],
   priceFilter: PriceFilterState
 ): Cabin[] | Activity[] => {
-  if (priceFilter.start > 0 && priceFilter.end === 0) {
-    return cabins.filter(cabin => cabin.price >= priceFilter.start);
+  let start = 0;
+  let end = 0;
+  if (priceFilter.start !== undefined) start = priceFilter.start;
+  if (priceFilter.end !== undefined) end = priceFilter.end;
+
+  if (start > 0 && end === 0) {
+    return cabins.filter(cabin => cabin.price >= start);
   }
-  if (priceFilter.end > 0 && priceFilter.start === 0) {
-    return cabins.filter(cabin => cabin.price <= priceFilter.end);
+  if (end > 0 && start === 0) {
+    return cabins.filter(cabin => cabin.price <= end);
   }
-  return cabins.filter(cabin => cabin.price >= priceFilter.start && cabin.price <= priceFilter.end);
+  return cabins.filter(cabin => cabin.price >= start && cabin.price <= end);
 };
 
-export const getFilteredCabinsByBenefits = (
+const getFilteredCabinsByBenefits = (
   cabins: Cabin[],
   benefits: SearchSelectOption[]
 ): Cabin[] | Activity[] => {
@@ -40,21 +46,66 @@ export const getFilteredCabinsByBenefits = (
   return filteredCabins;
 };
 
+export const getFilteredBySearch = (
+  items: (Cabin | Activity)[],
+  value: string
+): (Cabin | Activity)[] => {
+  const locale = getLocale()?.value;
+
+  return items.filter(item => {
+    const name = locale === 'lt' ? item.nameLT : item.nameEN;
+    return name.toLowerCase().includes(value.toLowerCase());
+  });
+};
+
 export const getFilteredList = (
   items: Cabin[] | Activity[],
   capacityFilter: number,
   priceFilter: PriceFilterState,
-  selectedBenefits: SearchSelectOption[] | undefined
+  selectedBenefits: SearchSelectOption[] | undefined,
+  searchValue: string | undefined
 ): Cabin[] | Activity[] => {
   let filtered = [...items];
   if (capacityFilter > 0) {
     filtered = filtered.filter(cabin => cabin.capacity >= capacityFilter);
   }
-  if (priceFilter.start > 0 || priceFilter.end > 0) {
+  let start = 0;
+  let end = 0;
+  if (priceFilter.start !== undefined) start = priceFilter.start;
+  if (priceFilter.end !== undefined) end = priceFilter.end;
+
+  if (start > 0 || end > 0) {
     filtered = getFilteredCabinsByPrice(filtered, priceFilter);
   }
+
   if (selectedBenefits) {
     filtered = getFilteredCabinsByBenefits(filtered, selectedBenefits);
   }
+  if (searchValue) {
+    filtered = getFilteredBySearch(filtered, searchValue);
+  }
   return filtered;
+};
+
+export const onCapacityButtonClick = (action: CapacityFilterType, capacity: number): number => {
+  if (action === 'increase') {
+    return capacity + 1;
+  } else {
+    if (capacity > 0) {
+      return capacity - 1;
+    }
+  }
+  return capacity;
+};
+
+export const onPriceChange = (
+  value: string,
+  input: PriceFilterType,
+  priceFilter: PriceFilterState
+): PriceFilterState => {
+  if (input === 'start') {
+    return { ...priceFilter, start: value ? parseInt(value) : 0 };
+  } else {
+    return { ...priceFilter, end: value ? parseInt(value) : 0 };
+  }
 };

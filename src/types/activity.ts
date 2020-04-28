@@ -15,9 +15,3 @@ export interface Activity {
   images: ImageType[];
   benefits: BenefitType[];
 }
-
-export type CapacityFilterType = 'increase' | 'decrease';
-
-export type PriceFilterType = 'start' | 'end';
-
-export type ActivitySection = 'About' | 'Reviews';

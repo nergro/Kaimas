@@ -1,18 +1,14 @@
-import { Button } from 'Atoms/buttons/Button';
-import { IncreaseButton } from 'Atoms/buttons/IncreaseButton';
 import { Tab } from 'Atoms/buttons/Tab';
-import {
-  InputLabel,
-  NumberInput,
-  NumberInputWrapper,
-  PriceInputWrapper,
-} from 'Molecules/CabinListFilter';
-import { MultiSelect } from 'Molecules/select/MultiSelect';
-import React, { FC } from 'react';
+import { ButtonLink } from 'Atoms/links/ButtonLink';
+import { H3 } from 'Atoms/text';
+import { ListFilter } from 'Molecules/ListFilter';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getLocale } from 'services/localStorage';
 import styled from 'styled-components/macro';
-import { BenefitType } from 'types/benefit';
+import { CapacityFilterType, PriceFilterType } from 'types/cabin';
+import { FilterState } from 'types/filter';
+import { SearchSelectOption } from 'types/searchSelectOption';
+import { onCapacityButtonClick, onPriceChange, PriceFilterState } from 'utils/listFilter';
 
 const Tabs = styled.div`
   display: flex;
@@ -36,57 +32,79 @@ const Wrapper = styled.div`
   }
 `;
 
-const Form = styled.form`
+const FormWrapper = styled.div`
   background: ${props => props.theme.colors.background.primary};
-  padding: 40px 30px;
+  padding: 10px 30px 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
 `;
 
-const StyledButton = styled(Button)`
+const StyledLink = styled(ButtonLink)`
   padding: 10px 10%;
   margin-top: 20px;
   align-self: center;
   text-transform: uppercase;
 `;
 
-interface Props {
-  benefits: BenefitType[];
-}
+export const BookingTable: FC = () => {
+  const [activeSection, setActiveSection] = useState<'cabins' | 'activities'>('cabins');
+  const [searchValue, setSearchValue] = useState<string>();
+  const [capacityFilter, setCapacityFilter] = useState<number>(0);
+  const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
+  const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[]>();
 
-export const BookingTable: FC<Props> = ({ benefits }) => {
   const { t } = useTranslation();
-  const locale = getLocale()?.value;
-  const isLT = locale === 'lt';
 
-  const benefitOptions = benefits.map(x => ({
-    value: x.id,
-    label: isLT ? x.descriptionLT : x.descriptionEN,
-  }));
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchValue(e.target.value);
+  };
+
+  const onCapacityClick = (action: CapacityFilterType): void => {
+    setCapacityFilter(onCapacityButtonClick(action, capacityFilter));
+  };
+
+  const onPrice = (e: React.ChangeEvent<HTMLInputElement>, input: PriceFilterType): void => {
+    setPriceFilter(onPriceChange(e.target.value, input, priceFilter));
+  };
+
+  const filterData: FilterState = {
+    searchValue,
+    capacity: capacityFilter,
+    price: priceFilter,
+    benefits: selectedBenefits,
+  };
 
   return (
     <Wrapper>
       <Tabs>
-        <StyledTab active>{t('Cabins')}</StyledTab>
-        <StyledTab>{t('Activities')}</StyledTab>
+        <StyledTab active={activeSection === 'cabins'} onClick={() => setActiveSection('cabins')}>
+          {t('Cabins')}
+        </StyledTab>
+        <StyledTab
+          active={activeSection === 'activities'}
+          onClick={() => setActiveSection('activities')}
+        >
+          {t('Activities')}
+        </StyledTab>
       </Tabs>
-      <Form>
-        <InputLabel weight="500">{t('Price')}</InputLabel>
-        <PriceInputWrapper>
-          <NumberInput type="number" name="capacity" placeholder={t('From')} />
-          <NumberInput type="number" name="capacity" placeholder={t('To')} />
-        </PriceInputWrapper>
-        <InputLabel weight="500">{t('Capacity')}</InputLabel>
-        <NumberInputWrapper>
-          <IncreaseButton>-</IncreaseButton>
-          <NumberInput type="number" name="capacity" />
-          <IncreaseButton>+</IncreaseButton>
-        </NumberInputWrapper>
-        <InputLabel weight="500">{t('Benefits')}</InputLabel>
-        <MultiSelect options={benefitOptions} placeholder={t('Choose one or more')} />
-        <StyledButton>{t('Search')}</StyledButton>
-      </Form>
+      <FormWrapper>
+        <H3>{activeSection === 'cabins' ? t('Search cabins') : t('Search activities')}</H3>
+        <ListFilter
+          onSearchChange={onSearch}
+          capacityValue={capacityFilter}
+          onCapacityChange={e => setCapacityFilter(parseInt(e.target.value))}
+          onCapacityButtonClick={onCapacityClick}
+          onPriceChange={onPrice}
+          onBenefitsChange={setSelectedBenefits}
+          searchValue={searchValue}
+          priceValues={priceFilter}
+          benefitValues={selectedBenefits}
+        />
+        <StyledLink toObject={{ pathname: `/${activeSection}`, state: filterData }}>
+          {t('Search')}
+        </StyledLink>
+      </FormWrapper>
     </Wrapper>
   );
 };

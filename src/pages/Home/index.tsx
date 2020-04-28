@@ -125,7 +125,7 @@ export const Home: FC = () => {
               <StyledButton onClick={() => push('/cabins')}>{t('Search')}</StyledButton>
             </OverlayContentLeft>
             <OverlayContentRight>
-              <BookingTable benefits={benefits} />
+              <BookingTable />
             </OverlayContentRight>
           </OverlayContent>
         </Overlay>

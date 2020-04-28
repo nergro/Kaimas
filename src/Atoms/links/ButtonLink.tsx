@@ -1,17 +1,23 @@
 import React, { FC, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { FilterState } from 'types/filter';
 
+type ToObject = {
+  pathname: string;
+  state: FilterState;
+};
 interface ButtonProps {
   className?: string;
   children: ReactNode;
-  to: string;
+  to?: string;
   outline?: boolean;
+  toObject?: ToObject;
 }
 
-const ButtonLinkBase: FC<ButtonProps> = ({ className, children, to }) => {
+const ButtonLinkBase: FC<ButtonProps> = ({ className, children, to, toObject }) => {
   return (
-    <Link className={className} to={to}>
+    <Link className={className} to={toObject || to || ''}>
       {children}
     </Link>
   );
