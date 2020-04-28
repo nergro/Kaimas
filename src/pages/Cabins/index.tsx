@@ -7,38 +7,7 @@ import { getLocale } from 'services/localStorage';
 import { useCabinsList } from 'store/cabinsStore/hooks';
 import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
-
-type PriceFilterState = { start: number; end: number };
-
-const getFilteredCabinsByPrice = (cabins: Cabin[], priceFilter: PriceFilterState): Cabin[] => {
-  if (priceFilter.start > 0 && priceFilter.end === 0) {
-    return cabins.filter(cabin => cabin.price >= priceFilter.start);
-  }
-  if (priceFilter.end > 0 && priceFilter.start === 0) {
-    return cabins.filter(cabin => cabin.price <= priceFilter.end);
-  }
-  return cabins.filter(cabin => cabin.price >= priceFilter.start && cabin.price <= priceFilter.end);
-};
-
-const getFilteredCabinsByBenefits = (cabins: Cabin[], benefits: SearchSelectOption[]): Cabin[] => {
-  const filteredCabins: Cabin[] = [];
-  const cabinsBenefitsIds = cabins.map(cabin => cabin.benefits.map(benefit => benefit.id));
-  const selectedBenefitsIds = benefits.map(benefit => benefit.value);
-
-  cabinsBenefitsIds.forEach((cabinIds, i) => {
-    let passed = true;
-    selectedBenefitsIds.forEach(id => {
-      if (!cabinIds.includes(id)) {
-        passed = false;
-      }
-    });
-    if (passed) {
-      filteredCabins.push(cabins[i]);
-    }
-  });
-
-  return filteredCabins;
-};
+import { getFilteredList, PriceFilterState } from 'utils/listFilter';
 
 export const Cabins: FC = () => {
   const { t } = useTranslation();
@@ -57,17 +26,7 @@ export const Cabins: FC = () => {
   const locale = getLocale()?.value;
 
   const filteredCabins: Cabin[] = useMemo(() => {
-    let filteredCabins = [...cabins];
-    if (capacityFilter > 0) {
-      filteredCabins = filteredCabins.filter(cabin => cabin.capacity >= capacityFilter);
-    }
-    if (priceFilter.start > 0 || priceFilter.end > 0) {
-      filteredCabins = getFilteredCabinsByPrice(filteredCabins, priceFilter);
-    }
-    if (selectedBenefits) {
-      filteredCabins = getFilteredCabinsByBenefits(filteredCabins, selectedBenefits);
-    }
-    return filteredCabins;
+    return getFilteredList(cabins, capacityFilter, priceFilter, selectedBenefits);
   }, [cabins, capacityFilter, priceFilter, selectedBenefits]);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

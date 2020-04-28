@@ -7,21 +7,8 @@ import { getLocale } from 'services/localStorage';
 import { useActivitiesList } from 'store/activitiesStore/hooks';
 import { Activity } from 'types/activity';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
-
-type PriceFilterState = { start: number; end: number };
-
-const getFilteredCabinsByPrice = (
-  cabins: Activity[],
-  priceFilter: PriceFilterState
-): Activity[] => {
-  if (priceFilter.start > 0 && priceFilter.end === 0) {
-    return cabins.filter(cabin => cabin.price >= priceFilter.start);
-  }
-  if (priceFilter.end > 0 && priceFilter.start === 0) {
-    return cabins.filter(cabin => cabin.price <= priceFilter.end);
-  }
-  return cabins.filter(cabin => cabin.price >= priceFilter.start && cabin.price <= priceFilter.end);
-};
+import { SearchSelectOption } from 'types/searchSelectOption';
+import { getFilteredList, PriceFilterState } from 'utils/listFilter';
 
 export const Activities: FC = () => {
   const { t } = useTranslation();
@@ -29,6 +16,7 @@ export const Activities: FC = () => {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [capacityFilter, setCapacityFilter] = useState<number>(0);
   const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
+  const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[]>();
 
   useEffect(() => {
     if (fetchedActivities) {
@@ -38,16 +26,9 @@ export const Activities: FC = () => {
 
   const locale = getLocale()?.value;
 
-  const filteredActivities: Activity[] = useMemo(() => {
-    let filteredCabins = [...activities];
-    if (capacityFilter > 0) {
-      filteredCabins = filteredCabins.filter(cabin => cabin.capacity >= capacityFilter);
-    }
-    if (priceFilter.start > 0 || priceFilter.end > 0) {
-      filteredCabins = getFilteredCabinsByPrice(filteredCabins, priceFilter);
-    }
-    return filteredCabins;
-  }, [activities, capacityFilter, priceFilter]);
+  const filteredActivities = useMemo(() => {
+    return getFilteredList(activities, capacityFilter, priceFilter, selectedBenefits);
+  }, [activities, capacityFilter, priceFilter, selectedBenefits]);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const filteredCabins = fetchedActivities.filter(cabin => {
@@ -92,6 +73,7 @@ export const Activities: FC = () => {
           onCapacityChange={onCapacityChange}
           onCapacityButtonClick={onCapacityButtonClick}
           onPriceChange={onPriceChange}
+          onBenefitsChange={setSelectedBenefits}
         />
       }
     />
