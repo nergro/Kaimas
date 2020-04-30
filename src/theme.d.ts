@@ -71,6 +71,8 @@ declare module 'styled-components' {
         available: string;
         inactive: string;
         error: string;
+        lightLink: string;
+        darkLink: string;
       };
       loader: string;
       input: {

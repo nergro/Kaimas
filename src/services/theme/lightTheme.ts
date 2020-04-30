@@ -105,6 +105,8 @@ export const lightTheme: DefaultTheme = {
       available: '#32a852',
       inactive: '#4f4f4f',
       error: '#FF0000',
+      darkLink: '#055B7A',
+      lightLink: '#0077A0',
     },
     loader: '#F8B600',
     input: {
