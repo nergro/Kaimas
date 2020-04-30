@@ -16,11 +16,12 @@ interface Props {
   className?: string;
   to: string;
   children: string;
+  onClick?(): void;
 }
 
-export const Link: FC<Props> = ({ className, to, children }) => {
+export const Link: FC<Props> = ({ className, to, children, onClick }) => {
   return (
-    <StyledLink className={className} to={to}>
+    <StyledLink className={className} to={to} onClick={onClick}>
       {children}
     </StyledLink>
   );

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getAuthStatus, getToken } from 'services/localStorage';
 
-export const baseUrl = 'http://localhost:4000/api';
+export const baseUrl = 'http://kaimuks.herokuapp.com/api';
 axios.defaults.baseURL = baseUrl;
 
 const authStatus = getAuthStatus();

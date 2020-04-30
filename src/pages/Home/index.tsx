@@ -20,11 +20,14 @@ const Landing = styled.div`
   background-image: url(${img});
   background-size: cover;
   height: 100vh;
-  @media (max-width: ${props => props.theme.breakpoints.m}) {
+  @media (max-height: 1000px) {
     height: calc(100vh + 130px);
   }
-  @media (max-width: ${props => props.theme.breakpoints.s}) {
-    height: calc(100vh + 200px);
+  @media (max-height: 800px) {
+    height: calc(100vh + 320px);
+  }
+  @media (max-height: 600px) {
+    height: calc(100vh + 500px);
   }
 `;
 

@@ -14,6 +14,7 @@ import {
   getLocale,
   setActivityReservationStatus,
   setCabinReservationStatus,
+  setLocale,
 } from 'services/localStorage';
 import { useOrdersList } from 'store/ordersStore/hooks';
 
@@ -25,6 +26,9 @@ export const App: FC = () => {
     const locale = getLocale();
     if (locale !== null) {
       i18n.changeLanguage(locale.value);
+    } else {
+      i18n.changeLanguage('lt');
+      setLocale({ value: 'lt', label: 'LT' });
     }
   }, [i18n]);
 

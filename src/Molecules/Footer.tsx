@@ -115,7 +115,7 @@ const Bottom = styled.div`
 
 const PolicyButton = styled(InvisibleButton)`
   cursor: pointer;
-  font: ${props => props.theme.fonts.normalText};
+  font: ${props => props.theme.fonts.tinyText};
   color: ${props => props.theme.colors.text.warning};
 `;
 
@@ -162,7 +162,7 @@ export const Footer: FC = () => {
         </Content>
         <PrivacyModal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
       </FooterStyled>
-      <CookieConsent buttonText={t('I agree')}>
+      <CookieConsent buttonText={t('I agree')} style={{ fontSize: '13px' }}>
         {t('cookie banner text')}
         <PolicyButton onClick={() => setPrivacyModalOpen(true)}>{t('Privacy policy')}</PolicyButton>
       </CookieConsent>

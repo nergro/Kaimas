@@ -46,9 +46,14 @@ const StyledSelect = styled(ReactSelect)`
         transform: rotate(-180deg);
       }
     }
+    &--is-focused {
+      border: 2px solid ${props => props.theme.colors.select.localeSelect.borderColorActive};
 
+      .${props => props.classNamePrefix}__dropdown-icon {
+        fill: ${props => props.theme.colors.select.localeSelect.borderColorActive};
+      }
+    }
     &:hover,
-    &--is-focused,
     &--has-value,
     &--menu-is-open {
       border-color: ${props => props.theme.colors.select.localeSelect.borderColorActive};

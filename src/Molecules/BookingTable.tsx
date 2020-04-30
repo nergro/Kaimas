@@ -11,7 +11,9 @@ import { SearchSelectOption } from 'types/searchSelectOption';
 import { onCapacityButtonClick, onPriceChange, PriceFilterState } from 'utils/listFilter';
 
 const Wrapper = styled.div`
-  margin-top: 100px;
+  @media (max-height: 900px) and (min-width: ${props => props.theme.breakpoints.m}) {
+    margin-top: 100px;
+  }
   width: 60%;
   @media (max-width: ${props => props.theme.breakpoints.l}) {
     width: 80%;
