@@ -4,6 +4,7 @@ import { H2, P } from 'Atoms/text';
 import { NewsletterForm } from 'Molecules/NewsletterForm';
 import { PrivacyModal } from 'Organisms/PrivacyModal';
 import React, { FC, useState } from 'react';
+import CookieConsent from 'react-cookie-consent';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
@@ -112,47 +113,59 @@ const Bottom = styled.div`
   padding-top: 15px;
 `;
 
+const PolicyButton = styled(InvisibleButton)`
+  cursor: pointer;
+  font: ${props => props.theme.fonts.normalText};
+  color: ${props => props.theme.colors.text.warning};
+`;
+
 export const Footer: FC = () => {
   const { t } = useTranslation();
   const [privacyModalOpen, setPrivacyModalOpen] = useState<boolean>(false);
   return (
-    <FooterStyled>
-      <Content>
-        <Top>
-          <About>
-            <Title>{t('About')}</Title>
-            <StyledP>
-              {t(
-                'Time for vacation - a convenient system that will ensure fast and convenient vacation planning and unforgettable rest in nature. Book your  vacation now!'
-              )}
+    <>
+      <FooterStyled>
+        <Content>
+          <Top>
+            <About>
+              <Title>{t('About')}</Title>
+              <StyledP>
+                {t(
+                  'Time for vacation - a convenient system that will ensure fast and convenient vacation planning and unforgettable rest in nature. Book your  vacation now!'
+                )}
+              </StyledP>
+            </About>
+            <Links>
+              <Title>{t('Navigation')}</Title>
+              <LinksWrapper>
+                <StyledLink to="/">{t('Home')}</StyledLink>
+                <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
+                <StyledLink to="/activities">{t('Activities')}</StyledLink>
+                <StyledLinkButton onClick={() => setPrivacyModalOpen(true)}>
+                  {t('Privacy')}
+                </StyledLinkButton>
+              </LinksWrapper>
+            </Links>
+            <Newsletter>
+              <Title>{t('Newsletter')}</Title>
+              <StyledP>
+                {t('Never miss a chance to get best deals by subscribing to our newsletter.')}
+              </StyledP>
+              <NewsletterForm />
+            </Newsletter>
+          </Top>
+          <Bottom>
+            <StyledP size="small" color="main">
+              {t('Copyright')} © Nerijus Gromas
             </StyledP>
-          </About>
-          <Links>
-            <Title>{t('Navigation')}</Title>
-            <LinksWrapper>
-              <StyledLink to="/">{t('Home')}</StyledLink>
-              <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
-              <StyledLink to="/activities">{t('Activities')}</StyledLink>
-              <StyledLinkButton onClick={() => setPrivacyModalOpen(true)}>
-                {t('Privacy')}
-              </StyledLinkButton>
-            </LinksWrapper>
-          </Links>
-          <Newsletter>
-            <Title>{t('Newsletter')}</Title>
-            <StyledP>
-              {t('Never miss a chance to get best deals by subscribing to our newsletter.')}
-            </StyledP>
-            <NewsletterForm />
-          </Newsletter>
-        </Top>
-        <Bottom>
-          <StyledP size="small" color="main">
-            {t('Copyright')} © Nerijus Gromas
-          </StyledP>
-        </Bottom>
-      </Content>
-      <PrivacyModal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
-    </FooterStyled>
+          </Bottom>
+        </Content>
+        <PrivacyModal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
+      </FooterStyled>
+      <CookieConsent buttonText={t('I agree')}>
+        {t('cookie banner text')}
+        <PolicyButton onClick={() => setPrivacyModalOpen(true)}>{t('Privacy policy')}</PolicyButton>
+      </CookieConsent>
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import { contentClassNames, Modal } from 'Atoms/Modal';
+import { contentClassNames, Modal, overlayClassNames } from 'Atoms/Modal';
 import { H1, P } from 'Atoms/text';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +6,26 @@ import styled from 'styled-components/macro';
 
 const StyledModal = styled(Modal)`
   .${contentClassNames.base} {
+    max-height: 80%;
+    transform: translate(0%, -5%);
+
     max-width: 45%;
+    width: 100%;
+    @media (max-width: ${props => props.theme.breakpoints.l}) {
+      max-width: 65%;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.m}) {
+      max-width: 75%;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.s}) {
+      max-width: 95%;
+    }
+    @media (max-width: ${props => props.theme.breakpoints.sm}) {
+      max-width: 100%;
+    }
+  }
+  .${overlayClassNames.afterOpen} {
+    z-index: 1000;
   }
 `;
 
