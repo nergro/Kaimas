@@ -1,7 +1,9 @@
+import { InvisibleButton } from 'Atoms/buttons/InvisibleButton';
 import { Link } from 'Atoms/links/Link';
 import { H2, P } from 'Atoms/text';
 import { NewsletterForm } from 'Molecules/NewsletterForm';
-import React, { FC } from 'react';
+import { PrivacyModal } from 'Organisms/PrivacyModal';
+import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
 
@@ -78,6 +80,18 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const StyledLinkButton = styled(InvisibleButton)`
+  cursor: pointer;
+  font: ${props => props.theme.fonts.mediumText};
+  color: ${props => props.theme.colors.footer.text};
+  display: block;
+  margin: 10px 0;
+  text-transform: uppercase;
+  &:hover {
+    color: ${props => props.theme.colors.link.hover};
+  }
+`;
+
 const Newsletter = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,6 +114,7 @@ const Bottom = styled.div`
 
 export const Footer: FC = () => {
   const { t } = useTranslation();
+  const [privacyModalOpen, setPrivacyModalOpen] = useState<boolean>(false);
   return (
     <FooterStyled>
       <Content>
@@ -115,9 +130,12 @@ export const Footer: FC = () => {
           <Links>
             <Title>{t('Navigation')}</Title>
             <LinksWrapper>
-              <StyledLink to="#">{t('Home')}</StyledLink>
-              <StyledLink to="#">{t('Cabins')}</StyledLink>
-              <StyledLink to="#">{t('Activities')}</StyledLink>
+              <StyledLink to="/">{t('Home')}</StyledLink>
+              <StyledLink to="/cabins">{t('Cabins')}</StyledLink>
+              <StyledLink to="/activities">{t('Activities')}</StyledLink>
+              <StyledLinkButton onClick={() => setPrivacyModalOpen(true)}>
+                {t('Privacy')}
+              </StyledLinkButton>
             </LinksWrapper>
           </Links>
           <Newsletter>
@@ -134,6 +152,7 @@ export const Footer: FC = () => {
           </StyledP>
         </Bottom>
       </Content>
+      <PrivacyModal isOpen={privacyModalOpen} onClose={() => setPrivacyModalOpen(false)} />
     </FooterStyled>
   );
 };
