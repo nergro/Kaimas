@@ -100,7 +100,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <Title size="big" weight="600">
           {name}
         </Title>
-        {!hasReservation && (
+        {hasReservation !== undefined && !hasReservation && (
           <ReservationButton onClick={() => setReservationModalOpen(true)}>
             {t('Reservation')}
           </ReservationButton>

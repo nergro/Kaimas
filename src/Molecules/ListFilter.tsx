@@ -40,14 +40,18 @@ const NumberInputWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  @media (max-width: ${props => props.theme.breakpoints.l}) {
-    /* width: 30%; */
-  }
 `;
 
 const NumberInput = styled(Input)`
   margin: 0 20px;
   text-align: center;
+  width: 50%;
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  -moz-appearance: textfield;
   font: ${props => props.theme.fonts.bigTextBold};
   color: ${props => props.theme.colors.text.available};
 `;

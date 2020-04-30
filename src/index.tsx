@@ -3,6 +3,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import 'services/http';
 import './i18n';
 
+import { ErrorPage } from 'pages/Error';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
@@ -35,7 +36,7 @@ const storeProviders = [
 
 ReactDOM.render(
   //TODO: Add error message/page to show for global ErrorBoundary
-  <ErrorBoundary error={null}>
+  <ErrorBoundary error={<ErrorPage />}>
     <Router>
       <ProvidersInjector providers={storeProviders}>
         <ThemeProvider theme={lightTheme}>

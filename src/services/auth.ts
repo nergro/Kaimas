@@ -2,6 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
   removeAuthStatus,
+  removeReservationStatus,
   removeToken,
   setAuthStatus,
   setReservationStatus,
@@ -58,6 +59,7 @@ export const handleRegistration = async (
 export const handleLogout = (toastMessage: string): void => {
   removeToken();
   removeAuthStatus();
+  removeReservationStatus();
   toast.info(toastMessage);
 };
 

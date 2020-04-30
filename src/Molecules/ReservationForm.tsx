@@ -65,7 +65,7 @@ export const ReservationForm: FC<Props> = ({ className, onSubmit, availableDates
   if (availableDates.length === 0) {
     return (
       <NotAvailable>
-        <P>Reservation currently unavailable</P>
+        <P>{t('Reservation currently unavailable')}</P>
       </NotAvailable>
     );
   }

@@ -10,13 +10,8 @@ import { FilterState } from 'types/filter';
 import { SearchSelectOption } from 'types/searchSelectOption';
 import { onCapacityButtonClick, onPriceChange, PriceFilterState } from 'utils/listFilter';
 
-const Tabs = styled.div`
-  display: flex;
-`;
-
-const StyledTab = styled(Tab)``;
-
 const Wrapper = styled.div`
+  margin-top: 100px;
   width: 60%;
   @media (max-width: ${props => props.theme.breakpoints.l}) {
     width: 80%;
@@ -31,6 +26,12 @@ const Wrapper = styled.div`
     width: 100%;
   }
 `;
+
+const Tabs = styled.div`
+  display: flex;
+`;
+
+const StyledTab = styled(Tab)``;
 
 const FormWrapper = styled.div`
   background: ${props => props.theme.colors.background.primary};
@@ -51,7 +52,10 @@ export const BookingTable: FC = () => {
   const [activeSection, setActiveSection] = useState<'cabins' | 'activities'>('cabins');
   const [searchValue, setSearchValue] = useState<string>();
   const [capacityFilter, setCapacityFilter] = useState<number>(0);
-  const [priceFilter, setPriceFilter] = useState<PriceFilterState>({ start: 0, end: 0 });
+  const [priceFilter, setPriceFilter] = useState<PriceFilterState>({
+    start: undefined,
+    end: undefined,
+  });
   const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[]>();
 
   const { t } = useTranslation();
