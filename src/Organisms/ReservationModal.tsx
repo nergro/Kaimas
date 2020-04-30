@@ -7,7 +7,7 @@ import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { getAuthStatus } from 'services/localStorage';
-import { setReservationStatus } from 'services/localStorage';
+import { setActivityReservationStatus, setCabinReservationStatus } from 'services/localStorage';
 import { useDates } from 'store/datesStore/hooks';
 import { assetIsNotStoreError } from 'store/storeError';
 import { isLoading } from 'store/types';
@@ -74,7 +74,11 @@ export const ReservationModal: FC<Props> = ({
         onClose();
         setLoading(false);
         toast.success(t('Your reservation were successful!'));
-        setReservationStatus(true);
+        if (serviceType === 'Activity') {
+          setActivityReservationStatus(true);
+        } else {
+          setCabinReservationStatus(true);
+        }
         return true;
       } else {
         setLoading(false);

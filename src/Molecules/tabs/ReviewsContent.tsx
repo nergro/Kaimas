@@ -4,7 +4,7 @@ import { P } from 'Atoms/text';
 import { ReviewModal } from 'Organisms/ReviewModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getAuthStatus } from 'services/localStorage';
+import { useOrdersList } from 'store/ordersStore/hooks';
 import styled from 'styled-components/macro';
 import { Review as ReviewType } from 'types/review';
 import { ScrollbarMixin } from 'utils/styleMixins';
@@ -41,16 +41,22 @@ interface Props {
 export const ReviewsContent: FC<Props> = ({ className, reviews, serviceType, serviceId }) => {
   const { t } = useTranslation();
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const orders = useOrdersList();
 
   const onModalClose = (): void => {
     setReviewModalOpen(false);
   };
 
-  const isAuth = getAuthStatus();
+  let hadReservation = false;
+  orders.forEach(x => {
+    if (x.id === serviceId) {
+      hadReservation = true;
+    }
+  });
 
   return (
     <Wrapper className={className}>
-      {isAuth && (
+      {hadReservation && (
         <StyledButton onClick={() => setReviewModalOpen(true)}>{t('Write a review')}</StyledButton>
       )}
       <Reviews>

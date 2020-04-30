@@ -1,4 +1,5 @@
 import { AppLayout } from 'layouts/AppLayout';
+import moment from 'moment';
 import { NotFound } from 'pages/404';
 import { Activities } from 'pages/Activities';
 import { ActivityDetails } from 'pages/ActivityDetails';
@@ -6,12 +7,19 @@ import { CabinDetails } from 'pages/CabinDetails';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
 import { SubscribeCancellation } from 'pages/SubscribeCancellation';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
-import { getLocale } from 'services/localStorage';
+import {
+  getLocale,
+  setActivityReservationStatus,
+  setCabinReservationStatus,
+} from 'services/localStorage';
+import { useOrdersList } from 'store/ordersStore/hooks';
 
 export const App: FC = () => {
+  const [reservedCabin, setReservedCabin] = useState<boolean>(false);
+  const [reservedActivity, setReservedActivity] = useState<boolean>(false);
   const { i18n } = useTranslation();
   useEffect(() => {
     const locale = getLocale();
@@ -19,6 +27,27 @@ export const App: FC = () => {
       i18n.changeLanguage(locale.value);
     }
   }, [i18n]);
+
+  const orders = useOrdersList();
+
+  console.log(orders);
+
+  useEffect(() => {
+    orders.forEach(x => {
+      x.reservedDates.forEach(date => {
+        if (moment(date.date).isAfter(new Date())) {
+          if (x.onModel === 'Activity') {
+            setReservedActivity(true);
+          } else {
+            setReservedCabin(true);
+          }
+        }
+      });
+    });
+  }, [orders]);
+
+  setActivityReservationStatus(reservedActivity);
+  setCabinReservationStatus(reservedCabin);
 
   return (
     <AppLayout>

@@ -11,7 +11,7 @@ import { ReservationModal } from 'Organisms/ReservationModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
-import { getLocale } from 'services/localStorage';
+import { getAuthStatus, getLocale } from 'services/localStorage';
 import { getReservationStatus } from 'services/localStorage';
 import { useActivitiesResource } from 'store/activitiesStore/hooks';
 import { useReviews } from 'store/reviewsStore/hooks';
@@ -67,7 +67,8 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
   assetIsNotStoreError(activitiesResource);
   assetIsNotStoreError(reviews);
 
-  const hasReservation = getReservationStatus();
+  const hasReservation = getReservationStatus('activity');
+  const isAuth = getAuthStatus();
 
   if (isLoading(activitiesResource) || isLoading(reviews)) {
     return (
@@ -103,7 +104,7 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
         <Title size="big" weight="600">
           {name}
         </Title>
-        {hasReservation !== undefined && !hasReservation && (
+        {hasReservation !== undefined && !hasReservation && isAuth && (
           <ReservationButton onClick={() => setReservationModalOpen(true)}>
             {t('Reservation')}
           </ReservationButton>

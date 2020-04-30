@@ -1,5 +1,6 @@
 import { getOrders } from 'apiServices/orders/orders';
 import React, { useMemo } from 'react';
+import { getAuthStatus } from 'services/localStorage';
 import { newStoreError } from 'store/storeError';
 import { assetIsNotStoreError } from 'store/storeError';
 import { Dispatch, isLoading, Loading, Resource } from 'store/types';
@@ -25,6 +26,8 @@ export const useDispatch = (): Dispatch<Action> => {
 export const useOrdersResource = (): Resource<Orders> => {
   const state = useState();
   const dispatch = useDispatch();
+  const isAuth = getAuthStatus();
+  if (!isAuth) return [];
   if (!state) {
     dispatch({ type: 'Orders/LoadInitiated' });
     getOrders()

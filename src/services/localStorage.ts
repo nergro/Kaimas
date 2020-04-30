@@ -30,15 +30,27 @@ export const getAuthStatus = (): boolean | undefined => {
   } else return undefined;
 };
 
-export const setReservationStatus = (status: boolean): void => {
-  localStorage.setItem('hasReservation', JSON.stringify(status));
-};
-export const removeReservationStatus = (): void => {
-  localStorage.removeItem('hasReservation');
+export const setCabinReservationStatus = (status: boolean): void => {
+  localStorage.setItem('hasCabinReservation', JSON.stringify(status));
 };
 
-export const getReservationStatus = (): boolean | undefined => {
-  const hasReservation = localStorage.getItem('hasReservation');
+export const removeCabinReservationStatus = (): void => {
+  localStorage.removeItem('hasCabinReservation');
+};
+
+export const setActivityReservationStatus = (status: boolean): void => {
+  localStorage.setItem('hasActivityReservation', JSON.stringify(status));
+};
+
+export const removeActivityReservationStatus = (): void => {
+  localStorage.removeItem('hasActivityReservation');
+};
+
+export const getReservationStatus = (type: 'cabin' | 'activity'): boolean | undefined => {
+  const hasReservation =
+    type === 'activity'
+      ? localStorage.getItem('hasActivityReservation')
+      : localStorage.getItem('hasCabinReservation');
   if (hasReservation) {
     const parsedReservation: boolean = JSON.parse(hasReservation);
     return parsedReservation;

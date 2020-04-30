@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
+  removeActivityReservationStatus,
   removeAuthStatus,
-  removeReservationStatus,
+  removeCabinReservationStatus,
   removeToken,
   setAuthStatus,
-  setReservationStatus,
   setToken,
 } from 'services/localStorage';
 
@@ -16,11 +16,10 @@ export const handleLogin = async (
 ): Promise<string | null> => {
   try {
     const {
-      data: { token, hasReservation },
+      data: { token },
     } = await axios.post('/user/login', { email, password });
     setToken(token);
     setAuthStatus(true);
-    setReservationStatus(hasReservation);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return null;
   } catch (err) {
@@ -40,11 +39,10 @@ export const handleRegistration = async (
 ): Promise<string | null> => {
   try {
     const {
-      data: { token, hasReservation },
+      data: { token },
     } = await axios.post('/user/register', { name, lastName, email, password, phone });
     setToken(token);
     setAuthStatus(true);
-    setReservationStatus(hasReservation);
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return null;
   } catch (err) {
@@ -59,7 +57,8 @@ export const handleRegistration = async (
 export const handleLogout = (toastMessage: string): void => {
   removeToken();
   removeAuthStatus();
-  removeReservationStatus();
+  removeActivityReservationStatus();
+  removeCabinReservationStatus();
   toast.info(toastMessage);
 };
 

@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 import { getLocale } from 'services/localStorage';
 import { getReservationStatus } from 'services/localStorage';
+import { getAuthStatus } from 'services/localStorage';
 import { useCabinsResource } from 'store/cabinsStore/hooks';
 import { useReviews } from 'store/reviewsStore/hooks';
 import { assetIsNotStoreError } from 'store/storeError';
@@ -63,7 +64,8 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
   const reviews = useReviews(match.params.cabinId);
 
   const locale = getLocale()?.value;
-  const hasReservation = getReservationStatus();
+  const hasReservation = getReservationStatus('cabin');
+  const isAuth = getAuthStatus();
 
   assetIsNotStoreError(cabinsResource);
   assetIsNotStoreError(reviews);
@@ -100,7 +102,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <Title size="big" weight="600">
           {name}
         </Title>
-        {hasReservation !== undefined && !hasReservation && (
+        {hasReservation !== undefined && !hasReservation && isAuth && (
           <ReservationButton onClick={() => setReservationModalOpen(true)}>
             {t('Reservation')}
           </ReservationButton>
