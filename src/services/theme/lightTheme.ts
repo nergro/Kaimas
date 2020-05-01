@@ -1,5 +1,3 @@
-import FullLogoPng from 'assets/full-logo.png';
-import LogoPng from 'assets/logo.png';
 import { rgba } from 'polished';
 import { DefaultTheme } from 'styled-components/macro';
 
@@ -136,9 +134,5 @@ export const lightTheme: DefaultTheme = {
     review: {
       border: '#000000',
     },
-  },
-  images: {
-    logo: FullLogoPng,
-    mobileLogo: LogoPng,
   },
 };

@@ -103,10 +103,6 @@ declare module 'styled-components' {
         border: string;
       };
     };
-    images: {
-      logo: string;
-      mobileLogo: string;
-    };
     fontFamily: {
       Poppins: string;
     };

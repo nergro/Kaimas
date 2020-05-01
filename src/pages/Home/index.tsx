@@ -20,7 +20,7 @@ const Landing = styled.div`
   background-image: url(${img});
   background-size: cover;
   height: 100vh;
-  @media (max-height: 1000px) {
+  @media (max-height: 900px) {
     height: calc(100vh + 130px);
   }
   @media (max-height: 800px) {
@@ -120,11 +120,7 @@ export const Home: FC = () => {
           <OverlayContent>
             <OverlayContentLeft>
               <StyledTitle>{t('Time for vacation')}</StyledTitle>
-              <StyledP>
-                {t(
-                  'Unforgettable holidays in the Lithuanian countryside. 15 wonderful homesteads, sauna, water bikes, horse riding.'
-                )}
-              </StyledP>
+              <StyledP>{t('main intro')}</StyledP>
               <StyledButton onClick={() => push('/cabins')}>{t('Search')}</StyledButton>
             </OverlayContentLeft>
             <OverlayContentRight>
