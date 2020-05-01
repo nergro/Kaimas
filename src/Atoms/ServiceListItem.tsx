@@ -9,7 +9,7 @@ import { ServiceType } from 'types/service';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 200px;
+  height: 230px;
   display: flex;
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
   transition: all 0.2s ease-in-out;
@@ -18,11 +18,7 @@ const Wrapper = styled.div`
   }
   @media (max-width: ${props => props.theme.breakpoints.m}) {
     flex-direction: column;
-    height: 450px;
-  }
-
-  @media (max-width: ${props => props.theme.breakpoints.s}) {
-    height: 500px;
+    height: unset;
   }
 `;
 
