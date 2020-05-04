@@ -1,3 +1,4 @@
+import { OrderBox } from 'Atoms/OrderBox';
 import { P, Span } from 'Atoms/text';
 import moment from 'moment';
 import React, { FC } from 'react';
@@ -5,14 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { getLocale } from 'services/localStorage';
 import styled from 'styled-components/macro';
 import { Order as OrderType } from 'types/order';
-
-const Wrapper = styled.div`
-  border: 2px solid ${props => props.theme.colors.review.border};
-  padding: 15px;
-
-  display: flex;
-  flex-direction: column;
-`;
 
 const NameAndDate = styled.div`
   display: flex;
@@ -47,11 +40,23 @@ interface Props {
   className?: string;
   order: OrderType;
 }
+
 export const Order: FC<Props> = ({ className, order }) => {
   const { t } = useTranslation();
   const locale = getLocale()?.value;
+
+  let isUpcoming = false;
+  const now = moment().format('LLLL');
+
+  order.reservedDates.forEach(x => {
+    console.log(moment(x.date).isAfter(now));
+    if (moment(x.date).isAfter(now)) {
+      isUpcoming = true;
+    }
+  });
+
   return (
-    <Wrapper className={className}>
+    <OrderBox className={className} isUpcoming={isUpcoming}>
       <NameAndDate>
         <Name size="normal" weight="700">
           {`${t('Order nr.')} ${order.id}`}
@@ -74,6 +79,12 @@ export const Order: FC<Props> = ({ className, order }) => {
           <Span size="normal">{order.price} €</Span>
         </StyledP>
       </Middle>
-    </Wrapper>
+      <StyledP size="normal" weight="600">
+        {t('Reserved dates')}:
+      </StyledP>
+      {order.reservedDates.map(x => (
+        <P key={x.id}>{moment(x.date).format('YYYY-MM-DD')}</P>
+      ))}
+    </OrderBox>
   );
 };

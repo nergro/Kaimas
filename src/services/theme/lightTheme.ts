@@ -134,5 +134,9 @@ export const lightTheme: DefaultTheme = {
     review: {
       border: '#000000',
     },
+    order: {
+      border: '#000000',
+      borderUpcoming: '#3c9c00',
+    },
   },
 };

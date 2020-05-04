@@ -102,6 +102,10 @@ declare module 'styled-components' {
       review: {
         border: string;
       };
+      order: {
+        border: string;
+        borderUpcoming: string;
+      };
     };
     fontFamily: {
       Poppins: string;

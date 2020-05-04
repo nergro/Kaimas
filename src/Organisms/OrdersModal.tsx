@@ -45,13 +45,19 @@ export const OrdersModal: FC<Props> = ({ className, isOpen, onClose }) => {
     return <></>;
   }
 
+  const sortedOrder = orders.sort((a, b) => {
+    if (a.date > b.date) return -1;
+    if (a.date < b.date) return 1;
+    return 0;
+  });
+
   return (
     <StyledModal className={className} isOpen={isOpen} onClose={onClose}>
       <H1 uppercase>{t('Orders')}</H1>
 
       <Wrapper>
-        {orders.length > 0 ? (
-          orders.map(order => <StyledOrder key={order.id} order={order} />)
+        {sortedOrder.length > 0 ? (
+          sortedOrder.map(order => <StyledOrder key={order.id} order={order} />)
         ) : (
           <NoOrdersWrapper>
             <P size="big">{t('No orders yet')}</P>

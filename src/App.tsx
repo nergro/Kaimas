@@ -34,8 +34,6 @@ export const App: FC = () => {
 
   const orders = useOrdersList();
 
-  console.log(orders);
-
   useEffect(() => {
     orders.forEach(x => {
       x.reservedDates.forEach(date => {
