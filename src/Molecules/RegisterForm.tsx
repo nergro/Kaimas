@@ -77,6 +77,10 @@ export const RegisterForm: FC<Props> = ({ className, onSwitchToLogin, onRegister
       setErrorMessage(t('Passwords must be the same'));
       return;
     }
+    if (!checked) {
+      setErrorMessage(t('You must agree with the rules'));
+      return;
+    }
     const message = await onRegister(name, lastName, email, password, phone);
     if (message) setErrorMessage(message);
   };
@@ -133,7 +137,6 @@ export const RegisterForm: FC<Props> = ({ className, onSwitchToLogin, onRegister
           required
           onChange={e => setPasswordRepeat(e.target.value)}
         />
-        {errorMessage && <ErrorMessage color="error">{errorMessage}</ErrorMessage>}
         <FormControlLabel
           control={
             <Checkbox
@@ -150,6 +153,7 @@ export const RegisterForm: FC<Props> = ({ className, onSwitchToLogin, onRegister
             </CheckboxLabel>
           }
         />
+        {errorMessage && <ErrorMessage color="error">{errorMessage}</ErrorMessage>}
         <StyledButton type="submit">{t('Register')}</StyledButton>
         <CardButton onClick={onSwitchToLogin}>{t('Already have an account?')}</CardButton>
       </Form>
