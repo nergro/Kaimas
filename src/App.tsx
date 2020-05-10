@@ -10,9 +10,11 @@ import { SubscribeCancellation } from 'pages/SubscribeCancellation';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Route, Switch } from 'react-router-dom';
+import { verify } from 'services/auth';
 import {
   getLocale,
   setActivityReservationStatus,
+  setAuthStatus,
   setCabinReservationStatus,
   setLocale,
 } from 'services/localStorage';
@@ -31,6 +33,13 @@ export const App: FC = () => {
       setLocale({ value: 'lt', label: 'LT' });
     }
   }, [i18n]);
+
+  useEffect(() => {
+    (async () => {
+      const status = await verify();
+      setAuthStatus(status);
+    })();
+  }, []);
 
   const orders = useOrdersList();
 

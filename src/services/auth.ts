@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
+  getToken,
   removeActivityReservationStatus,
   removeAuthStatus,
   removeCabinReservationStatus,
@@ -54,11 +55,15 @@ export const handleRegistration = async (
   }
 };
 
-export const handleLogout = (toastMessage: string): void => {
+const clearStorage = (): void => {
   removeToken();
   removeAuthStatus();
   removeActivityReservationStatus();
   removeCabinReservationStatus();
+};
+
+export const handleLogout = (toastMessage: string): void => {
+  clearStorage();
   toast.info(toastMessage);
 };
 
@@ -70,4 +75,29 @@ export const handlePasswordChange = async (password: string): Promise<boolean> =
   } catch (err) {
     return false;
   }
+};
+
+export const verify = async (): Promise<boolean> => {
+  const token = getToken();
+  const config = {
+    headers: { Authorization: 'Bearer ' + token },
+  };
+  if (!token) {
+    clearStorage();
+    return false;
+  }
+  try {
+    const {
+      data: { id, userType },
+    } = await axios.get(`/user/verify`, config);
+    if (id || userType) {
+      return true;
+    } else {
+      clearStorage();
+    }
+  } catch (error) {
+    clearStorage();
+    return false;
+  }
+  return false;
 };

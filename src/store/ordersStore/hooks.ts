@@ -32,9 +32,10 @@ export const useOrdersResource = (): Resource<Orders> => {
     dispatch({ type: 'Orders/LoadInitiated' });
     getOrders()
       .then(data => dispatch({ type: 'Orders/Loaded', payload: data }))
-      .catch(err =>
-        dispatch({ type: 'Orders/LoadFailed', payload: newStoreError(err.message, err.code) })
-      );
+      .catch(err => {
+        window.location.reload();
+        dispatch({ type: 'Orders/LoadFailed', payload: newStoreError(err.message, err.code) });
+      });
 
     return Loading;
   }
