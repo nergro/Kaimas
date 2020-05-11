@@ -14,6 +14,9 @@ const Wrapper = styled.div`
   @media (max-width: ${props => props.theme.breakpoints.l}) {
     flex-direction: column;
   }
+  @media (max-width: ${props => props.theme.breakpoints.s}) {
+    width: 95%;
+  }
 `;
 
 const ListWrapper = styled.div`

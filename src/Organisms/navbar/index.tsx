@@ -143,7 +143,7 @@ const NavbarBase: FC<Props> = ({ className }) => {
 export const Navbar = styled(NavbarBase)`
   background: transparent;
   height: 120px;
-  width: ${props => (props.scrolled ? '100%' : '80%')};
+  width: ${props => (props.scrolled ? '101%' : '80%')};
   margin: 0 auto;
   position: fixed;
   z-index: 9;

@@ -31,6 +31,9 @@ const ContentBottom = styled.div`
   @media (max-width: ${props => props.theme.breakpoints.l}) {
     flex-direction: column;
   }
+  @media (max-width: ${props => props.theme.breakpoints.s}) {
+    padding: 50px 0;
+  }
 `;
 
 const Title = styled(H1)`
