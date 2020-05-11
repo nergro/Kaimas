@@ -49,7 +49,6 @@ export const Order: FC<Props> = ({ className, order }) => {
   const now = moment().format('LLLL');
 
   order.reservedDates.forEach(x => {
-    console.log(moment(x.date).isAfter(now));
     if (moment(x.date).isAfter(now)) {
       isUpcoming = true;
     }

@@ -20,7 +20,6 @@ export const Cabins: FC = () => {
   const { benefits, capacity, price, searchValue: initialSearchValue } = getInitialListValues(
     location.state
   );
-  console.log(location.state);
 
   const { t } = useTranslation();
   const fetchedCabins = useCabinsList();
