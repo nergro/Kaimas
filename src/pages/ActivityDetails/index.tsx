@@ -38,6 +38,8 @@ const ContentBottom = styled.div`
 
 const Title = styled(H1)`
   margin-bottom: 10px;
+  color: rgba(0, 0, 0, 0.6);
+  text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 16px rgba(255, 255, 255, 0.3);
 `;
 
 const Gallery = styled(ImageGallery)`
@@ -104,7 +106,7 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
   return (
     <MainLayout>
       <ContentTop>
-        <Title size="big" weight="600">
+        <Title size="massive" weight="600">
           {name}
         </Title>
         {hasReservation !== undefined && !hasReservation && isAuth && (

@@ -46,7 +46,7 @@ export const AboutContent: FC<Props> = ({ className, price, capacity, address, d
       </Paragraph>
       <Paragraph weight="600">{t('Description')}:</Paragraph>
       {description.split('.').map((x, i) => (
-        <StyledP key={i}>{x}.</StyledP>
+        <StyledP key={i}>{x}</StyledP>
       ))}
     </Wrapper>
   );

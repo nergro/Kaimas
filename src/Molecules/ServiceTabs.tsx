@@ -37,6 +37,13 @@ const StyledTab = styled(CabinTab)`
 const Content = styled.div`
   padding: 40px;
   background: ${props => props.theme.colors.background.primary};
+  min-height: 300px;
+  @media (max-width: ${props => props.theme.breakpoints.m}) {
+    padding: 20px;
+  }
+  @media (max-width: ${props => props.theme.breakpoints.s}) {
+    padding: 5px;
+  }
 `;
 
 interface Props {

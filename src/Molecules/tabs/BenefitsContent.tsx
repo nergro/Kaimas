@@ -1,15 +1,24 @@
+import { P } from 'Atoms/text';
 import React, { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getLocale } from 'services/localStorage';
 import styled from 'styled-components/macro';
 import { BenefitType } from 'types/benefit';
-import { P } from 'Atoms/text';
-import { useTranslation } from 'react-i18next';
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  /* background: whitesmoke; */
+`;
 
-const List = styled.ul``;
+const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-const ListItem = styled.li``;
+const StyledP = styled(P)`
+  color: rgba(0, 0, 0, 0.6);
+  text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 16px rgba(255, 255, 255, 0.3);
+`;
 
 interface Props {
   className?: string;
@@ -26,7 +35,9 @@ export const BenefitsContent: FC<Props> = ({ className, benefits }) => {
       {benefits.length > 0 ? (
         <List>
           {benefits.map(x => (
-            <ListItem key={x.id}>{isLT ? x.descriptionLT : x.descriptionEN}</ListItem>
+            <StyledP key={x.id} size="huge" weight="600">
+              {isLT ? x.descriptionLT : x.descriptionEN}
+            </StyledP>
           ))}
         </List>
       ) : (

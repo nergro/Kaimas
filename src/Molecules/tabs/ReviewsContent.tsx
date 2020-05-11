@@ -31,6 +31,10 @@ const StyledReview = styled(Review)`
   margin: 15px 15px 0 0;
 `;
 
+const StyledP = styled(P)`
+  text-align: center;
+`;
+
 interface Props {
   className?: string;
   reviews: ReviewType[];
@@ -63,9 +67,9 @@ export const ReviewsContent: FC<Props> = ({ className, reviews, serviceType, ser
         {reviews.length > 0 ? (
           reviews.map(review => <StyledReview key={review.id} review={review} />)
         ) : (
-          <P size="big" weight="600">
+          <StyledP size="huge" weight="600">
             {t('No reviews yet')}
-          </P>
+          </StyledP>
         )}
       </Reviews>
       <ReviewModal
