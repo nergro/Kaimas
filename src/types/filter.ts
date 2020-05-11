@@ -1,4 +1,4 @@
-import { PriceFilterState } from 'utils/listFilter';
+import { PriceFilterState } from 'utils/activitiesFilter';
 
 import { SearchSelectOption } from './searchSelectOption';
 
@@ -7,4 +7,5 @@ export interface FilterState {
   capacity: number;
   price: PriceFilterState;
   benefits: SearchSelectOption[] | undefined;
+  category: SearchSelectOption | undefined;
 }

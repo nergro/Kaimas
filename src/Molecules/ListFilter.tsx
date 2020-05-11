@@ -2,14 +2,16 @@ import { IncreaseButton } from 'Atoms/buttons/IncreaseButton';
 import { Input } from 'Atoms/Input';
 import { H3 } from 'Atoms/text';
 import { MultiSelect } from 'Molecules/select/MultiSelect';
+import { SingleSelect } from 'Molecules/select/SingleSelect';
 import React, { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getLocale } from 'services/localStorage';
 import { useBenefitsList } from 'store/benefitsStore/hooks';
+import { useCategoriesList } from 'store/categoriesStore/hooks';
 import styled from 'styled-components/macro';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
-import { PriceFilterState } from 'utils/listFilter';
+import { PriceFilterState } from 'utils/activitiesFilter';
 
 const Wrapper = styled.div`
   box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
@@ -76,6 +78,9 @@ interface Props {
   onBenefitsChange?: (values?: SearchSelectOption[]) => void;
   priceValues: PriceFilterState;
   benefitValues: SearchSelectOption[] | undefined;
+  hasCategory?: boolean;
+  categoryValue?: SearchSelectOption | undefined;
+  onCategoryChange?: (value?: SearchSelectOption) => void;
 }
 
 export const ListFilter: FC<Props> = ({
@@ -88,15 +93,24 @@ export const ListFilter: FC<Props> = ({
   onBenefitsChange,
   priceValues,
   benefitValues,
+  hasCategory,
+  categoryValue,
+  onCategoryChange,
 }) => {
   const { t } = useTranslation();
   const benefits = useBenefitsList();
+  const categories = useCategoriesList();
   const locale = getLocale()?.value;
   const isLT = locale === 'lt';
 
   const benefitOptions = benefits.map(x => ({
     value: x.id,
     label: isLT ? x.descriptionLT : x.descriptionEN,
+  }));
+
+  const categoriesOptions = categories.map(x => ({
+    value: x.id,
+    label: isLT ? x.nameLT : x.nameEN,
   }));
 
   return (
@@ -144,6 +158,17 @@ export const ListFilter: FC<Props> = ({
         onChange={onBenefitsChange}
         value={benefitValues}
       />
+      {hasCategory && (
+        <>
+          <InputLabel weight="500">{t('Categories')}</InputLabel>
+          <SingleSelect
+            options={categoriesOptions}
+            placeholder={t('Choose one')}
+            onChange={onCategoryChange}
+            value={categoryValue}
+          />
+        </>
+      )}
     </Wrapper>
   );
 };

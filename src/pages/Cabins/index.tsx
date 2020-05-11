@@ -7,13 +7,13 @@ import { useLocation } from 'react-router-dom';
 import { useCabinsList } from 'store/cabinsStore/hooks';
 import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
-import { getInitialListValues } from 'utils/getInitialListValues';
 import {
-  getFilteredList,
+  getFilteredCabins,
   onCapacityButtonClick,
   onPriceChange,
   PriceFilterState,
-} from 'utils/listFilter';
+} from 'utils/cabinsFilter';
+import { getInitialListValues } from 'utils/getInitialListValues';
 
 export const Cabins: FC = () => {
   const location = useLocation();
@@ -39,7 +39,7 @@ export const Cabins: FC = () => {
   }, [fetchedCabins]);
 
   const filteredCabins: Cabin[] = useMemo(() => {
-    return getFilteredList(cabins, capacityFilter, priceFilter, selectedBenefits, searchValue);
+    return getFilteredCabins(cabins, capacityFilter, priceFilter, selectedBenefits, searchValue);
   }, [cabins, capacityFilter, priceFilter, selectedBenefits, searchValue]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {

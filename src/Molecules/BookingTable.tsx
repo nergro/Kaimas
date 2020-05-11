@@ -8,7 +8,7 @@ import styled from 'styled-components/macro';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { FilterState } from 'types/filter';
 import { SearchSelectOption } from 'types/searchSelectOption';
-import { onCapacityButtonClick, onPriceChange, PriceFilterState } from 'utils/listFilter';
+import { onCapacityButtonClick, onPriceChange, PriceFilterState } from 'utils/activitiesFilter';
 
 const Wrapper = styled.div`
   @media (max-height: 900px) and (min-width: ${props => props.theme.breakpoints.m}) {
@@ -59,6 +59,7 @@ export const BookingTable: FC = () => {
     end: undefined,
   });
   const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[]>();
+  const [selectedCategory, setSelectedCategory] = useState<SearchSelectOption>();
 
   const { t } = useTranslation();
 
@@ -79,6 +80,7 @@ export const BookingTable: FC = () => {
     capacity: capacityFilter,
     price: priceFilter,
     benefits: selectedBenefits,
+    category: selectedCategory,
   };
 
   return (
@@ -106,6 +108,9 @@ export const BookingTable: FC = () => {
           searchValue={searchValue}
           priceValues={priceFilter}
           benefitValues={selectedBenefits}
+          hasCategory={activeSection === 'activities'}
+          categoryValue={selectedCategory}
+          onCategoryChange={setSelectedCategory}
         />
         <StyledLink toObject={{ pathname: `/${activeSection}`, state: filterData }}>
           {t('Search')}

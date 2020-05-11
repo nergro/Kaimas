@@ -6,29 +6,36 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useActivitiesList } from 'store/activitiesStore/hooks';
 import { Activity } from 'types/activity';
-import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
+import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
-import { getInitialListValues } from 'utils/getInitialListValues';
 import {
-  getFilteredList,
+  getFilteredActivities,
   onCapacityButtonClick,
   onPriceChange,
   PriceFilterState,
-} from 'utils/listFilter';
+} from 'utils/activitiesFilter';
+import { getInitialListValues } from 'utils/getInitialListValues';
 
 export const Activities: FC = () => {
   const location = useLocation();
-  const { benefits, capacity, price, searchValue: initialSearchValue } = getInitialListValues(
-    location.state
-  );
+  const {
+    benefits,
+    capacity,
+    price,
+    searchValue: initialSearchValue,
+    category,
+  } = getInitialListValues(location.state);
 
   const { t } = useTranslation();
   const fetchedActivities = useActivitiesList();
-  const [activities, setActivities] = useState<(Cabin | Activity)[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [capacityFilter, setCapacityFilter] = useState<number>(capacity);
   const [priceFilter, setPriceFilter] = useState<PriceFilterState>(price);
   const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[] | undefined>(
     benefits
+  );
+  const [selectedCategory, setSelectedCategory] = useState<SearchSelectOption | undefined>(
+    category
   );
   const [searchValue, setSearchValue] = useState<string | undefined>(initialSearchValue);
 
@@ -39,8 +46,15 @@ export const Activities: FC = () => {
   }, [fetchedActivities]);
 
   const filteredActivities = useMemo(() => {
-    return getFilteredList(activities, capacityFilter, priceFilter, selectedBenefits, searchValue);
-  }, [activities, capacityFilter, priceFilter, selectedBenefits, searchValue]);
+    return getFilteredActivities(
+      activities,
+      capacityFilter,
+      priceFilter,
+      selectedBenefits,
+      searchValue,
+      selectedCategory
+    );
+  }, [activities, capacityFilter, priceFilter, selectedBenefits, searchValue, selectedCategory]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value);
@@ -70,6 +84,9 @@ export const Activities: FC = () => {
           searchValue={searchValue}
           priceValues={priceFilter}
           benefitValues={selectedBenefits}
+          hasCategory
+          categoryValue={selectedCategory}
+          onCategoryChange={setSelectedCategory}
         />
       }
     />

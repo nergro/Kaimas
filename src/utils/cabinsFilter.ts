@@ -1,14 +1,10 @@
 import { getLocale } from 'services/localStorage';
-import { Activity } from 'types/activity';
 import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
 
 export type PriceFilterState = { start: number | undefined; end: number | undefined };
 
-const getFilteredCabinsByPrice = (
-  cabins: Cabin[] | Activity[],
-  priceFilter: PriceFilterState
-): Cabin[] | Activity[] => {
+const getFilteredCabinsByPrice = (cabins: Cabin[], priceFilter: PriceFilterState): Cabin[] => {
   let start = 0;
   let end = 0;
   if (priceFilter.start !== undefined) start = priceFilter.start;
@@ -23,10 +19,7 @@ const getFilteredCabinsByPrice = (
   return cabins.filter(cabin => cabin.price >= start && cabin.price <= end);
 };
 
-const getFilteredCabinsByBenefits = (
-  cabins: Cabin[],
-  benefits: SearchSelectOption[]
-): Cabin[] | Activity[] => {
+const getFilteredCabinsByBenefits = (cabins: Cabin[], benefits: SearchSelectOption[]): Cabin[] => {
   const filteredCabins: Cabin[] = [];
   const cabinsBenefitsIds = cabins.map(cabin => cabin.benefits.map(benefit => benefit.id));
   const selectedBenefitsIds = benefits.map(benefit => benefit.value);
@@ -46,10 +39,7 @@ const getFilteredCabinsByBenefits = (
   return filteredCabins;
 };
 
-export const getFilteredBySearch = (
-  items: (Cabin | Activity)[],
-  value: string
-): (Cabin | Activity)[] => {
+export const getFilteredBySearch = (items: Cabin[], value: string): Cabin[] => {
   const locale = getLocale()?.value;
 
   return items.filter(item => {
@@ -58,14 +48,14 @@ export const getFilteredBySearch = (
   });
 };
 
-export const getFilteredList = (
-  items: Cabin[] | Activity[],
+export const getFilteredCabins = (
+  cabins: Cabin[],
   capacityFilter: number,
   priceFilter: PriceFilterState,
   selectedBenefits: SearchSelectOption[] | undefined,
   searchValue: string | undefined
-): Cabin[] | Activity[] => {
-  let filtered = [...items];
+): Cabin[] => {
+  let filtered: Cabin[] = [...cabins];
   if (capacityFilter > 0) {
     filtered = filtered.filter(cabin => cabin.capacity >= capacityFilter);
   }

@@ -58,6 +58,7 @@ const OverlayContentLeft = styled.div`
 
 const OverlayContentRight = styled.div`
   width: 50%;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   @media (max-width: ${props => props.theme.breakpoints.m}) {
