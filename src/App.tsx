@@ -6,6 +6,7 @@ import { ActivityDetails } from 'pages/ActivityDetails';
 import { CabinDetails } from 'pages/CabinDetails';
 import { Cabins } from 'pages/Cabins';
 import { Home } from 'pages/Home';
+import { OrderCancellation } from 'pages/OrderCancellation';
 import { SubscribeCancellation } from 'pages/SubscribeCancellation';
 import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,6 +70,7 @@ export const App: FC = () => {
         <Route path="/activities" exact component={Activities} />
         <Route path="/activities/:activityId" exact component={ActivityDetails} />
         <Route path="/subscribtion/:token" exact component={SubscribeCancellation} />
+        <Route path="/order/:token" exact component={OrderCancellation} />
         <Route component={NotFound} />
       </Switch>
     </AppLayout>

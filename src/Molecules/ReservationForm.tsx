@@ -70,7 +70,9 @@ export const ReservationForm: FC<Props> = ({ className, onSubmit, availableDates
     );
   }
 
-  const includeDates = availableDates.map(x => moment(x.date).toDate());
+  const includeDates = availableDates
+    .filter(x => moment(x.date).isAfter(new Date()))
+    .map(x => moment(x.date).toDate());
 
   return (
     <Form className={className} onSubmit={onFormSubmit}>

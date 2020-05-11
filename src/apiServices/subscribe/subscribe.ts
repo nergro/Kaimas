@@ -6,7 +6,10 @@ export const doSubscribe = async (email: string): Promise<string> => {
 };
 
 export const doCancellation = async (token: string): Promise<boolean> => {
-  await axios.post<string>(`/subscribe/${token}`);
-
-  return true;
+  try {
+    await axios.post<string>(`/subscribe/${token}`);
+    return true;
+  } catch (error) {
+    return false;
+  }
 };

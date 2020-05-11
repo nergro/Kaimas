@@ -1,8 +1,12 @@
+import { doOrderCancellation } from 'apiServices/orders/orders';
+import { Loader } from 'Atoms/Loader';
 import { H1 } from 'Atoms/text';
 import { MainLayout } from 'layouts/MainLayout';
 import { NotFoundImage } from 'Molecules/NotFoundImage';
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RouteComponentProps } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components/macro';
 
 const NotFoundPage = styled.div`
@@ -10,16 +14,6 @@ const NotFoundPage = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  @media (max-width: ${props => props.theme.breakpoints.m}) {
-    padding: 100px 10px 32px;
-  }
-  @media (max-width: ${props => props.theme.breakpoints.l}) and (min-width: ${props =>
-      props.theme.breakpoints.m}) {
-    padding: 100px 20px 32px;
-  }
-  @media (min-width: ${props => props.theme.breakpoints.l}) {
-    padding: 100px 48px 32px;
-  }
 `;
 
 const GridSection = styled.div`
@@ -66,8 +60,33 @@ const TitleStyled = styled(H1)`
   }
 `;
 
-export const NotFound: React.FC = () => {
+type CancelState = 'cancelled' | 'error' | 'initial';
+
+export const OrderCancellation: FC<RouteComponentProps<{ token: string }>> = ({ match }) => {
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [cancelStatus, setCancelStatus] = useState<CancelState>('initial');
+
+  useEffect(() => {
+    const makeCancellation = async (): Promise<void> => {
+      setIsLoading(true);
+      const res = await doOrderCancellation(match.params.token);
+      setCancelStatus(res ? 'cancelled' : 'error');
+      setIsLoading(false);
+    };
+    makeCancellation();
+  }, [match.params.token]);
+
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <Loader />
+      </MainLayout>
+    );
+  }
+  if (cancelStatus === 'error') {
+    return <Redirect to="/404" />;
+  }
 
   return (
     <MainLayout>
@@ -76,7 +95,9 @@ export const NotFound: React.FC = () => {
           <NotFoundImageStyled />
           <TextContainer>
             <TitleStyled weight="600" font="Poppins" size="veryBig" color="main" lineHeight="unset">
-              {t('Hmm... I can’t find this page.')}
+              {cancelStatus === 'cancelled'
+                ? t('Your cancellation were successful!')
+                : t('Your cancellation were not successful!')}
             </TitleStyled>
           </TextContainer>
         </GridSection>

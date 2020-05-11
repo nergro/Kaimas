@@ -4,6 +4,7 @@ import { P } from 'Atoms/text';
 import { ReviewModal } from 'Organisms/ReviewModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getReservationStatus } from 'services/localStorage';
 import { useOrdersList } from 'store/ordersStore/hooks';
 import styled from 'styled-components/macro';
 import { Review as ReviewType } from 'types/review';
@@ -53,19 +54,25 @@ export const ReviewsContent: FC<Props> = ({ className, reviews, serviceType, ser
 
   let hadReservation = false;
   orders.forEach(x => {
-    if (x.id === serviceId) {
+    if (x.serviceId.id === serviceId) {
       hadReservation = true;
     }
   });
 
+  const sortedReviews = reviews.sort((a, b) => {
+    if (a.date > b.date) return -1;
+    if (a.date < b.date) return 1;
+    return 0;
+  });
+
   return (
     <Wrapper className={className}>
-      {hadReservation && (
+      {hadReservation && !getReservationStatus(serviceType === 'Cabin' ? 'cabin' : 'activity') && (
         <StyledButton onClick={() => setReviewModalOpen(true)}>{t('Write a review')}</StyledButton>
       )}
       <Reviews>
-        {reviews.length > 0 ? (
-          reviews.map(review => <StyledReview key={review.id} review={review} />)
+        {sortedReviews.length > 0 ? (
+          sortedReviews.map(review => <StyledReview key={review.id} review={review} />)
         ) : (
           <StyledP size="huge" weight="600">
             {t('No reviews yet')}

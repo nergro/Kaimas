@@ -73,6 +73,7 @@ export const ReservationModal: FC<Props> = ({
       if (response === 200) {
         onClose();
         setLoading(false);
+        window.location.reload();
         toast.success(t('Your reservation were successful!'));
         if (serviceType === 'Activity') {
           setActivityReservationStatus(true);
