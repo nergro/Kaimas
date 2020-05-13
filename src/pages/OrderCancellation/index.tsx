@@ -44,7 +44,8 @@ const NotFoundImageStyled = styled(NotFoundImage)`
 `;
 
 const TitleStyled = styled(H1)`
-  text-align: unset;
+  width: 80%;
+  text-align: center;
   color: rgba(0, 0, 0, 0.6);
   text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 16px rgba(255, 255, 255, 0.3);
   @media (max-width: ${props => props.theme.breakpoints.s}) {
@@ -96,8 +97,8 @@ export const OrderCancellation: FC<RouteComponentProps<{ token: string }>> = ({ 
           <TextContainer>
             <TitleStyled weight="600" font="Poppins" size="veryBig" color="main" lineHeight="unset">
               {cancelStatus === 'cancelled'
-                ? t('Your cancellation were successful!')
-                : t('Your cancellation were not successful!')}
+                ? t('Your order cancellation were successful!')
+                : t('Your order cancellation were not successful!')}
             </TitleStyled>
           </TextContainer>
         </GridSection>
