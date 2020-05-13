@@ -18,21 +18,29 @@ const StyledInput = styled(InputWithIcon)`
 export const NewsletterForm: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasSubscribed, setHasSubscribed] = useState<boolean>(false);
+  const [hasSubscribed, setHasSubscribed] = useState<'initial' | 'subscribed' | 'error'>('initial');
   const { t } = useTranslation();
 
   if (isLoading) {
     return <SimpleLoader />;
   }
-  if (hasSubscribed) {
+  if (hasSubscribed === 'subscribed') {
     return <P color="warning">{t('Thank you!')}</P>;
+  }
+  if (hasSubscribed === 'error') {
+    return <P color="warning">{t('Already subscribed')}</P>;
   }
   const onSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    setIsLoading(true);
-    await doSubscribe(email);
-    setHasSubscribed(true);
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      await doSubscribe(email);
+      setHasSubscribed('subscribed');
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      setHasSubscribed('error');
+    }
   };
 
   return (
