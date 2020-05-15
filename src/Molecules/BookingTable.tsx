@@ -2,8 +2,10 @@ import { Tab } from 'Atoms/buttons/Tab';
 import { ButtonLink } from 'Atoms/links/ButtonLink';
 import { H3 } from 'Atoms/text';
 import { ListFilter } from 'Molecules/ListFilter';
+import moment from 'moment';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDatesList } from 'store/allDatesStore/hooks';
 import styled from 'styled-components/macro';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { FilterState } from 'types/filter';
@@ -51,6 +53,8 @@ const StyledLink = styled(ButtonLink)`
 `;
 
 export const BookingTable: FC = () => {
+  const dates = useDatesList();
+  const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState<'cabins' | 'activities'>('cabins');
   const [searchValue, setSearchValue] = useState<string>();
   const [capacityFilter, setCapacityFilter] = useState<number>(0);
@@ -60,8 +64,8 @@ export const BookingTable: FC = () => {
   });
   const [selectedBenefits, setSelectedBenefits] = useState<SearchSelectOption[]>();
   const [selectedCategory, setSelectedCategory] = useState<SearchSelectOption>();
-
-  const { t } = useTranslation();
+  const [from, setFrom] = useState<Date | null>(null);
+  const [to, setTo] = useState<Date | null>(null);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value);
@@ -82,6 +86,12 @@ export const BookingTable: FC = () => {
     benefits: selectedBenefits,
     category: selectedCategory,
   };
+
+  const allDates = activeSection === 'cabins' ? dates.cabinDates : dates.activityDates;
+
+  const availableDates = allDates
+    .filter(x => moment(x.date).isAfter(new Date()))
+    .map(x => moment(x.date).toDate());
 
   return (
     <Wrapper>
@@ -111,6 +121,11 @@ export const BookingTable: FC = () => {
           hasCategory={activeSection === 'activities'}
           categoryValue={selectedCategory}
           onCategoryChange={setSelectedCategory}
+          availableDates={availableDates}
+          from={from}
+          to={to}
+          onFromChange={day => setFrom(day)}
+          onToChange={day => setTo(day)}
         />
         <StyledLink toObject={{ pathname: `/${activeSection}`, state: filterData }}>
           {t('Search')}

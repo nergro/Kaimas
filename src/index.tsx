@@ -10,6 +10,7 @@ import Modal from 'react-modal';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { lightTheme } from 'services/theme/lightTheme';
 import { ActivitiesStoreProvider } from 'store/activitiesStore/provider';
+import { AllDatesStoreProvider } from 'store/allDatesStore/provider';
 import { BenefitsStoreProvider } from 'store/benefitsStore/provider';
 import { CabinsStoreProvider } from 'store/cabinsStore/provider';
 import { CategoriesStoreProvider } from 'store/categoriesStore/provider';
@@ -34,6 +35,7 @@ const storeProviders = [
   OrdersStoreProvider,
   BenefitsStoreProvider,
   CategoriesStoreProvider,
+  AllDatesStoreProvider,
 ];
 
 ReactDOM.render(

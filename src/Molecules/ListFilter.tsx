@@ -1,4 +1,5 @@
 import { IncreaseButton } from 'Atoms/buttons/IncreaseButton';
+import { DatePicker } from 'Atoms/DatePicker';
 import { Input } from 'Atoms/Input';
 import { H3 } from 'Atoms/text';
 import { MultiSelect } from 'Molecules/select/MultiSelect';
@@ -67,6 +68,12 @@ const PriceInputWrapper = styled.div`
   }
 `;
 
+const DatePickers = styled.div`
+  display: flex;
+`;
+
+const StyledPicker = styled(DatePicker)``;
+
 interface Props {
   className?: string;
   onSearchChange(e: React.ChangeEvent<HTMLInputElement>): void;
@@ -81,6 +88,11 @@ interface Props {
   hasCategory?: boolean;
   categoryValue?: SearchSelectOption | undefined;
   onCategoryChange?: (value?: SearchSelectOption) => void;
+  availableDates: Date[];
+  from: Date | null;
+  to: Date | null;
+  onFromChange: (day: Date) => void;
+  onToChange: (day: Date) => void;
 }
 
 export const ListFilter: FC<Props> = ({
@@ -96,6 +108,11 @@ export const ListFilter: FC<Props> = ({
   hasCategory,
   categoryValue,
   onCategoryChange,
+  availableDates,
+  from,
+  to,
+  onFromChange,
+  onToChange,
 }) => {
   const { t } = useTranslation();
   const benefits = useBenefitsList();
@@ -115,6 +132,23 @@ export const ListFilter: FC<Props> = ({
 
   return (
     <Wrapper>
+      <InputLabel weight="500">{t('Dates')}</InputLabel>
+      <DatePickers>
+        <StyledPicker
+          dateFormat="dd/MM/yyyy"
+          selected={from}
+          onChange={onFromChange}
+          placeholderText={t('From')}
+          includeDates={availableDates}
+        />
+        <StyledPicker
+          dateFormat="dd/MM/yyyy"
+          selected={to}
+          onChange={onToChange}
+          placeholderText={t('To')}
+          includeDates={availableDates}
+        />
+      </DatePickers>
       <InputLabel weight="500">{t('Search')}</InputLabel>
       <StyledInput
         type="text"

@@ -2,5 +2,5 @@ export interface AvailableDate {
   id: string;
   serviceId: string;
   date: string;
-  onModel: string;
+  onModel: 'Cabin' | 'Activity';
 }

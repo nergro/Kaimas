@@ -1,4 +1,4 @@
-import { getDates } from 'apiServices/availableDates/availableDates';
+import { getDatesById } from 'apiServices/availableDates/availableDates';
 import React from 'react';
 import { newStoreError } from 'store/storeError';
 import { Dispatch, Loading, Resource } from 'store/types';
@@ -28,7 +28,7 @@ export const useDates = (serviceId: string): Resource<AvailableDate[]> => {
   const dates = state[serviceId];
   if (!dates) {
     dispatch({ type: 'Dates/SingleLoadInitiated', payload: { serviceId } });
-    getDates(serviceId)
+    getDatesById(serviceId)
       .then(data => dispatch({ type: 'Dates/SingleLoaded', payload: { serviceId, data } }))
       .catch(err => {
         dispatch({

@@ -1,10 +1,12 @@
 import { ListLayout } from 'layouts/ListLayout';
 import { ListFilter } from 'Molecules/ListFilter';
 import { ServiceList } from 'Molecules/ServiceList';
+import moment from 'moment';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { useActivitiesList } from 'store/activitiesStore/hooks';
+import { useDatesList } from 'store/allDatesStore/hooks';
 import { Activity } from 'types/activity';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
@@ -17,6 +19,7 @@ import {
 import { getInitialListValues } from 'utils/getInitialListValues';
 
 export const Activities: FC = () => {
+  const dates = useDatesList();
   const location = useLocation();
   const {
     benefits,
@@ -38,6 +41,8 @@ export const Activities: FC = () => {
     category
   );
   const [searchValue, setSearchValue] = useState<string | undefined>(initialSearchValue);
+  const [from, setFrom] = useState<Date | null>(null);
+  const [to, setTo] = useState<Date | null>(null);
 
   useEffect(() => {
     if (fetchedActivities) {
@@ -68,6 +73,10 @@ export const Activities: FC = () => {
     setPriceFilter(onPriceChange(e.target.value, input, priceFilter));
   };
 
+  const availableDates = dates.activityDates
+    .filter(x => moment(x.date).isAfter(new Date()))
+    .map(x => moment(x.date).toDate());
+
   return (
     <ListLayout
       title={t('Activities')}
@@ -87,6 +96,11 @@ export const Activities: FC = () => {
           hasCategory
           categoryValue={selectedCategory}
           onCategoryChange={setSelectedCategory}
+          availableDates={availableDates}
+          from={from}
+          to={to}
+          onFromChange={day => setFrom(day)}
+          onToChange={day => setTo(day)}
         />
       }
     />
