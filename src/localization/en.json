@@ -133,5 +133,8 @@
   "You must agree with the rules": "You must agree with the rules",
   "Categories": "Categories",
   "Choose one" : "Choose one",
-  "Already subscribed":"Already subscribed"
+  "Already subscribed":"Already subscribed",
+  "Dates has unavailable gap": "Dates has unavailable gap",
+  "Reservation can not be longer than 2 weeks": "Reservation can not be longer than 2 weeks",
+  "Date": "Date"
 }

@@ -64,13 +64,17 @@ const ReservationButton = styled(Button)`
 
 export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ match }) => {
   const { t } = useTranslation();
+  const hasReservation = getReservationStatus('cabin');
+  const isAuth = getAuthStatus();
+
+  console.log(isAuth);
+
+  const [showReservationButton, setShowReservationButton] = useState<boolean>(true);
   const [reservationModalOpen, setReservationModalOpen] = useState<boolean>(false);
   const cabinsResource = useCabinsResource();
   const reviews = useReviews(match.params.cabinId);
 
   const locale = getLocale()?.value;
-  const hasReservation = getReservationStatus('cabin');
-  const isAuth = getAuthStatus();
 
   assetIsNotStoreError(cabinsResource);
   assetIsNotStoreError(reviews);
@@ -107,7 +111,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         <Title size="massive" weight="600">
           {name}
         </Title>
-        {hasReservation !== undefined && !hasReservation && isAuth && (
+        {hasReservation !== undefined && !hasReservation && isAuth && showReservationButton && (
           <ReservationButton onClick={() => setReservationModalOpen(true)}>
             {t('Reservation')}
           </ReservationButton>
@@ -140,6 +144,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         serviceId={match.params.cabinId}
         onClose={() => setReservationModalOpen(false)}
         price={cabin.price}
+        onSuccessfullSubmit={() => setShowReservationButton(false)}
       />
     </MainLayout>
   );

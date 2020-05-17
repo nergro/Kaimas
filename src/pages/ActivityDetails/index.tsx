@@ -63,6 +63,10 @@ const ReservationButton = styled(Button)`
 
 export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = ({ match }) => {
   const { t } = useTranslation();
+  const hasReservation = getReservationStatus('activity');
+  const isAuth = getAuthStatus();
+
+  const [showReservationButton, setShowReservationButton] = useState<boolean>(true);
   const [reservationModalOpen, setReservationModalOpen] = useState<boolean>(false);
   const activitiesResource = useActivitiesResource();
   const reviews = useReviews(match.params.activityId);
@@ -71,9 +75,6 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
 
   assetIsNotStoreError(activitiesResource);
   assetIsNotStoreError(reviews);
-
-  const hasReservation = getReservationStatus('activity');
-  const isAuth = getAuthStatus();
 
   if (isLoading(activitiesResource) || isLoading(reviews)) {
     return (
@@ -109,7 +110,7 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
         <Title size="massive" weight="600">
           {name}
         </Title>
-        {hasReservation !== undefined && !hasReservation && isAuth && (
+        {hasReservation !== undefined && !hasReservation && isAuth && showReservationButton && (
           <ReservationButton onClick={() => setReservationModalOpen(true)}>
             {t('Reservation')}
           </ReservationButton>
@@ -142,6 +143,7 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
         serviceId={match.params.activityId}
         onClose={() => setReservationModalOpen(false)}
         price={activity.price}
+        onSuccessfullSubmit={() => setShowReservationButton(false)}
       />
     </MainLayout>
   );

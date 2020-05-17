@@ -25,6 +25,7 @@ interface Props {
   serviceId: string;
   onClose(): void;
   price: number;
+  onSuccessfullSubmit: () => void;
 }
 
 export const ReservationModal: FC<Props> = ({
@@ -34,6 +35,7 @@ export const ReservationModal: FC<Props> = ({
   serviceId,
   serviceType,
   price,
+  onSuccessfullSubmit,
 }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
@@ -73,8 +75,8 @@ export const ReservationModal: FC<Props> = ({
       if (response === 200) {
         onClose();
         setLoading(false);
-        window.location.reload();
         toast.success(t('Your reservation were successful!'));
+        onSuccessfullSubmit();
         if (serviceType === 'Activity') {
           setActivityReservationStatus(true);
         } else {
@@ -95,7 +97,7 @@ export const ReservationModal: FC<Props> = ({
 
   return (
     <Modal className={className} isOpen={isOpen} onClose={onModalClose}>
-      <ReservationForm onSubmit={onSubmit} availableDates={dates} />
+      <ReservationForm onSubmit={onSubmit} availableDates={dates} serviceType={serviceType} />
     </Modal>
   );
 };

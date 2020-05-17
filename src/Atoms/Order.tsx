@@ -54,6 +54,12 @@ export const Order: FC<Props> = ({ className, order }) => {
     }
   });
 
+  const sortedDates = order.reservedDates.sort((a, b) => {
+    if (a.date < b.date) return -1;
+    if (a.date > b.date) return 1;
+    return 0;
+  });
+
   return (
     <OrderBox className={className} isUpcoming={isUpcoming}>
       <NameAndDate>
@@ -81,7 +87,7 @@ export const Order: FC<Props> = ({ className, order }) => {
       <StyledP size="normal" weight="600">
         {t('Reserved dates')}:
       </StyledP>
-      {order.reservedDates.map(x => (
+      {sortedDates.map(x => (
         <P key={x.id}>{moment(x.date).format('YYYY-MM-DD')}</P>
       ))}
     </OrderBox>

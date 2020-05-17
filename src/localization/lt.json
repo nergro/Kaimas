@@ -133,5 +133,8 @@
   "You must agree with the rules": "Privalote sutikti su taisyklėmis",
   "Categories": "Kategorija",
   "Choose one": "Pasirinkite vieną",
-  "Already subscribed":"Jau užprenumeruota"
+  "Already subscribed":"Jau užprenumeruota",
+  "Dates has unavailable gap": "Negalimas tarpas tarp pasirinktų datų",
+  "Reservation can not be longer than 2 weeks": "Rezervacija negali trukti ilgiau nei 2 savaites",
+  "Date": "Data"
 }
