@@ -1,4 +1,6 @@
+import moment from 'moment';
 import { getLocale } from 'services/localStorage';
+import { AvailableDate } from 'types/availableDate';
 import { Cabin, CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
 
@@ -48,12 +50,48 @@ export const getFilteredBySearch = (items: Cabin[], value: string): Cabin[] => {
   });
 };
 
+export const getFilteredByDates = (
+  items: Cabin[],
+  from: Date | null,
+  to: Date | null,
+  availableDates: AvailableDate[]
+): Cabin[] => {
+  const filteredItems: Cabin[] = [];
+  items.forEach(item => {
+    const itemDates = availableDates.filter(x => x.serviceId.id === item.id);
+    let hasCorrectDates = false;
+    itemDates.forEach(date => {
+      if (from && to) {
+        if (moment(date.date).isSameOrAfter(from) && moment(date.date).isSameOrBefore(to)) {
+          hasCorrectDates = true;
+        }
+      } else if (from) {
+        if (moment(date.date).isSameOrAfter(from)) {
+          hasCorrectDates = true;
+        }
+      } else if (to) {
+        if (moment(date.date).isSameOrBefore(to)) {
+          hasCorrectDates = true;
+        }
+      }
+    });
+    if (hasCorrectDates) {
+      filteredItems.push(item);
+    }
+  });
+
+  return filteredItems;
+};
+
 export const getFilteredCabins = (
   cabins: Cabin[],
   capacityFilter: number,
   priceFilter: PriceFilterState,
   selectedBenefits: SearchSelectOption[] | undefined,
-  searchValue: string | undefined
+  searchValue: string | undefined,
+  availableDates: AvailableDate[],
+  from: Date | null,
+  to: Date | null
 ): Cabin[] => {
   let filtered: Cabin[] = [...cabins];
   if (capacityFilter > 0) {
@@ -73,6 +111,9 @@ export const getFilteredCabins = (
   }
   if (searchValue) {
     filtered = getFilteredBySearch(filtered, searchValue);
+  }
+  if (from || to) {
+    filtered = getFilteredByDates(filtered, from, to, availableDates);
   }
   return filtered;
 };

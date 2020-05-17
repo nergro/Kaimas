@@ -1,5 +1,7 @@
+import moment from 'moment';
 import { getLocale } from 'services/localStorage';
 import { Activity } from 'types/activity';
+import { AvailableDate } from 'types/availableDate';
 import { CapacityFilterType, PriceFilterType } from 'types/cabin';
 import { SearchSelectOption } from 'types/searchSelectOption';
 
@@ -70,13 +72,49 @@ export const getFilteredBySearch = (items: Activity[], value: string): Activity[
   });
 };
 
+export const getFilteredByDates = (
+  items: Activity[],
+  from: Date | null,
+  to: Date | null,
+  availableDates: AvailableDate[]
+): Activity[] => {
+  const filteredItems: Activity[] = [];
+  items.forEach(item => {
+    const itemDates = availableDates.filter(x => x.serviceId.id === item.id);
+    let hasCorrectDates = false;
+    itemDates.forEach(date => {
+      if (from && to) {
+        if (moment(date.date).isSameOrAfter(from) && moment(date.date).isSameOrBefore(to)) {
+          hasCorrectDates = true;
+        }
+      } else if (from) {
+        if (moment(date.date).isSameOrAfter(from)) {
+          hasCorrectDates = true;
+        }
+      } else if (to) {
+        if (moment(date.date).isSameOrBefore(to)) {
+          hasCorrectDates = true;
+        }
+      }
+    });
+    if (hasCorrectDates) {
+      filteredItems.push(item);
+    }
+  });
+
+  return filteredItems;
+};
+
 export const getFilteredActivities = (
   activities: Activity[],
   capacityFilter: number,
   priceFilter: PriceFilterState,
   selectedBenefits: SearchSelectOption[] | undefined,
   searchValue: string | undefined,
-  selectedCategory: SearchSelectOption | undefined
+  selectedCategory: SearchSelectOption | undefined,
+  availableDates: AvailableDate[],
+  from: Date | null,
+  to: Date | null
 ): Activity[] => {
   let filtered: Activity[] = [...activities];
   if (capacityFilter > 0) {
@@ -99,6 +137,9 @@ export const getFilteredActivities = (
   }
   if (searchValue) {
     filtered = getFilteredBySearch(filtered, searchValue);
+  }
+  if (from || to) {
+    filtered = getFilteredByDates(filtered, from, to, availableDates);
   }
   return filtered;
 };

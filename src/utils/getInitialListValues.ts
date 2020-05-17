@@ -8,6 +8,8 @@ export const getInitialListValues = (locationState: FilterState | undefined): Fi
   let price: PriceFilterState = { start: undefined, end: undefined };
   let searchValue = undefined;
   let category = undefined;
+  let from = null;
+  let to = null;
 
   if (locationState) {
     capacity = locationState.capacity;
@@ -15,6 +17,8 @@ export const getInitialListValues = (locationState: FilterState | undefined): Fi
     price = locationState.price;
     searchValue = locationState.searchValue;
     category = locationState.category;
+    from = locationState.from;
+    to = locationState.to;
   }
-  return { capacity, benefits, price, searchValue, category };
+  return { capacity, benefits, price, searchValue, category, from, to };
 };

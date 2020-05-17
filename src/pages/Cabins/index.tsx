@@ -20,9 +20,14 @@ import { getInitialListValues } from 'utils/getInitialListValues';
 export const Cabins: FC = () => {
   const dates = useDatesList();
   const location = useLocation();
-  const { benefits, capacity, price, searchValue: initialSearchValue } = getInitialListValues(
-    location.state
-  );
+  const {
+    benefits,
+    capacity,
+    price,
+    searchValue: initialSearchValue,
+    from: initialFrom,
+    to: initialTo,
+  } = getInitialListValues(location.state);
 
   const { t } = useTranslation();
   const fetchedCabins = useCabinsList();
@@ -33,8 +38,8 @@ export const Cabins: FC = () => {
     benefits
   );
   const [searchValue, setSearchValue] = useState<string | undefined>(initialSearchValue);
-  const [from, setFrom] = useState<Date | null>(null);
-  const [to, setTo] = useState<Date | null>(null);
+  const [from, setFrom] = useState<Date | null>(initialFrom);
+  const [to, setTo] = useState<Date | null>(initialTo);
 
   useEffect(() => {
     if (fetchedCabins.length > 0) {
@@ -43,8 +48,26 @@ export const Cabins: FC = () => {
   }, [fetchedCabins]);
 
   const filteredCabins: Cabin[] = useMemo(() => {
-    return getFilteredCabins(cabins, capacityFilter, priceFilter, selectedBenefits, searchValue);
-  }, [cabins, capacityFilter, priceFilter, selectedBenefits, searchValue]);
+    return getFilteredCabins(
+      cabins,
+      capacityFilter,
+      priceFilter,
+      selectedBenefits,
+      searchValue,
+      dates.cabinDates,
+      from,
+      to
+    );
+  }, [
+    cabins,
+    capacityFilter,
+    priceFilter,
+    selectedBenefits,
+    searchValue,
+    dates.cabinDates,
+    from,
+    to,
+  ]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value);

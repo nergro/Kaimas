@@ -27,6 +27,8 @@ export const Activities: FC = () => {
     price,
     searchValue: initialSearchValue,
     category,
+    from: initialFrom,
+    to: initialTo,
   } = getInitialListValues(location.state);
 
   const { t } = useTranslation();
@@ -41,8 +43,8 @@ export const Activities: FC = () => {
     category
   );
   const [searchValue, setSearchValue] = useState<string | undefined>(initialSearchValue);
-  const [from, setFrom] = useState<Date | null>(null);
-  const [to, setTo] = useState<Date | null>(null);
+  const [from, setFrom] = useState<Date | null>(initialFrom);
+  const [to, setTo] = useState<Date | null>(initialTo);
 
   useEffect(() => {
     if (fetchedActivities) {
@@ -57,9 +59,22 @@ export const Activities: FC = () => {
       priceFilter,
       selectedBenefits,
       searchValue,
-      selectedCategory
+      selectedCategory,
+      dates.activityDates,
+      from,
+      to
     );
-  }, [activities, capacityFilter, priceFilter, selectedBenefits, searchValue, selectedCategory]);
+  }, [
+    activities,
+    capacityFilter,
+    priceFilter,
+    selectedBenefits,
+    searchValue,
+    selectedCategory,
+    dates.activityDates,
+    from,
+    to,
+  ]);
 
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchValue(e.target.value);

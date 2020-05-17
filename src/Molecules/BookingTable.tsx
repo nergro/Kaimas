@@ -85,6 +85,8 @@ export const BookingTable: FC = () => {
     price: priceFilter,
     benefits: selectedBenefits,
     category: selectedCategory,
+    from: from,
+    to: to,
   };
 
   const allDates = activeSection === 'cabins' ? dates.cabinDates : dates.activityDates;

@@ -8,4 +8,6 @@ export interface FilterState {
   price: PriceFilterState;
   benefits: SearchSelectOption[] | undefined;
   category: SearchSelectOption | undefined;
+  from: Date | null;
+  to: Date | null;
 }
