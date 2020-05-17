@@ -128,6 +128,7 @@ export const BookingTable: FC = () => {
           to={to}
           onFromChange={day => setFrom(day)}
           onToChange={day => setTo(day)}
+          showCapacity={false}
         />
         <StyledLink toObject={{ pathname: `/${activeSection}`, state: filterData }}>
           {t('Search')}

@@ -93,6 +93,7 @@ interface Props {
   to: Date | null;
   onFromChange: (day: Date) => void;
   onToChange: (day: Date) => void;
+  showCapacity?: boolean;
 }
 
 export const ListFilter: FC<Props> = ({
@@ -113,6 +114,7 @@ export const ListFilter: FC<Props> = ({
   to,
   onFromChange,
   onToChange,
+  showCapacity = true,
 }) => {
   const { t } = useTranslation();
   const benefits = useBenefitsList();
@@ -157,17 +159,19 @@ export const ListFilter: FC<Props> = ({
         onChange={onSearchChange}
         value={searchValue}
       />
-      <InputLabel weight="500">{t('Capacity')}</InputLabel>
-      <NumberInputWrapper>
-        <IncreaseButton onClick={() => onCapacityButtonClick('decrease')}>-</IncreaseButton>
-        <NumberInput
-          type="number"
-          name="capacity"
-          value={capacityValue}
-          onChange={onCapacityChange}
-        />
-        <IncreaseButton onClick={() => onCapacityButtonClick('increase')}>+</IncreaseButton>
-      </NumberInputWrapper>
+      {showCapacity && <InputLabel weight="500">{t('Capacity')}</InputLabel>}
+      {showCapacity && (
+        <NumberInputWrapper>
+          <IncreaseButton onClick={() => onCapacityButtonClick('decrease')}>-</IncreaseButton>
+          <NumberInput
+            type="number"
+            name="capacity"
+            value={capacityValue}
+            onChange={onCapacityChange}
+          />
+          <IncreaseButton onClick={() => onCapacityButtonClick('increase')}>+</IncreaseButton>
+        </NumberInputWrapper>
+      )}
       <InputLabel weight="500">{t('Price')}</InputLabel>
       <PriceInputWrapper>
         <NumberInput
