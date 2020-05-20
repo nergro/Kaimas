@@ -56,7 +56,6 @@ interface Props {
   uppercase?: boolean;
 }
 
-// this is common styles for all heading tags
 const componentFactory = (comp: FC<Props>): StyledComponent<FC<Props>, DefaultTheme> =>
   styled(comp)`
     color: ${props => props.theme.colors.text[props.color || 'main']};

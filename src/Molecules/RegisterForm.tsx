@@ -32,9 +32,7 @@ const ErrorMessage = styled(P)`
   margin-top: 10px;
 `;
 
-const CheckboxLabel = styled(P)`
-  /* display: flex; */
-`;
+const CheckboxLabel = styled(P)``;
 
 const RulesButton = styled(InvisibleButton)`
   font: ${props => props.theme.fonts.normalText};

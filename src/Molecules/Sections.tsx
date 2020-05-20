@@ -68,19 +68,6 @@ export const Sections: FC = () => {
           toRight={i % 2 === 0}
         />
       ))}
-      {/* <StyledSection
-        title="Vandens pramogos"
-        description="Geriausias poilsis tik tikroje lietuviškoje gamtoje. Mūsų komfortabilios sodybos įrengtos puikioje vietoje. Viskas tobulam Jūsų poilsiui!"
-        path="#"
-        image={LakeImage}
-        toRight
-      />
-      <StyledSection
-        title="Jodinėjimas žirgais"
-        description="Geriausias poilsis tik tikroje lietuviškoje gamtoje. Mūsų komfortabilios sodybos įrengtos puikioje vietoje. Viskas tobulam Jūsų poilsiui!"
-        path="#"
-        image={HorseImage}
-      /> */}
     </Wrapper>
   );
 };

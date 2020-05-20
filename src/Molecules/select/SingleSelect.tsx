@@ -37,7 +37,6 @@ const StyledSelect = styled(Select)`
     display: none;
   }
   .${props => props.classNamePrefix}__multi-value {
-    /* 95% so that search cursor would stay in the same line */
     width: 95%;
   }
   .${props => props.classNamePrefix}__multi-value__label {

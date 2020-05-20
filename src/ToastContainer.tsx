@@ -1,5 +1,3 @@
-// import 'react-toastify/dist/ReactToastify.css';
-// minified version is also included
 import 'react-toastify/dist/ReactToastify.min.css';
 
 import React, { FC } from 'react';

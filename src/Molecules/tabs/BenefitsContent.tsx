@@ -5,9 +5,7 @@ import { getLocale } from 'services/localStorage';
 import styled from 'styled-components/macro';
 import { BenefitType } from 'types/benefit';
 
-const Wrapper = styled.div`
-  /* background: whitesmoke; */
-`;
+const Wrapper = styled.div``;
 
 const List = styled.div`
   display: flex;

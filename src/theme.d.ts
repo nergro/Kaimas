@@ -1,4 +1,3 @@
-// import original module declarations
 import 'styled-components/macro';
 
 interface ButtonStateTheme {
@@ -14,7 +13,6 @@ interface ButtonTheme {
   active: ButtonStateTheme;
 }
 
-// and extend them!
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {

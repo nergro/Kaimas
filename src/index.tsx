@@ -24,7 +24,6 @@ import { App } from './App';
 import { ErrorBoundary } from './errorBoundary';
 import { GlobalStyle } from './globalStyle';
 import { ProvidersInjector } from './ProvidersInjector';
-import * as serviceWorker from './serviceWorker';
 Modal.setAppElement('#root');
 
 const storeProviders = [
@@ -39,7 +38,6 @@ const storeProviders = [
 ];
 
 ReactDOM.render(
-  //TODO: Add error message/page to show for global ErrorBoundary
   <ErrorBoundary error={<ErrorPage />}>
     <Router>
       <ProvidersInjector providers={storeProviders}>
@@ -53,5 +51,3 @@ ReactDOM.render(
   </ErrorBoundary>,
   document.getElementById('root')
 );
-
-serviceWorker.unregister();

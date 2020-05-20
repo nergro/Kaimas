@@ -24,7 +24,6 @@ export const isErrorRenderFunction = <T>(
   return val instanceof Function && typeof val === 'function';
 };
 
-//TODO: Expand error codes
 export enum ErrorCodes {
   AxiosNotInitialized = 100,
   MissingMandatoryProps = 101,

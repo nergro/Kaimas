@@ -13,5 +13,4 @@ const ImageGalleryBase: FC<Props> = ({ className, images }) => {
 
 export const ImageGallery = styled(ImageGalleryBase)`
   width: 70%;
-  /* height: 400px; */
 `;

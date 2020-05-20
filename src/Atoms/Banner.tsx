@@ -1,4 +1,4 @@
-import bannerImg from 'assets/banner2.jpg';
+import bannerImg from 'assets/banner.jpg';
 import { H1 } from 'Atoms/text';
 import React, { FC } from 'react';
 import styled from 'styled-components/macro';
