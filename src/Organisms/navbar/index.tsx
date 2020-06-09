@@ -74,12 +74,13 @@ const MenuButton = styled(Menu)`
 interface Props {
   className?: string;
   scrolled?: boolean;
+  loginOpen: boolean;
+  setLoginOpen: (value: boolean) => void;
 }
-const NavbarBase: FC<Props> = ({ className }) => {
+const NavbarBase: FC<Props> = ({ className, loginOpen, setLoginOpen }) => {
   const { t } = useTranslation();
   const { push } = useHistory();
   const [mobileNavbarOpen, setMobileNavbarOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [isAuth, setIsAuth] = useState<boolean | undefined>(getAuthStatus());
 

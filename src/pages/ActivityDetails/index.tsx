@@ -7,6 +7,7 @@ import { ServiceTabs } from 'Molecules/ServiceTabs';
 import { AboutContent } from 'Molecules/tabs/AboutContent';
 import { BenefitsContent } from 'Molecules/tabs/BenefitsContent';
 import { ReviewsContent } from 'Molecules/tabs/ReviewsContent';
+import { LoginModal } from 'Organisms/LoginModal';
 import { ReservationModal } from 'Organisms/ReservationModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -61,7 +62,12 @@ const ReservationButton = styled(Button)`
   }
 `;
 
-export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = ({ match }) => {
+interface Props extends RouteComponentProps<{ activityId: string }> {
+  loginOpen: boolean;
+  setLoginOpen: (value: boolean) => void;
+}
+
+export const ActivityDetails: FC<Props> = ({ match, loginOpen, setLoginOpen }) => {
   const { t } = useTranslation();
   const hasReservation = getReservationStatus('activity');
   const isAuth = getAuthStatus();
@@ -104,14 +110,26 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
   const name = locale === 'lt' ? activity.nameLT : activity.nameEN;
   const description = locale === 'lt' ? activity.descriptionLT : activity.descriptionEN;
 
+  const onReservationButtonClick = (): void => {
+    if (isAuth) {
+      setReservationModalOpen(true);
+    } else {
+      setLoginOpen(true);
+    }
+  };
+
+  const onLoginModalClose = (): void => {
+    setLoginOpen(false);
+  };
+
   return (
     <MainLayout>
       <ContentTop>
         <Title size="massive" weight="600">
           {name}
         </Title>
-        {hasReservation !== undefined && !hasReservation && isAuth && showReservationButton && (
-          <ReservationButton onClick={() => setReservationModalOpen(true)}>
+        {hasReservation !== undefined && !hasReservation && showReservationButton && (
+          <ReservationButton onClick={onReservationButtonClick}>
             {t('Reservation')}
           </ReservationButton>
         )}
@@ -145,6 +163,7 @@ export const ActivityDetails: FC<RouteComponentProps<{ activityId: string }>> = 
         price={activity.price}
         onSuccessfullSubmit={() => setShowReservationButton(false)}
       />
+      <LoginModal isOpen={loginOpen} onClose={onLoginModalClose} />
     </MainLayout>
   );
 };

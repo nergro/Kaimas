@@ -7,6 +7,7 @@ import { ServiceTabs } from 'Molecules/ServiceTabs';
 import { AboutContent } from 'Molecules/tabs/AboutContent';
 import { BenefitsContent } from 'Molecules/tabs/BenefitsContent';
 import { ReviewsContent } from 'Molecules/tabs/ReviewsContent';
+import { LoginModal } from 'Organisms/LoginModal';
 import { ReservationModal } from 'Organisms/ReservationModal';
 import React, { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -62,12 +63,15 @@ const ReservationButton = styled(Button)`
   }
 `;
 
-export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ match }) => {
+interface Props extends RouteComponentProps<{ cabinId: string }> {
+  loginOpen: boolean;
+  setLoginOpen: (value: boolean) => void;
+}
+
+export const CabinDetails: FC<Props> = ({ match, loginOpen, setLoginOpen }) => {
   const { t } = useTranslation();
   const hasReservation = getReservationStatus('cabin');
   const isAuth = getAuthStatus();
-
-  console.log(isAuth);
 
   const [showReservationButton, setShowReservationButton] = useState<boolean>(true);
   const [reservationModalOpen, setReservationModalOpen] = useState<boolean>(false);
@@ -105,14 +109,26 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
   const name = locale === 'lt' ? cabin.nameLT : cabin.nameEN;
   const description = locale === 'lt' ? cabin.descriptionLT : cabin.descriptionEN;
 
+  const onReservationButtonClick = (): void => {
+    if (isAuth) {
+      setReservationModalOpen(true);
+    } else {
+      setLoginOpen(true);
+    }
+  };
+
+  const onLoginModalClose = (): void => {
+    setLoginOpen(false);
+  };
+
   return (
     <MainLayout>
       <ContentTop>
         <Title size="massive" weight="600">
           {name}
         </Title>
-        {hasReservation !== undefined && !hasReservation && isAuth && showReservationButton && (
-          <ReservationButton onClick={() => setReservationModalOpen(true)}>
+        {hasReservation !== undefined && !hasReservation && showReservationButton && (
+          <ReservationButton onClick={onReservationButtonClick}>
             {t('Reservation')}
           </ReservationButton>
         )}
@@ -146,6 +162,7 @@ export const CabinDetails: FC<RouteComponentProps<{ cabinId: string }>> = ({ mat
         price={cabin.price}
         onSuccessfullSubmit={() => setShowReservationButton(false)}
       />
+      <LoginModal isOpen={loginOpen} onClose={onLoginModalClose} />
     </MainLayout>
   );
 };

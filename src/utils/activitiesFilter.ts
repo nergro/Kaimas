@@ -54,6 +54,10 @@ const getFilteredActivitiesByCategory = (
 ): Activity[] => {
   const filteredA: Activity[] = [];
 
+  if (category.value === '00000') {
+    return activities;
+  }
+
   activities.forEach(x => {
     if (x.category.id === category.value) {
       filteredA.push(x);

@@ -48,7 +48,6 @@ const NumberInputWrapper = styled.div`
 const NumberInput = styled(Input)`
   margin: 0 20px;
   text-align: center;
-  width: 50%;
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -70,9 +69,12 @@ const PriceInputWrapper = styled.div`
 
 const DatePickers = styled.div`
   display: flex;
+  .react-datepicker-wrapper {
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
 `;
-
-const StyledPicker = styled(DatePicker)``;
 
 interface Props {
   className?: string;
@@ -136,14 +138,14 @@ export const ListFilter: FC<Props> = ({
     <Wrapper>
       <InputLabel weight="500">{t('Dates')}</InputLabel>
       <DatePickers>
-        <StyledPicker
+        <DatePicker
           dateFormat="dd/MM/yyyy"
           selected={from}
           onChange={onFromChange}
           placeholderText={t('From')}
           includeDates={availableDates}
         />
-        <StyledPicker
+        <DatePicker
           dateFormat="dd/MM/yyyy"
           selected={to}
           onChange={onToChange}

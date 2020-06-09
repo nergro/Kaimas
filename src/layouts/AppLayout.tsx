@@ -19,10 +19,12 @@ const Content = styled.main`
 
 interface AppLayoutProps {
   children: ReactNode;
+  loginOpen: boolean;
+  setLoginOpen: (value: boolean) => void;
   className?: string;
 }
 
-export const AppLayout: FC<AppLayoutProps> = ({ children, className }) => {
+export const AppLayout: FC<AppLayoutProps> = ({ children, className, loginOpen, setLoginOpen }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ export const AppLayout: FC<AppLayoutProps> = ({ children, className }) => {
 
   return (
     <LayoutStyled className={className}>
-      <Navbar scrolled={scrolled} />
+      <Navbar scrolled={scrolled} loginOpen={loginOpen} setLoginOpen={setLoginOpen} />
       <ErrorBoundary error={<ErrorPage />}>
         <Content>{children}</Content>
       </ErrorBoundary>

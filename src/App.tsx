@@ -22,6 +22,7 @@ import {
 import { useOrdersList } from 'store/ordersStore/hooks';
 
 export const App: FC = () => {
+  const [loginOpen, setLoginOpen] = useState(false);
   const [reservedCabin, setReservedCabin] = useState<boolean>(false);
   const [reservedActivity, setReservedActivity] = useState<boolean>(false);
   const { i18n } = useTranslation();
@@ -62,13 +63,33 @@ export const App: FC = () => {
   setCabinReservationStatus(reservedCabin);
 
   return (
-    <AppLayout>
+    <AppLayout loginOpen={loginOpen} setLoginOpen={(value: boolean) => setLoginOpen(value)}>
       <Switch>
         <Route path="/" exact component={Home} />
         <Route path="/cabins" exact component={Cabins} />
-        <Route path="/cabins/:cabinId" exact component={CabinDetails} />
+        <Route
+          path="/cabins/:cabinId"
+          exact
+          render={props => (
+            <CabinDetails
+              loginOpen={loginOpen}
+              setLoginOpen={(value: boolean) => setLoginOpen(value)}
+              {...props}
+            />
+          )}
+        />
         <Route path="/activities" exact component={Activities} />
-        <Route path="/activities/:activityId" exact component={ActivityDetails} />
+        <Route
+          path="/activities/:activityId"
+          exact
+          render={props => (
+            <ActivityDetails
+              loginOpen={loginOpen}
+              setLoginOpen={(value: boolean) => setLoginOpen(value)}
+              {...props}
+            />
+          )}
+        />
         <Route path="/subscribtion/:token" exact component={SubscribeCancellation} />
         <Route path="/order/:token" exact component={OrderCancellation} />
         <Route component={NotFound} />

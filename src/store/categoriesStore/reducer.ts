@@ -8,7 +8,7 @@ export const reducer = (state: State, action: Action): State => {
       return Loading;
     }
     case 'Categories/Loaded': {
-      return action.payload;
+      return [{ id: '00000', nameLT: 'Visi', nameEN: 'All' }, ...action.payload];
     }
     case 'Categories/LoadFailed': {
       return action.payload;
